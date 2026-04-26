@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.BusinessLogic.Administration.Core
 
 Administration-oriented business rules and support for the operator UI.

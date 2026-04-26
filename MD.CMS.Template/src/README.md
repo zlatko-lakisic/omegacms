@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.Template
 
 **Fuse/Angular** template site and modern app (`src/modern-app`) for demos and client integration patterns. Not the main production admin host.

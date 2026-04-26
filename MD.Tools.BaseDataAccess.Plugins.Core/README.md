@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.Tools.BaseDataAccess.Plugins.Core
 
 Plugin model for **database and file** providers.

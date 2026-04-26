@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.BusinessLogic.WebApi.Core
 
 Bridges the core business layer to the REST/Web API (controllers and integration points).

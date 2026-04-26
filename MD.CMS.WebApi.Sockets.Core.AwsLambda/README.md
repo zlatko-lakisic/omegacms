@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.WebApi.Sockets.Core.AwsLambda
 
 **WebSocket** / real-time API on **AWS Lambda**.

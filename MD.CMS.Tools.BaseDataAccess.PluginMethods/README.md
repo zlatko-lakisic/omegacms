@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.Tools.BaseDataAccess.PluginMethods
 
 CMS-specific **plugin methods** built on `MD.Tools.BaseDataAccess.PluginMethods.Core`.

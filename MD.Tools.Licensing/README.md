@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.Tools.Licensing
 
 Licensing validation and helpers used by the platform and tests.

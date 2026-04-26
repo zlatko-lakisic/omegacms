@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.BusinessLogic.CoreTests
 
 **Test project** for OmegaCMS. From the repository root, run:

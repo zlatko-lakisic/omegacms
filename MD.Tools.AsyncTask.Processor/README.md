@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.Tools.AsyncTask.Processor
 
 Background **async task** worker process (queue or jobâ€“driven processing per configuration).

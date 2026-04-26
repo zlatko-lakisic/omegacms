@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.Installer.Hosted.Core
 
 Hosted **installer** flow for deploying Administration, Web API, and related components to a server.

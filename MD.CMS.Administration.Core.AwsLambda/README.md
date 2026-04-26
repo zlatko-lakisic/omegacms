@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.Administration.Core.AwsLambda
 
 **AWS Lambda** host for the **administration** web app. See `aws-lambda-tools-defaults.json`. May include template text from the AWS .NET sample in addition to OmegaCMS assets.

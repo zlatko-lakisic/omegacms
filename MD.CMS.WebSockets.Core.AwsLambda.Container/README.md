@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.WebSockets.Core.AwsLambda.Container
 
 **WebSocket** support on **AWS** (container or Lambda, depending on the project).

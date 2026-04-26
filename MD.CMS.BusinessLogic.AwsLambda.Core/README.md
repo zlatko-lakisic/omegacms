@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.BusinessLogic.AwsLambda.Core
 
 Business logic for the **AWS Lambda** packaging of the API and admin stack.

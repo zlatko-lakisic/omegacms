@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.Administration.Core
 
 Core **admin** host and bootstrapping for the static administration app. The client app, **Yarn**, and **Gulp** live under the parent `MD.CMS.Administration` folder.

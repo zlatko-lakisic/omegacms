@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.AwsLambda.Container.Core
 
 Shared **container** packaging for AWS Lambda images used by the solution.

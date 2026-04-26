@@ -11,6 +11,23 @@ if (-not (Test-Path (Join-Path $root 'MD.CMS.Core.sln'))) {
 }
 
 $repoWiki = 'https://github.com/zlatko-lakisic/omegacms/wiki'
+# Banner file under the solution `Assets` folder (add `Assets/banner.png` in the repo root when ready)
+$assetsBanner = 'Assets/banner.png'
+
+function Get-RelativePathToAssetsBanner {
+  param(
+    [string]$rootPath,
+    [string]$projectDir
+  )
+  $rootPath = [IO.Path]::GetFullPath($rootPath)
+  $projectDir = [IO.Path]::GetFullPath($projectDir)
+  if (-not $projectDir.StartsWith($rootPath, [StringComparison]::OrdinalIgnoreCase)) { return $assetsBanner }
+  $child = $projectDir.Substring($rootPath.Length).Trim([IO.Path]::DirectorySeparatorChar, '/')
+  if ([string]::IsNullOrEmpty($child)) { return $assetsBanner }
+  $segs = $child -split [regex]::Escape([string][IO.Path]::DirectorySeparatorChar) | Where-Object { $_ }
+  $up = (1..$segs.Count | ForEach-Object { '..' } ) -join '/'
+  if ($segs.Count -ge 1) { return ($up + '/' + $assetsBanner) } else { return $assetsBanner }
+}
 
 function Get-ReadmeBody {
   param(
@@ -19,11 +36,20 @@ function Get-ReadmeBody {
     [string]$tfm,
     [string]$product,
     [string]$isPack,
-    [string]$awsType
+    [string]$awsType,
+    [string]$bannerImageSrc
   )
+
+  $bannerHtml = @"
+<p align="center">
+  <img src="$bannerImageSrc" alt="OmegaCMS" width="100%" />
+</p>
+
+"@
 
   if ($projName -match 'Tests$' -or $projName -match 'CoreTests$' -or $projName -match '\.Tests$') {
     return @"
+$bannerHtml
 # $projName
 
 **Test project** for OmegaCMS. From the repository root, run:
@@ -94,6 +120,7 @@ Project references are listed in the project file (see the .csproj).
   $packNote = if ($isPack -eq 'true') { 'This project may produce a **NuGet** package when packed (see the .csproj).' } else { '' }
 
   return @"
+$bannerHtml
 # $projName
 
 $blurb
@@ -136,7 +163,8 @@ foreach ($f in $csprojs) {
   }
   if (-not $tfm) { $tfm = 'net10.0' }
 
-  $body = Get-ReadmeBody -projName $projName -relCsproj $relCsproj -tfm $tfm -product $product -isPack $isPack -awsType $aws
+  $bannerSrc = Get-RelativePathToAssetsBanner -rootPath $root -projectDir $dir
+  $body = Get-ReadmeBody -projName $projName -relCsproj $relCsproj -tfm $tfm -product $product -isPack $isPack -awsType $aws -bannerImageSrc $bannerSrc
   $readmePath = Join-Path $dir 'README.md'
   $legacy = Join-Path $dir 'Readme.md'
   if (Test-Path $legacy) { Remove-Item $legacy -Force }

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.Tools.BaseDataAccess.PluginMethods.Tests
 
 **Test project** for OmegaCMS. From the repository root, run:

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.WebApi.Core
 
 Main REST API layer (controllers, filters, middleware) â€” referenced by all Web API **host** projects (hosted, Lambda, Google Cloud).

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+</p>
+
 # MD.CMS.BusinessLogic.Core
 
 Core business rules, services, and domain logic. Consumed by Web API, administration, and serverless hosts. XML documentation is emitted in **Debug** builds.
