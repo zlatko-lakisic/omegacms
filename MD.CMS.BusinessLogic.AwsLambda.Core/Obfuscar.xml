@@ -1,0 +1,21 @@
+﻿<?xml version='1.0'?>
+<Obfuscator>
+  <AssemblySearchPath path=".\" />
+  <AssemblySearchPath path="C:\Users\Administrator\.nuget\packages\amazon.lambda.apigatewayevents\2.1.0\lib\netstandard2.0" />
+  <AssemblySearchPath path="C:\Users\Administrator\.nuget\packages\amazon.lambda.core\1.1.0\lib\netstandard2.0" />
+  <AssemblySearchPath path="C:\Users\Administrator\.nuget\packages\aws.logger.aspnetcore\2.2.0\lib\netstandard2.0" />
+  <AssemblySearchPath path="C:\Users\Administrator\.nuget\packages\amazon.lambda.aspnetcoreserver\5.1.5\lib\netstandard2.0" />
+  <Var name="InPath" value=".\" />
+  <Var name="OutPath" value=".\Obfuscated" />
+  <Var name="KeepPublicApi" value="true" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="RenameProperties" value="true" />
+  <Var name="RenameEvents" value="true" />
+  <Var name="RenameFields" value="true" />
+  <Var name="UseUnicodeNames" value="false" />
+  <Var name="HideStrings" value="true" />
+  <Var name="OptimizeMethods" value="true" />
+  <Var name="SuppressIldasm" value="true" />
+  
+  <Module file="$(InPath)\MD.CMS.BusinessLogic.AwsLambda.Core.dll" />
+</Obfuscator>

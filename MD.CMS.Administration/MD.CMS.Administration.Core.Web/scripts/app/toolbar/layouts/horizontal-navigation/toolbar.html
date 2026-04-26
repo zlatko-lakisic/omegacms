@@ -1,0 +1,150 @@
+<div layout="row" layout-align="space-between center">
+
+    <div layout="row" layout-align="start center">
+        <div class="navigation-toggle" hide-gt-sm>
+            <md-button class="md-icon-button" ng-click="vm.toggleHorizontalMobileMenu()"
+                       aria-label="Toggle Mobile Navigation">
+                <md-icon md-font-icon="icon-menu"></md-icon>
+            </md-button>
+        </div>
+
+        <div class="logo" layout="row" layout-align="start center">
+            <span class="logo-image icon-omega-logo"></span>
+            <div layout="column" flex>
+                <span class="logo-text">{{$root.systemName}}</span>
+                <span class="logo-version">v{{$root.systemVersion}}</span>
+            </div>
+        </div>
+
+        <md-progress-circular id="toolbar-progress" style="margin: 0px 16px" ng-if="$root.NumberOfDaRequests > 0" class="md-accent" md-mode="indeterminate" md-diameter="32"></md-progress-circular>
+    </div>
+
+    <div layout="row" layout-align="start center">
+
+        <ms-search-bar></ms-search-bar>
+
+        <md-menu-bar id="plugin-menu" ng-if="vm.pluginJobs.length > 0">
+            <md-menu id="plugin-status-menu" md-position-mode="left bottom">
+                <md-button ng-click="$mdOpenMenu()" class="status" ng-class="vm.userStatus.class">
+                    <md-icon md-font-icon ng-class="vm.pluginStatuses[vm.currentPluginStatus].icon"
+                             ng-style="{'color': vm.pluginStatuses[vm.currentPluginStatus].color }" class="icon"></md-icon>
+                    {{vm.pluginStatuses[vm.currentPluginStatus].title}}
+                </md-button>
+                <md-menu-content width="2">
+                    <md-menu-item class="status md-indent"
+                                  ng-repeat="job in vm.pluginJobs">
+                        <div layout="row">
+                            <md-icon md-font-icon="icon-clock" class="icon"></md-icon>
+                            <span flex>&nbsp;{{job.PluginName}} - {{job.Message}}</span>
+                        </div>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+        <div class="toolbar-separator" hide-xs></div>
+        <md-menu-bar id="language-menu" ng-click="$change()">
+            <md-menu md-position-mode="left bottom">
+                <md-button ng-click="$mdMenu.open()" class="language-button">
+                    <div layout="column">
+                        <div layout="row" layout-align="center center">
+                            <span class="iso">CMS</span>
+                            <img class="flag" ng-src="assets/images/flags/{{vm.selectedLanguage.flag}}.png">
+                            <span class="code" hide-xs>{{vm.selectedLanguage.code}}</span>
+                        </div>
+                        <div layout="row" layout-align="center center">
+                            <span class="iso">UI</span>
+                            <img class="flag" ng-src="assets/images/flags/{{$root.globals.selectedLanguage}}.png">
+                            <span class="code" hide-xs>{{$root.globals.resources.SupportedLanguages[$root.globals.selectedLanguage]}}</span>
+                        </div>
+                    </div>
+                </md-button>
+                <md-menu-content width="3" id="language-menu-content">
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdMenu.open()" class="language-menu-button">
+                                <div layout="row" layout-align="start center" flex="80">
+                                    <span class="iso">CMS</span>
+                                    <img class="flag" ng-src="assets/images/flags/{{vm.selectedLanguage.flag}}.png">
+                                    <span class="code">{{vm.selectedLanguage.code}}</span>
+                                </div>
+                            </md-button>
+                            <md-menu-content width="3" class="language-menu-content">
+                                <md-menu-item ng-repeat="(iso, lang) in vm.languages">
+                                    <md-button ng-click="vm.changeLanguage(lang)" aria-label="{{lang.title}}" translate
+                                               translate-attr-aria-label="{{lang.title}}">
+                                        <span layout="row" layout-align="start center">
+                                            <img class="flag" ng-src="assets/images/flags/{{lang.flag}}.png">
+                                            <span>{{lang.title}}</span>
+                                        </span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdMenu.open()" class="language-menu-button">
+                                <div layout="row" layout-align="start center" flex="80">
+                                    <span class="iso">UI</span>
+                                    <img class="flag" ng-src="assets/images/flags/{{$root.globals.selectedLanguage}}.png">
+                                    <span class="code">{{$root.globals.resources.SupportedLanguages[$root.globals.selectedLanguage]}}</span>
+                                </div>
+                            </md-button>
+                            <md-menu-content width="3" class="language-menu-content">
+                                <md-menu-item ng-repeat="(key,val) in $root.globals.resources.SupportedLanguages">
+                                    <md-button ng-click="vm.changeUiLanguage(key)" aria-label="{{val}}" translate
+                                               translate-attr-aria-label="{{val}}">
+                                        <span layout="row" layout-align="start center">
+                                            <img class="flag" ng-src="assets/images/flags/{{key}}.png">
+                                            <span>{{val}}</span>
+                                        </span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+        <div class="toolbar-separator"></div>
+        <md-menu-bar id="user-menu">
+            <md-menu md-position-mode="left bottom">
+                <md-button class="user-button" ng-click="$mdMenu.open()">
+                    <div layout="row" layout-align="space-between center">
+                        <div class="avatar-wrapper">
+                            <img md-menu-align-target class="avatar" src="assets/images/avatars/profile.jpg">
+                            <span class="status badge white-fg ng-binding ng-scope" ng-style="{'background': $root.unreadMessages ? 'green' : 'grey'}">{{$root.unreadMessages}}</span>
+                        </div>
+                        <span class="username" hide-xs>{{vm.loggedOnUser.Username}}</span>
+                        <md-icon md-font-icon="icon-chevron-down"
+                                 class="icon s16" hide-xs></md-icon>
+                    </div>
+                </md-button>
+                <md-menu-content width="3">
+                    <md-menu-item class="md-indent" ui-sref="app.profile()">
+                        <md-icon md-font-icon="icon-account" class="icon"></md-icon>
+                        <md-button><span md-resource-text name="Labels.MyProfile"></span></md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent" ui-sref="app.mailbox">
+                        <md-icon md-font-icon="icon-email" class="icon"></md-icon>
+                        <md-button>
+                            <span md-resource-text name="Labels.Inbox"></span>
+                            <span></span>
+                            <p ng-show="$root.unreadMessages > 0">{{vm.unreadMessages}}</p>
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item class="md-indent">
+                        <md-icon md-font-icon="icon-logout" class="icon"></md-icon>
+                        <md-button ng-click="vm.logout()">Logout</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+        <div class="toolbar-separator"></div>
+        <md-button id="quick-panel-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('quick-panel')"
+                   aria-label="Toggle quick panel" translate translate-attr-aria-label="TOOLBAR.TOGGLE_QUICK_PANEL">
+            <md-icon md-font-icon="icon-format-list-bulleted" class="icon"></md-icon>
+        </md-button>
+    </div>
+</div>

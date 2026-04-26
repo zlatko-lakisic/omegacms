@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "MD.Tools.AsyncTask.Processor": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

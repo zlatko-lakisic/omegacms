@@ -1,0 +1,211 @@
+#toolbar {
+    height: $toolbarHeight;
+    min-height: $toolbarHeight;
+    max-height: $toolbarHeight;
+    z-index: 55 !important;
+
+    .badge {
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        min-width: 20px;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 7px;
+        font-size: 11px;
+        font-weight: bold;
+        border-radius: 20px;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+        transition: opacity 0.2s ease-in-out 0.1s;
+    }
+
+    #navigation-toggle {
+        width: $toolbarHeight;
+        min-width: $toolbarHeight;
+        height: $toolbarHeight;
+        margin: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 0;
+    }
+
+    #user-menu {
+        height: $toolbarHeight;
+        padding: 0;
+
+        md-menu-item .md-button {
+            font-size: 15px;
+
+            md-icon {
+                margin: auto 16px auto 0;
+            }
+        }
+
+        md-menu-content {
+
+            &.md-menu-bar-menu {
+
+                &.md-dense {
+                    padding: 8px 0;
+
+                    .md-button,
+                    md-menu-item {
+                        height: 48px;
+                        line-height: 48px;
+                    }
+                }
+            }
+        }
+
+        .user-button {
+            margin: 0;
+            padding: 0 16px;
+            height: $toolbarHeight;
+            text-transform: none;
+
+            .avatar-wrapper {
+                position: relative;
+
+                .status {
+                    position: absolute;
+                    top: 35px;
+                    right: 5px;
+                }
+            }
+
+            .username {
+                margin: 0 12px 0 8px;
+            }
+        }
+    }
+
+    #language-menu {
+        height: $toolbarHeight;
+        padding: 0;
+
+        md-menu-item .md-button {
+            font-size: 15px;
+        }
+
+        md-menu-content {
+
+            &.md-menu-bar-menu {
+
+                &.md-dense {
+                    padding: 8px 0;
+
+                    .md-button,
+                    md-menu-item {
+                        height: 48px;
+                        line-height: 48px;
+                    }
+                }
+            }
+        }
+
+        .language-button {
+            margin: 0;
+            padding: 0 16px;
+            height: $toolbarHeight;
+            text-transform: none;
+
+            .layout-row {
+                height: 32px;
+            }
+
+            .iso {
+                text-transform: uppercase;
+            }
+
+            .flag {
+                margin-right: 8px;
+                margin-left: 8px;
+            }
+
+            .code {
+                text-transform: uppercase;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                display: inline-block;
+
+                @media (max-width: 599px) {
+                    &.hide-xs {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    #quick-panel-toggle {
+        width: $toolbarHeight;
+        height: $toolbarHeight;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .toolbar-separator {
+        height: $toolbarHeight;
+        width: 1px;
+        background: rgba(0, 0, 0, 0.12);
+    }
+}
+
+#language-menu-content {
+
+  md-menu-item {
+
+    .iso {
+      text-transform: uppercase;
+    }
+
+    .flag {
+      margin-right: 8px;
+      margin-left: 8px;
+    }
+
+    .code {
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: inline-block;
+    }
+  }
+}
+
+.language-menu-content {
+
+    md-menu-item {
+
+        .flag {
+            margin-right: 16px;
+        }
+    }
+}
+
+#language-message {
+    min-height: 88px;
+    max-width: 600px;
+
+    .md-toast-content {
+        height: 90px;
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-xs) {
+
+    #toolbar {
+
+        #user-menu {
+
+            .user-button {
+                min-width: 64px;
+                padding: 0 2px 0 10px;
+            }
+        }
+    }
+}

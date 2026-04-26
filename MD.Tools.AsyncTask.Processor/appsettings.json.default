@@ -1,0 +1,46 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "Config": {
+    "MD.Tools.Helpers.Core": {
+      "TraceLoggerIsEnabled": true,
+      "TraceSwitches": {
+        "TraceLogger": "1"
+      },
+      "DefaultFileProvider": 1,
+      "TempAssembliesFolder": "Path to temp assemblies folder"
+    },
+    "MD.CMS.BusinessLogic.Core": {
+      "DefaultLcid": "2057",
+      "ProductionMode": false,
+      "InProcSessions": false,
+      "SessionDomain": "",
+      "SessionTimeout": "01:00:00",
+      "AdministrationAngularRootModuleRegisterUrl": "",
+      "AdministrationAddonsModuleCode": "",
+      "NumberOfSystemMessageFolders": "",
+      "PluginJobHashFileLocation": "",
+      "FileUploadPath": "",
+      "RootAdminAccount": {
+        "Username": "root",
+        "Password": ""
+      }
+    },
+    "MD.Tools.BaseDataAccess.Plugins.Core": {
+      "DataAccessPlugins": [
+      ],
+      "DataAccessPluginSettings": {},
+      "BaseDataAccessPluginsDirectory": "Path to plugins directory",
+      "BaseDataAccessPluginsFileProviderType": "1"
+    },
+    "MD.Tools.AsyncTask.Processor": {
+      "PluginsDirectory": "Path to plugins directory",
+      "Period": "00:05:00"
+    }
+  }
+}

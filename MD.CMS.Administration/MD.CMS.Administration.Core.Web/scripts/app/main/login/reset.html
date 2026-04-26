@@ -1,0 +1,58 @@
+<div id="reset-password" class="flex-scrollable" layout="column" ms-scroll>
+    <div flex hide show-gt-sm>
+        <div id="omega-background-video-top-gradient"></div>
+        <video autoplay muted id="omega-background-video">
+            <source ng-src="{{vm.background.video.url}}" type="video/mp4">
+        </video>
+    </div>
+    <div id="reset-password-form-wrapper" layout="column" layout-align="center center">
+        <div id="reset-password-form" class="md-whiteframe-8dp">
+            <div class="logo md-accent-bg">
+                <span class="logo-image icon-omega-logo"></span>
+            </div>
+
+            <div class="title">Reset your password</div>
+
+            <form autocomplete="off" name="resetPasswordForm" novalidate>
+                <md-input-container class="md-block" md-no-float>
+                    <input type="email" name="email" ng-model="vm.email" placeholder="Email address"
+                           ng-pattern="/^.+@.+\..+$/" required>
+                    <div ng-messages="resetPasswordForm.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>Email field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span>Email must be a valid e-mail address</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <input type="password" name="password" ng-model="vm.password" placeholder="Password"
+                           required>
+                    <div ng-messages="registerForm.password.$error" role="alert">
+                        <div ng-message="required">
+                            <span>Password field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <input type="password" name="passwordConfirm" ng-model="vm.passwordConfirm"
+                           placeholder="Password (Confirm)"
+                           required>
+                    <div ng-messages="resetPasswordForm.passwordConfirm.$error" role="alert">
+                        <div ng-message="required">
+                            <span>Password (Confirm) field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-button type="submit" ng-click="vm.changePassword()" class="md-raised md-accent submit-button" aria-label="UPDATE MY PASSWORD"
+                           ng-disabled="resetPasswordForm.$invalid || resetPasswordForm.$pristine || (vm.password != vm.passwordConfirm)">
+                    RESET MY PASSWORD
+                </md-button>
+            </form>
+        </div>
+    </div>
+</div>

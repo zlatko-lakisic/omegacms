@@ -1,0 +1,43 @@
+<div layout="row" layout-align="left center" class="md-cms-aliases" id="{{uniqueId}}" layout-wrap>
+    <div layout-gt-xs="row" class="add-alias-form">
+        <md-input-container class="md-block" flex>
+            <label>Alias</label>
+            <input ng-model="alias" name="{{mdInputName}}" type="text" flex>
+        </md-input-container>
+        <md-button class="md-raised" ng-click="addAlias()">Add Alias</md-button>
+    </div>
+    <md-toolbar layout="row" class="md-hue-3">
+        <div class="md-toolbar-tools">
+            <span>Custom Aliases</span>
+        </div>
+    </md-toolbar>
+    <md-content class="custom-aliases">
+        <md-list flex>
+            <md-list-item ng-if="customAliases.length > 0" class="md-3-line" ng-repeat="alias in customAliases" ng-click="null" flex>
+                <div class="md-list-item-text" layout="column">
+                    <p>{{alias.Alias}}</p>
+                    <md-button class="md-secondary md-raised" ng-click="deleteAlias($index)">Delete</md-button>
+                </div>
+            </md-list-item>
+            <md-list-item ng-if="customAliases.length == 0" class="md-3-line">
+                <div class="md-list-item-text" layout="column">
+                    <p>There are no custom aliases</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <md-toolbar ng-if="defaultAliases.length > 0" layout="row" class="md-hue-3">
+        <div class="md-toolbar-tools">
+            <span>Default Aliases</span>
+        </div>
+    </md-toolbar>
+    <md-content ng-if="defaultAliases.length > 0" class="default-aliases">
+        <md-list flex>
+            <md-list-item class="md-3-line" ng-repeat="alias in defaultAliases" ng-click="null" flex>
+                <div class="md-list-item-text" layout="column">
+                    <p>{{alias}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>

@@ -1,0 +1,1928 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Transform"                : "AWS::Serverless-2016-10-31",
+    "Description"              : "OmegaCMS CloudFormation Template",
+    "Parameters"               : {
+        "Domain" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaLambdaContainerCodeUriBucket" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaLambdaContainerCodeUriKey"    : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "StackName"                         : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "BillingGroup"                      : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "VpcSecurityGroupId"                : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "VpcSubnet1Id"                      : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "VpcSubnet2Id"                      : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "CloudFrontCertificateArn"          : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaCmsDataAccessPlugins"         : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaCmsDataAccessPluginSettings"  : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaCmsCorsOrigins"               : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaCmsSessionDomain"             : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaCmsSessionTimeout"            : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "OmegaCmsDefaultLcid"               : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "EmailUsername"                     : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "EmailPassword"                     : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "EmailHost"                         : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "EmailPort"                         : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "EmailUseSsl"                       : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminStageName"                    : {
+            "Type" : "String",
+            "Default" : "admin"
+        },
+        "AdminWebAppPath"                   : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminAppReferencePath"             : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminGatewayName"                  : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminMDCMSBusinessLogicCoreDefaultLcid" : {
+            "Type" : "Number",
+            "Default" : "0"
+        },
+        "AdminMDCMSBusinessLogicCoreGoogleApiTranslationKey" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminMDCMSBusinessLogicCoreGoogleMapsJsKey"         : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminMDToolsHelpersCoreProviderOptions"             : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminMDToolsHelpersCoreDefaultFileProvider"         : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "AdminMDToolsHelpersCoreVerboseLoggingReflectionEnabled" : {
+            "Type" : "String",
+            "Default" : "false"
+        },
+        "AdminMDCMSAdministrationCorePluginsDirectory"           : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminMDCMSAdministrationCorePluginsFileProviderType"    : {
+            "Type" : "Number",
+            "Default" : "1"
+        },
+        "AdminBasePluginsLayer"                                  : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "AdminOtherPlugins"                                  : {
+            "Type" : "CommaDelimitedList",
+            "Default" : ""
+        },
+        "AdminProductLayer"                                      : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiStageName"                                        : {
+            "Type" : "String",
+            "Default" : "ws"
+        },
+        "WebApiWebAppPath"                                       : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiAppReferencePath"                                 : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiGatewayName"                                      : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDCMSBusinessLogicCoreRootAdminAccount"           : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDCMSWebApiCorePluginsDirectory"                  : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDCMSWebApiCorePluginsFileProviderType"           : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "WebApiMDToolsBaseDataAccessPluginsCoreDataAccessPlugins" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "WebApiMDToolsHelpersCoreProviderOptions"                                     : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDToolsHelpersCoreDefaultFileProvider"                                 : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "WebApiMDCMSWebApiCoreBaseApiPath"                                            : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiMDCMSWebApiCoreBaseFolder"                                             : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiApiTimeout"                                                            : {
+            "Type" : "Number",
+            "Default" : 30
+        },
+        "WebApiTraceLevel"                                                            : {
+            "Type" : "Number",
+            "Default" : 1
+        },
+        "WebApiMDToolsHelpersCoreVerboseLoggingReflectionEnabled"                     : {
+            "Type" : "String",
+            "Default" : "false"
+        },
+        "WebApiBasePluginsLayer"                                                      : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiProductLayer"                                                          : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiOtherPlugins"                                  : {
+            "Type" : "CommaDelimitedList",
+            "Default" : ""
+        },
+        "WebApiSocketsBasePluginsLayer"                                               : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsProductLayer"                                                   : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsOtherPlugins"                                  : {
+            "Type" : "CommaDelimitedList",
+            "Default" : ""
+        },
+        "WebApiSocketsStageName"                                                      : {
+            "Type" : "String",
+            "Default" : "ws-web-sockets"
+        },
+        "WebApiSocketsWebAppPath"                                                     : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsAppReferencePath"                                               : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsGatewayName"                                                    : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDCMSBusinessLogicCoreRootAdminAccount"                         : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDCMSWebApiCorePluginsDirectory"                                : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDCMSWebApiCorePluginsFileProviderType"                         : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "WebApiSocketsMDToolsBaseDataAccessPluginsCoreDataAccessPlugins"              : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings"       : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "WebApiSocketsMDToolsHelpersCoreProviderOptions"                                     : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsMDToolsHelpersCoreDefaultFileProvider"                                 : {
+            "Type" : "Number",
+            "Default" : "2"
+        },
+        "WebApiSocketsMDCMSWebApiCoreBaseApiPath"                                            : {
+            "Type" : "String",
+            "Default" : ""
+        },
+        "WebApiSocketsApiTimeout"                                                            : {
+            "Type" : "Number",
+            "Default" : 600
+        },
+        "WebApiSocketsTraceLevel"                                                            : {
+            "Type" : "Number",
+            "Default" : 1
+        },
+        "WebApiSocketsMDToolsHelpersCoreVerboseLoggingReflectionEnabled"                     : {
+            "Type" : "String",
+            "Default" : "false"
+        },
+        "WebApiSocketsDebugMode"                                                             : {
+            "Type" : "String",
+            "Default" : "false"
+        }
+    },
+    "Conditions"               : {
+        "VpcSecurityGroupIdNotEmpty" : {
+            "Fn::Not" : [
+                {
+                    "Fn::Equals" : [
+                        {
+                            "Ref" : "VpcSecurityGroupId"
+                        },
+                        ""
+                    ]
+                }
+            ]
+        },
+        "VpcSubnet1IdNotEmpty"       : {
+            "Fn::Not" : [
+                {
+                    "Fn::Equals" : [
+                        {
+                            "Ref" : "VpcSubnet1Id"
+                        },
+                        ""
+                    ]
+                }
+            ]
+        },
+        "VpcSubnet2IdNotEmpty"       : {
+            "Fn::Not" : [
+                {
+                    "Fn::Equals" : [
+                        {
+                            "Ref" : "VpcSubnet2Id"
+                        },
+                        ""
+                    ]
+                }
+            ]
+        }
+    },
+    "Resources"                : {
+        "OmegaCmsAdminApi" : {
+            "Type" : "AWS::Serverless::Api",
+            "Properties" : {
+                "Name" : {
+                    "Ref" : "AdminGatewayName"
+                },
+                "Tags" : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "StageName" : {
+                    "Ref" : "AdminStageName"
+                },
+                "BinaryMediaTypes" : [
+                    "*/*"
+                ]
+            }
+        },
+        "OmegaCmsWebApiApi" : {
+            "Type" : "AWS::Serverless::Api",
+            "Properties" : {
+                "Name" : {
+                    "Ref" : "WebApiGatewayName"
+                },
+                "Tags" : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "StageName" : {
+                    "Ref" : "WebApiStageName"
+                },
+                "BinaryMediaTypes" : [
+                    "image/*",
+                    "video/*",
+                    "font/*",
+                    "application/*",
+                    "text/*",
+                    "multipart/form-data"
+                ]
+            }
+        },
+        "OmegaCmsWebApiWebSocketsApi" : {
+            "Type" : "AWS::ApiGatewayV2::Api",
+            "Properties" : {
+                "Name" : {
+                    "Ref" : "WebApiSocketsGatewayName"
+                },
+                "ProtocolType" : "WEBSOCKET",
+                "RouteSelectionExpression" : "$request.body.action",
+                "Tags"                     : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                }
+            }
+        },
+        "OmegaCmsAdminAspNetCoreFunction" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties" : {
+                "Handler" : "MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPoint::FunctionHandlerAsync",
+                "Runtime" : "dotnetcore3.1",
+                "PackageType" : "Zip",
+                "CodeUri"     : {
+                    "Bucket" : {
+                        "Ref" : "OmegaLambdaContainerCodeUriBucket"
+                    },
+                    "Key"    : {
+                        "Ref" : "OmegaLambdaContainerCodeUriKey"
+                    }
+                },
+                "MemorySize"  : 512,
+                "Timeout"     : 30,
+                "Policies"    : [
+                    "AWSLambda_FullAccess"
+                ],
+                "Environment" : {
+                    "Variables" : {
+                        "MD_CMS_AwsLambda_Container_Core_WebAppPath" : {
+                            "Ref" : "AdminWebAppPath"
+                        },
+                        "MD_CMS_AwsLambda_Container_Core_AppReferencePath" : {
+                            "Ref" : "AdminAppReferencePath"
+                        },
+                        "MD_CMS_BusinessLogic_Core_DefaultLcid"            : {
+                            "Ref" : "OmegaCmsDefaultLcid"
+                        },
+                        "MD_CMS_BusinessLogic_Core_GoogleApiTranslationKey" : {
+                            "Ref" : "AdminMDCMSBusinessLogicCoreGoogleApiTranslationKey"
+                        },
+                        "MD_CMS_BusinessLogic_Core_GoogleMapsJsKey"         : {
+                            "Ref" : "AdminMDCMSBusinessLogicCoreGoogleMapsJsKey"
+                        },
+                        "MD_Tools_Helpers_Core_ProviderOptions"             : {
+                            "Ref" : "AdminMDToolsHelpersCoreProviderOptions"
+                        },
+                        "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled" : {
+                            "Ref" : "AdminMDToolsHelpersCoreVerboseLoggingReflectionEnabled"
+                        },
+                        "MD_CMS_Administration_Core_PluginsDirectory"           : {
+                            "Ref" : "AdminMDCMSAdministrationCorePluginsDirectory"
+                        },
+                        "MD_CMS_Administration_Core_PluginsFileProviderType"    : {
+                            "Ref" : "AdminMDCMSAdministrationCorePluginsFileProviderType"
+                        }
+                    }
+                },
+                "Events"      : {
+                    "ProxyResource" : {
+                        "Type" : "Api",
+                        "Properties" : {
+                            "Path" : "/{proxy+}",
+                            "Method" : "ANY",
+                            "RestApiId" : {
+                                "Ref" : "OmegaCmsAdminApi"
+                            }
+                        }
+                    },
+                    "RootResource"  : {
+                        "Type" : "Api",
+                        "Properties" : {
+                            "Path" : "/",
+                            "Method" : "ANY",
+                            "RestApiId" : {
+                                "Ref" : "OmegaCmsAdminApi"
+                            }
+                        }
+                    }
+                },
+                "Tags"        : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "Layers"      : {
+                    "Fn::Split": [
+                        ",",
+                        {
+                            "Fn::Join": [
+                                ",",
+                                [{
+                                    "Ref" : "AdminProductLayer"
+                                },
+                                {
+                                    "Ref" : "AdminBasePluginsLayer"
+                                },
+                                {
+                                    "Fn::Join": [
+                                        ",",
+                                        {
+                                            "Ref" : "AdminOtherPlugins"
+                                        }
+                                    ]
+                                }]
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebApiAspNetCoreFunction" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties" : {
+                "Handler" : "MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPoint::FunctionHandlerAsync",
+                "Runtime" : "dotnetcore3.1",
+                "CodeUri" : {
+                    "Bucket" : {
+                        "Ref" : "OmegaLambdaContainerCodeUriBucket"
+                    },
+                    "Key"    : {
+                        "Ref" : "OmegaLambdaContainerCodeUriKey"
+                    }
+                },
+                "MemorySize" : 512,
+                "Timeout"    : {
+                    "Ref" : "WebApiApiTimeout"
+                },
+                "Policies"   : [
+                    "AWSLambda_FullAccess"
+                ],
+                "Environment" : {
+                    "Variables" : {
+                        "MD_CMS_AwsLambda_Container_Core_WebAppPath" : {
+                            "Ref" : "WebApiWebAppPath"
+                        },
+                        "MD_CMS_AwsLambda_Container_Core_AppReferencePath" : {
+                            "Ref" : "WebApiAppReferencePath"
+                        },
+                        "MD_CMS_BusinessLogic_Core_DefaultLcid"            : {
+                            "Ref" : "OmegaCmsDefaultLcid"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailEnableSsl"         : {
+                            "Ref" : "EmailUseSsl"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailHost"              : {
+                            "Ref" : "EmailHost"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailPort"              : {
+                            "Ref" : "EmailPort"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Password"               : {
+                            "Ref" : "EmailPassword"
+                        },
+                        "MD_CMS_BusinessLogic_Core_RootAdminAccount"       : {
+                            "Ref" : "WebApiMDCMSBusinessLogicCoreRootAdminAccount"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionDomain"          : {
+                            "Ref" : "OmegaCmsSessionDomain"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionTimeout"         : {
+                            "Ref" : "OmegaCmsSessionTimeout"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Username"               : {
+                            "Ref" : "EmailUsername"
+                        },
+                        "MD_CMS_WebApi_Core_CorsOrigins"                    : {
+                            "Ref" : "OmegaCmsCorsOrigins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins" : {
+                            "Ref" : "OmegaCmsDataAccessPlugins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings" : {
+                            "Ref" : "OmegaCmsDataAccessPluginSettings"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory" : {
+                            "Ref" : "WebApiMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType" : {
+                            "Ref" : "WebApiMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_ProviderOptions"                                      : {
+                            "Ref" : "WebApiMDToolsHelpersCoreProviderOptions"
+                        },
+                        "MD_Tools_Helpers_Core_DefaultFileProvider"                                  : {
+                            "Ref" : "WebApiMDToolsHelpersCoreDefaultFileProvider"
+                        },
+                        "MD_CMS_WebApi_Core_BaseApiPath"                                              : {
+                            "Ref" : "WebApiMDCMSWebApiCoreBaseApiPath"
+                        },
+                        "MD_CMS_WebApi_Core_BaseFolder"                                               : {
+                            "Ref" : "WebApiMDCMSWebApiCoreBaseFolder"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsDirectory"                                         : {
+                            "Ref" : "WebApiMDCMSWebApiCorePluginsDirectory"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsFileProviderType"                                  : {
+                            "Ref" : "WebApiMDCMSWebApiCorePluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_TraceSwitches"                                        : {
+                            "Fn::Sub" : [
+                                "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                                {
+                                    "TraceLevel" : {
+                                        "Ref" : "WebApiTraceLevel"
+                                    }
+                                }
+                            ]
+                        },
+                        "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled"                      : {
+                            "Ref" : "WebApiMDToolsHelpersCoreVerboseLoggingReflectionEnabled"
+                        }
+                    }
+                },
+                "Events"      : {
+                    "ProxyResource" : {
+                        "Type" : "Api",
+                        "Properties" : {
+                            "Path" : "/{proxy+}",
+                            "Method" : "ANY",
+                            "RestApiId" : {
+                                "Ref" : "OmegaCmsWebApiApi"
+                            }
+                        }
+                    },
+                    "RootResource"  : {
+                        "Type" : "Api",
+                        "Properties" : {
+                            "Path" : "/",
+                            "Method" : "ANY",
+                            "RestApiId" : {
+                                "Ref" : "OmegaCmsWebApiApi"
+                            }
+                        }
+                    }
+                },
+                "Tags"        : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "VpcConfig"   : {
+                    "SecurityGroupIds" : [
+                        {
+                            "Fn::If" : [
+                                "VpcSecurityGroupIdNotEmpty",
+                                {
+                                    "Ref" : "VpcSecurityGroupId"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ],
+                    "SubnetIds"        : [
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet1IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet1Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        },
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet2IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet2Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "Layers"      : {
+                    "Fn::Split": [
+                        ",",
+                        {
+                            "Fn::Join": [
+                                ",",
+                                [{
+                                    "Ref" : "WebApiProductLayer"
+                                },
+                                {
+                                    "Ref" : "WebApiBasePluginsLayer"
+                                },
+                                {
+                                    "Fn::Join": [
+                                        ",",
+                                        {
+                                            "Ref" : "WebApiOtherPlugins"
+                                        }
+                                    ]
+                                }]
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiOnConnectFunction" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties" : {
+                "Handler" : "MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets::OnConnectHandler",
+                "Runtime" : "dotnetcore3.1",
+                "CodeUri" : {
+                    "Bucket" : {
+                        "Ref" : "OmegaLambdaContainerCodeUriBucket"
+                    },
+                    "Key"    : {
+                        "Ref" : "OmegaLambdaContainerCodeUriKey"
+                    }
+                },
+                "MemorySize" : 512,
+                "Timeout"    : {
+                    "Ref" : "WebApiSocketsApiTimeout"
+                },
+                "Policies"   : [
+                ],
+                "Environment" : {
+                    "Variables" : {
+                        "MD_CMS_AwsLambda_Container_Core_WebAppPath" : {
+                            "Ref" : "WebApiSocketsWebAppPath"
+                        },
+                        "MD_CMS_AwsLambda_Container_Core_AppReferencePath" : {
+                            "Ref" : "WebApiSocketsAppReferencePath"
+                        },
+                        "MD_CMS_BusinessLogic_Core_DefaultLcid"            : {
+                            "Ref" : "OmegaCmsDefaultLcid"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailEnableSsl"         : {
+                            "Ref" : "EmailUseSsl"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailHost"              : {
+                            "Ref" : "EmailHost"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailPort"              : {
+                            "Ref" : "EmailPort"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Password"               : {
+                            "Ref" : "EmailPassword"
+                        },
+                        "MD_CMS_BusinessLogic_Core_RootAdminAccount"       : {
+                            "Ref" : "WebApiSocketsMDCMSBusinessLogicCoreRootAdminAccount"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionDomain"          : {
+                            "Ref" : "OmegaCmsSessionDomain"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionTimeout"         : {
+                            "Ref" : "OmegaCmsSessionTimeout"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Username"               : {
+                            "Ref" : "EmailUsername"
+                        },
+                        "MD_CMS_WebApi_Core_CorsOrigins"                    : {
+                            "Ref" : "OmegaCmsCorsOrigins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins" : {
+                            "Ref" : "OmegaCmsDataAccessPlugins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings" : {
+                            "Ref" : "OmegaCmsDataAccessPluginSettings"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory" : {
+                            "Ref" : "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType" : {
+                            "Ref" : "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_ProviderOptions"                                      : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreProviderOptions"
+                        },
+                        "MD_Tools_Helpers_Core_DefaultFileProvider"                                  : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreDefaultFileProvider"
+                        },
+                        "MD_CMS_WebApi_Core_BaseApiPath"                                              : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCoreBaseApiPath"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsDirectory"                                         : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCorePluginsDirectory"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsFileProviderType"                                  : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCorePluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_TraceSwitches"                                        : {
+                            "Fn::Sub" : [
+                                "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                                {
+                                    "TraceLevel" : {
+                                        "Ref" : "WebApiSocketsTraceLevel"
+                                    }
+                                }
+                            ]
+                        },
+                        "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled"                      : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreVerboseLoggingReflectionEnabled"
+                        },
+                        "MD_CMS_WebApiSocketsCore_AwsLambda_DebugMode"                               : {
+                            "Ref" : "WebApiSocketsDebugMode"
+                        }
+                    }
+                },
+                "Tags"        : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "VpcConfig"   : {
+                    "SecurityGroupIds" : [
+                        {
+                            "Fn::If" : [
+                                "VpcSecurityGroupIdNotEmpty",
+                                {
+                                    "Ref" : "VpcSecurityGroupId"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ],
+                    "SubnetIds"        : [
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet1IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet1Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        },
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet2IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet2Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "Layers"      : {
+                    "Fn::Split": [
+                        ",",
+                        {
+                            "Fn::Join": [
+                                ",",
+                                [{
+                                    "Ref" : "WebApiSocketsProductLayer"
+                                },
+                                {
+                                    "Ref" : "WebApiSocketsBasePluginsLayer"
+                                },
+                                {
+                                    "Fn::Join": [
+                                        ",",
+                                        {
+                                            "Ref" : "WebApiSocketsOtherPlugins"
+                                        }
+                                    ]
+                                }]
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiOnDisconnectFunction" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties" : {
+                "Handler" : "MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets::OnDisconnectHandler",
+                "Runtime" : "dotnetcore3.1",
+                "CodeUri" : {
+                    "Bucket" : {
+                        "Ref" : "OmegaLambdaContainerCodeUriBucket"
+                    },
+                    "Key"    : {
+                        "Ref" : "OmegaLambdaContainerCodeUriKey"
+                    }
+                },
+                "MemorySize" : 512,
+                "Timeout"    : {
+                    "Ref" : "WebApiSocketsApiTimeout"
+                },
+                "Policies"   : [
+                ],
+                "Environment" : {
+                    "Variables" : {
+                        "MD_CMS_AwsLambda_Container_Core_WebAppPath" : {
+                            "Ref" : "WebApiSocketsWebAppPath"
+                        },
+                        "MD_CMS_AwsLambda_Container_Core_AppReferencePath" : {
+                            "Ref" : "WebApiSocketsAppReferencePath"
+                        },
+                        "MD_CMS_BusinessLogic_Core_DefaultLcid"            : {
+                            "Ref" : "OmegaCmsDefaultLcid"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailEnableSsl"         : {
+                            "Ref" : "EmailUseSsl"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailHost"              : {
+                            "Ref" : "EmailHost"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailPort"              : {
+                            "Ref" : "EmailPort"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Password"               : {
+                            "Ref" : "EmailPassword"
+                        },
+                        "MD_CMS_BusinessLogic_Core_RootAdminAccount"       : {
+                            "Ref" : "WebApiSocketsMDCMSBusinessLogicCoreRootAdminAccount"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionDomain"          : {
+                            "Ref" : "OmegaCmsSessionDomain"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionTimeout"         : {
+                            "Ref" : "OmegaCmsSessionTimeout"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Username"               : {
+                            "Ref" : "EmailUsername"
+                        },
+                        "MD_CMS_WebApi_Core_CorsOrigins"                    : {
+                            "Ref" : "OmegaCmsCorsOrigins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins" : {
+                            "Ref" : "OmegaCmsDataAccessPlugins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings" : {
+                            "Ref" : "OmegaCmsDataAccessPluginSettings"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory" : {
+                            "Ref" : "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType" : {
+                            "Ref" : "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_ProviderOptions"                                      : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreProviderOptions"
+                        },
+                        "MD_Tools_Helpers_Core_DefaultFileProvider"                                  : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreDefaultFileProvider"
+                        },
+                        "MD_CMS_WebApi_Core_BaseApiPath"                                              : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCoreBaseApiPath"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsDirectory"                                         : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCorePluginsDirectory"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsFileProviderType"                                  : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCorePluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_TraceSwitches"                                        : {
+                            "Fn::Sub" : [
+                                "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                                {
+                                    "TraceLevel" : {
+                                        "Ref" : "WebApiSocketsTraceLevel"
+                                    }
+                                }
+                            ]
+                        },
+                        "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled"                      : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreVerboseLoggingReflectionEnabled"
+                        },
+                        "MD_CMS_WebApiSocketsCore_AwsLambda_DebugMode"                               : {
+                            "Ref" : "WebApiSocketsDebugMode"
+                        }
+                    }
+                },
+                "Tags"        : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "VpcConfig"   : {
+                    "SecurityGroupIds" : [
+                        {
+                            "Fn::If" : [
+                                "VpcSecurityGroupIdNotEmpty",
+                                {
+                                    "Ref" : "VpcSecurityGroupId"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ],
+                    "SubnetIds"        : [
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet1IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet1Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        },
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet2IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet2Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "Layers"      : {
+                    "Fn::Split": [
+                        ",",
+                        {
+                            "Fn::Join": [
+                                ",",
+                                [{
+                                    "Ref" : "WebApiSocketsProductLayer"
+                                },
+                                {
+                                    "Ref" : "WebApiSocketsBasePluginsLayer"
+                                },
+                                {
+                                    "Fn::Join": [
+                                        ",",
+                                        {
+                                            "Ref" : "WebApiSocketsOtherPlugins"
+                                        }
+                                    ]
+                                }]
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiSendMessageFunction"  : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties" : {
+                "Handler" : "MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets::SendMessageHandler",
+                "Runtime" : "dotnetcore3.1",
+                "CodeUri" : {
+                    "Bucket" : {
+                        "Ref" : "OmegaLambdaContainerCodeUriBucket"
+                    },
+                    "Key"    : {
+                        "Ref" : "OmegaLambdaContainerCodeUriKey"
+                    }
+                },
+                "MemorySize" : 512,
+                "Timeout"    : {
+                    "Ref" : "WebApiSocketsApiTimeout"
+                },
+                "Policies"   : [
+                    {
+                        "Statement" : {
+                            "Effect" : "Allow",
+                            "Action" : "execute-api:ManageConnections",
+                            "Resource" : "arn:aws:execute-api:*:*:*/@connections/*"
+                        }
+                    }
+                ],
+                "Environment" : {
+                    "Variables" : {
+                        "MD_CMS_AwsLambda_Container_Core_WebAppPath" : {
+                            "Ref" : "WebApiSocketsWebAppPath"
+                        },
+                        "MD_CMS_AwsLambda_Container_Core_AppReferencePath" : {
+                            "Ref" : "WebApiSocketsAppReferencePath"
+                        },
+                        "MD_CMS_BusinessLogic_Core_DefaultLcid"            : {
+                            "Ref" : "OmegaCmsDefaultLcid"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailEnableSsl"         : {
+                            "Ref" : "EmailUseSsl"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailHost"              : {
+                            "Ref" : "EmailHost"
+                        },
+                        "MD_CMS_BusinessLogic_Core_EmailPort"              : {
+                            "Ref" : "EmailPort"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Password"               : {
+                            "Ref" : "EmailPassword"
+                        },
+                        "MD_CMS_BusinessLogic_Core_RootAdminAccount"       : {
+                            "Ref" : "WebApiSocketsMDCMSBusinessLogicCoreRootAdminAccount"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionDomain"          : {
+                            "Ref" : "OmegaCmsSessionDomain"
+                        },
+                        "MD_CMS_BusinessLogic_Core_SessionTimeout"         : {
+                            "Ref" : "OmegaCmsSessionTimeout"
+                        },
+                        "MD_CMS_BusinessLogic_Core_Username"               : {
+                            "Ref" : "EmailUsername"
+                        },
+                        "MD_CMS_WebApi_Core_CorsOrigins"                    : {
+                            "Ref" : "OmegaCmsCorsOrigins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins" : {
+                            "Ref" : "OmegaCmsDataAccessPlugins"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings" : {
+                            "Ref" : "OmegaCmsDataAccessPluginSettings"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory" : {
+                            "Ref" : "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory"
+                        },
+                        "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType" : {
+                            "Ref" : "WebApiSocketsMDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_ProviderOptions"                                      : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreProviderOptions"
+                        },
+                        "MD_Tools_Helpers_Core_DefaultFileProvider"                                  : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreDefaultFileProvider"
+                        },
+                        "MD_CMS_WebApi_Core_BaseApiPath"                                              : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCoreBaseApiPath"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsDirectory"                                         : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCorePluginsDirectory"
+                        },
+                        "MD_CMS_WebApi_Core_PluginsFileProviderType"                                  : {
+                            "Ref" : "WebApiSocketsMDCMSWebApiCorePluginsFileProviderType"
+                        },
+                        "MD_Tools_Helpers_Core_TraceSwitches"                                        : {
+                            "Fn::Sub" : [
+                                "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                                {
+                                    "TraceLevel" : {
+                                        "Ref" : "WebApiSocketsTraceLevel"
+                                    }
+                                }
+                            ]
+                        },
+                        "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled"                      : {
+                            "Ref" : "WebApiSocketsMDToolsHelpersCoreVerboseLoggingReflectionEnabled"
+                        },
+                        "MD_CMS_WebApiSocketsCore_AwsLambda_DebugMode"                               : {
+                            "Ref" : "WebApiSocketsDebugMode"
+                        }
+                    }
+                },
+                "Tags"        : {
+                    "BillingGroup" : {
+                        "Ref" : "BillingGroup"
+                    }
+                },
+                "VpcConfig"   : {
+                    "SecurityGroupIds" : [
+                        {
+                            "Fn::If" : [
+                                "VpcSecurityGroupIdNotEmpty",
+                                {
+                                    "Ref" : "VpcSecurityGroupId"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ],
+                    "SubnetIds"        : [
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet1IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet1Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        },
+                        {
+                            "Fn::If" : [
+                                "VpcSubnet2IdNotEmpty",
+                                {
+                                    "Ref" : "VpcSubnet2Id"
+                                },
+                                {
+                                    "Ref" : "AWS::NoValue"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "Layers"      : {
+                    "Fn::Split": [
+                        ",",
+                        {
+                            "Fn::Join": [
+                                ",",
+                                [{
+                                    "Ref" : "WebApiSocketsProductLayer"
+                                },
+                                {
+                                    "Ref" : "WebApiSocketsBasePluginsLayer"
+                                },
+                                {
+                                    "Fn::Join": [
+                                        ",",
+                                        {
+                                            "Ref" : "WebApiSocketsOtherPlugins"
+                                        }
+                                    ]
+                                }]
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiConnectRoute"         : {
+            "Type" : "AWS::ApiGatewayV2::Route",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "RouteKey" : "$connect",
+                "AuthorizationType" : "NONE",
+                "OperationName"     : "ConnectRoute",
+                "Target"            : {
+                    "Fn::Join" : [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref" : "OmegaCmsWebSocketsApiConnectInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiConnectInteg"         : {
+            "Type" : "AWS::ApiGatewayV2::Integration",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "IntegrationType" : "AWS_PROXY",
+                "IntegrationUri"  : {
+                    "Fn::Sub" : [
+                        "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${function}/invocations",
+                        {
+                            "region" : {
+                                "Ref" : "AWS::Region"
+                            },
+                            "function" : {
+                                "Fn::GetAtt" : [
+                                    "OmegaCmsWebSocketsApiOnConnectFunction",
+                                    "Arn"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiDisconnectRoute"      : {
+            "Type" : "AWS::ApiGatewayV2::Route",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "RouteKey" : "$disconnect",
+                "AuthorizationType" : "NONE",
+                "OperationName"     : "ConnectRoute",
+                "Target"            : {
+                    "Fn::Join" : [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref" : "OmegaCmsWebSocketsApiDisconnectInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiDisconnectInteg"      : {
+            "Type" : "AWS::ApiGatewayV2::Integration",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "IntegrationType" : "AWS_PROXY",
+                "IntegrationUri"  : {
+                    "Fn::Sub" : [
+                        "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${function}/invocations",
+                        {
+                            "region" : {
+                                "Ref" : "AWS::Region"
+                            },
+                            "function" : {
+                                "Fn::GetAtt" : [
+                                    "OmegaCmsWebSocketsApiOnDisconnectFunction",
+                                    "Arn"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiSendMessageRoute"     : {
+            "Type" : "AWS::ApiGatewayV2::Route",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "RouteKey" : "sendmessage",
+                "AuthorizationType" : "NONE",
+                "OperationName"     : "ConnectRoute",
+                "Target"            : {
+                    "Fn::Join" : [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref" : "OmegaCmsWebSocketsApiSendMessageInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiSendMessageInteg"     : {
+            "Type" : "AWS::ApiGatewayV2::Integration",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "IntegrationType" : "AWS_PROXY",
+                "IntegrationUri"  : {
+                    "Fn::Sub" : [
+                        "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${function}/invocations",
+                        {
+                            "region" : {
+                                "Ref" : "AWS::Region"
+                            },
+                            "function" : {
+                                "Fn::GetAtt" : [
+                                    "OmegaCmsWebSocketsApiSendMessageFunction",
+                                    "Arn"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiDeployment"           : {
+            "Type" : "AWS::ApiGatewayV2::Deployment",
+            "DependsOn" : [
+                "OmegaCmsWebSocketsApiConnectRoute",
+                "OmegaCmsWebSocketsApiSendMessageRoute",
+                "OmegaCmsWebSocketsApiDisconnectRoute"
+            ],
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiStage"                : {
+            "Type" : "AWS::ApiGatewayV2::Stage",
+            "Properties" : {
+                "ApiId" : {
+                    "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                },
+                "DeploymentId" : {
+                    "Ref" : "OmegaCmsWebSocketsApiDeployment"
+                },
+                "StageName"    : {
+                    "Ref" : "WebApiSocketsStageName"
+                }
+            }
+        },
+        "OmegaCmsWebSocketsApiOnConnectPermission"  : {
+            "Type" : "AWS::Lambda::Permission",
+            "DependsOn" : [
+                "OmegaCmsWebSocketsApiOnConnectFunction",
+                "OmegaCmsWebApiWebSocketsApi"
+            ],
+            "Properties" : {
+                "Action" : "lambda:InvokeFunction",
+                "FunctionName" : {
+                    "Ref" : "OmegaCmsWebSocketsApiOnConnectFunction"
+                },
+                "Principal"    : "apigateway.amazonaws.com"
+            }
+        },
+        "OmegaCmsWebSocketsApiOnDisconnectPermission" : {
+            "Type" : "AWS::Lambda::Permission",
+            "DependsOn" : [
+                "OmegaCmsWebSocketsApiOnDisconnectFunction",
+                "OmegaCmsWebApiWebSocketsApi"
+            ],
+            "Properties" : {
+                "Action" : "lambda:InvokeFunction",
+                "FunctionName" : {
+                    "Ref" : "OmegaCmsWebSocketsApiOnDisconnectFunction"
+                },
+                "Principal"    : "apigateway.amazonaws.com"
+            }
+        },
+        "OmegaCmsWebSocketsApiSendMessagePermission"  : {
+            "Type" : "AWS::Lambda::Permission",
+            "DependsOn" : [
+                "OmegaCmsWebSocketsApiSendMessageFunction",
+                "OmegaCmsWebApiWebSocketsApi"
+            ],
+            "Properties" : {
+                "Action" : "lambda:InvokeFunction",
+                "FunctionName" : {
+                    "Ref" : "OmegaCmsWebSocketsApiSendMessageFunction"
+                },
+                "Principal"    : "apigateway.amazonaws.com"
+            }
+        },
+        "OmegaCmsS3BucketAdminStaticAssets"           : {
+            "Type" : "AWS::S3::Bucket",
+            "Properties" : {
+                "BucketName" : {
+                    "Fn::Sub" : [
+                        "${StackName}-admin-assets",
+                        {
+                            "StackName" : {
+                                "Ref" : "StackName"
+                            }
+                        }
+                    ]
+                },
+                "Tags"        : [{
+                    "Key": "BillingGroup",
+                    "Value": {
+                        "Ref" : "BillingGroup"
+                    }
+                }]
+            },
+            "DeletionPolicy" : "Retain"
+        },
+        "OmegaCmsS3BucketAdminUploads"                : {
+            "Type" : "AWS::S3::Bucket",
+            "Properties" : {
+                "BucketName" : {
+                    "Fn::Sub" : [
+                        "${StackName}-admin-uploads",
+                        {
+                            "StackName" : {
+                                "Ref" : "StackName"
+                            }
+                        }
+                    ]
+                },
+                "Tags"        : [{
+                    "Key": "BillingGroup",
+                    "Value": {
+                        "Ref" : "BillingGroup"
+                    }
+                }]
+            },
+            "DeletionPolicy" : "Delete"
+        },
+        "OmegaCmsS3BucketAdminStaticAssetsPublicPolicy" : {
+            "Type" : "AWS::S3::BucketPolicy",
+            "Properties" : {
+                "Bucket" : {
+                    "Fn::Sub" : [
+                        "${StackName}-admin-assets",
+                        {
+                            "StackName" : {
+                                "Ref" : "StackName"
+                            }
+                        }
+                    ]
+                },
+                "PolicyDocument" : {
+                    "Version" : "2008-10-17",
+                    "Id"      : "PolicyForCloudFrontPrivateContent",
+                    "Statement" : [
+                        {
+                            "Sid" : "Allow-Public-Access-To-Bucket",
+                            "Effect" : "Allow",
+                            "Principal" : "*",
+                            "Action"    : "s3:GetObject",
+                            "Resource"  : {
+                                "Fn::Sub" : [
+                                    "arn:aws:s3:::${BucketName}/*",
+                                    {
+                                        "BucketName" : {
+                                            "Fn::Sub" : [
+                                                "${StackName}-admin-assets",
+                                                {
+                                                    "StackName" : {
+                                                        "Ref" : "StackName"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "DependsOn" : "OmegaCmsS3BucketAdminStaticAssets"
+        },
+        "OmegaCmsS3BucketAdminUploadsPublicPolicy" : {
+            "Type" : "AWS::S3::BucketPolicy",
+            "Properties" : {
+                "Bucket" : {
+                    "Fn::Sub" : [
+                        "${StackName}-admin-uploads",
+                        {
+                            "StackName" : {
+                                "Ref" : "StackName"
+                            }
+                        }
+                    ]
+                },
+                "PolicyDocument" : {
+                    "Version" : "2008-10-17",
+                    "Id"      : "PolicyForCloudFrontPrivateContent",
+                    "Statement" : [
+                        {
+                            "Sid" : "Allow-Public-Access-To-Bucket",
+                            "Effect" : "Allow",
+                            "Principal" : "*",
+                            "Action"    : "s3:GetObject",
+                            "Resource"  : {
+                                "Fn::Sub" : [
+                                    "arn:aws:s3:::${BucketName}/*",
+                                    {
+                                        "BucketName" : {
+                                            "Fn::Sub" : [
+                                                "${StackName}-admin-uploads",
+                                                {
+                                                    "StackName" : {
+                                                        "Ref" : "StackName"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "DependsOn" : "OmegaCmsS3BucketAdminUploads"
+        },
+        "OmegaCmsOriginAccessId"                        : {
+            "Type" : "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+            "Properties" : {
+                "CloudFrontOriginAccessIdentityConfig" : {
+                    "Comment" : "OmegaCms Cloudfront Distribution origin access identity"
+                }
+            }
+        },
+        "OmegaCmsCloudFormationDistribution"            : {
+            "Type" : "AWS::CloudFront::Distribution",
+            "DependsOn" : [
+                "OmegaCmsS3BucketAdminStaticAssets",
+                "OmegaCmsS3BucketAdminUploads",
+                "OmegaCmsAdminApi",
+                "OmegaCmsWebApiApi",
+                "OmegaCmsWebApiWebSocketsApi",
+                "OmegaCmsOriginAccessId"
+            ],
+            "Properties" : {
+                "DistributionConfig" : {
+                    "Origins" : [
+                        {
+                            "DomainName" : {
+                                "Fn::GetAtt" : [
+                                    "OmegaCmsS3BucketAdminStaticAssets",
+                                    "RegionalDomainName"
+                                ]
+                            },
+                            "Id"         : "Custom-s3-omega-cms-client-assets",
+                            "S3OriginConfig" : {
+                                "OriginAccessIdentity" : {
+                                    "Fn::Sub" : "origin-access-identity/cloudfront/${OmegaCmsOriginAccessId}"
+                                }
+                            }
+                        },
+                        {
+                            "DomainName" : {
+                                "Fn::GetAtt" : [
+                                    "OmegaCmsS3BucketAdminUploads",
+                                    "RegionalDomainName"
+                                ]
+                            },
+                            "Id"         : "Custom-s3-omega-cms-uploads",
+                            "S3OriginConfig" : {
+                                "OriginAccessIdentity" : {
+                                    "Fn::Sub" : "origin-access-identity/cloudfront/${OmegaCmsOriginAccessId}"
+                                }
+                            }
+                        },
+                        {
+                            "Id" : "Custom-omega-cms-ws",
+                            "DomainName" : {
+                                "Fn::Sub" : [
+                                    "${Domain}.execute-api.${AWS::Region}.amazonaws.com",
+                                    {
+                                        "Domain" : {
+                                            "Ref" : "OmegaCmsWebApiApi"
+                                        }
+                                    }
+                                ]
+                            },
+                            "OriginPath" : "",
+                            "CustomOriginConfig" : {
+                                "HTTPPort" : "80",
+                                "HTTPSPort" : "443",
+                                "OriginProtocolPolicy" : "https-only",
+                                "OriginSSLProtocols"   : [
+                                    "TLSv1.2"
+                                ]
+                            }
+                        },
+                        {
+                            "Id" : "Custom-omega-cms-wssockets",
+                            "DomainName" : {
+                                "Fn::Sub" : [
+                                    "${Domain}.execute-api.${AWS::Region}.amazonaws.com",
+                                    {
+                                        "Domain" : {
+                                            "Ref" : "OmegaCmsWebApiWebSocketsApi"
+                                        }
+                                    }
+                                ]
+                            },
+                            "OriginPath" : "",
+                            "CustomOriginConfig" : {
+                                "HTTPPort" : "80",
+                                "HTTPSPort" : "443",
+                                "OriginProtocolPolicy" : "https-only",
+                                "OriginSSLProtocols"   : [
+                                    "TLSv1.2"
+                                ]
+                            }
+                        },
+                        {
+                            "Id" : "Custom-omega-cms-admin",
+                            "DomainName" : {
+                                "Fn::Sub" : [
+                                    "${Domain}.execute-api.${AWS::Region}.amazonaws.com",
+                                    {
+                                        "Domain" : {
+                                            "Ref" : "OmegaCmsAdminApi"
+                                        }
+                                    }
+                                ]
+                            },
+                            "OriginPath" : {
+                                "Fn::Sub" : [
+                                    "/${BaseApiPath}",
+                                    {
+                                        "BaseApiPath" : {
+                                            "Ref" : "AdminStageName"
+                                        }
+                                    }
+                                ]
+                            },
+                            "CustomOriginConfig" : {
+                                "HTTPPort" : "80",
+                                "HTTPSPort" : "443",
+                                "OriginProtocolPolicy" : "https-only",
+                                "OriginSSLProtocols"   : [
+                                    "TLSv1.2"
+                                ]
+                            }
+                        }
+                    ],
+                    "Enabled" : "true",
+                    "Comment" : {
+                        "Ref" : "Domain"
+                    },
+                    "Aliases" : [
+                        {
+                            "Ref" : "Domain"
+                        }
+                    ],
+                    "CacheBehaviors" : [
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/uploads/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD"
+                            ],
+                            "TargetOriginId"       : "Custom-s3-omega-cms-uploads",
+                            "ForwardedValues"      : {
+                                "QueryString" : "false",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                }
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        },
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/scripts/documentation/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD"
+                            ],
+                            "TargetOriginId"       : "Custom-s3-omega-cms-client-assets",
+                            "ForwardedValues"      : {
+                                "QueryString" : "false",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                }
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        },
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/assets/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD"
+                            ],
+                            "TargetOriginId"       : "Custom-s3-omega-cms-client-assets",
+                            "ForwardedValues"      : {
+                                "QueryString" : "false",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                }
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        },
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/css/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD"
+                            ],
+                            "TargetOriginId"       : "Custom-s3-omega-cms-client-assets",
+                            "ForwardedValues"      : {
+                                "QueryString" : "false",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                }
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        },
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/js/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD"
+                            ],
+                            "TargetOriginId"       : "Custom-s3-omega-cms-client-assets",
+                            "ForwardedValues"      : {
+                                "QueryString" : "false",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                }
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        },
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/ws-web-sockets/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD",
+                                "OPTIONS",
+                                "PUT",
+                                "POST",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "TargetOriginId"       : "Custom-omega-cms-wssockets",
+                            "ForwardedValues"      : {
+                                "QueryString" : "true",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                },
+                                "Headers" : ["administration", "authorization", "lcid", "content-type"]
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        },
+                        {
+                            "ViewerProtocolPolicy" : "redirect-to-https",
+                            "PathPattern"          : "/ws/*",
+                            "AllowedMethods"       : [
+                                "GET",
+                                "HEAD",
+                                "OPTIONS",
+                                "PUT",
+                                "POST",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "TargetOriginId"       : "Custom-omega-cms-ws",
+                            "ForwardedValues"      : {
+                                "QueryString" : "true",
+                                "Cookies"     : {
+                                    "Forward" : "none"
+                                },
+                                "Headers" : ["administration", "authorization", "lcid", "content-type"]
+                            },
+                            "Compress"             : true,
+                            "SmoothStreaming"      : true
+                        }
+                    ],
+                    "DefaultCacheBehavior" : {
+                        "ViewerProtocolPolicy" : "redirect-to-https",
+                        "AllowedMethods"       : [
+                            "GET",
+                            "HEAD"
+                        ],
+                        "TargetOriginId"       : "Custom-omega-cms-admin",
+                        "ForwardedValues"      : {
+                            "QueryString" : "false",
+                            "Cookies"     : {
+                                "Forward" : "none"
+                            },
+                            "Headers" : ["administration", "authorization", "lcid", "content-type"]
+                        },
+                        "Compress"             : true,
+                        "SmoothStreaming"      : true
+                    },
+                    "PriceClass"           : "PriceClass_200",
+                    "ViewerCertificate"    : {
+                        "SslSupportMethod" : "sni-only",
+                        "AcmCertificateArn" : {
+                            "Ref" : "CloudFrontCertificateArn"
+                        }
+                    }
+                },
+                "Tags"        : [{
+                    "Key": "BillingGroup",
+                    "Value": {
+                        "Ref" : "BillingGroup"
+                    }
+                }]
+            }
+        }
+    },
+    "Outputs"                  : {
+        "OmegaCmsAdminApiUrl" : {
+            "Description" : "Admin API endpoint URL for Prod environment",
+            "Value"       : {
+                "Fn::Sub" : [
+                    "https://${OmegaCmsAdminApi}.execute-api.${AWS::Region}.amazonaws.com/${BaseApiPath}/",
+                    {
+                        "BaseApiPath" : {
+                            "Ref" : "AdminStageName"
+                        }
+                    }
+                ]
+            }
+        },
+        "OmegaCmsWebApiApiUrl" : {
+            "Description" : "WebApi API endpoint URL for Prod environment",
+            "Value"       : {
+                "Fn::Sub" : [
+                    "https://${OmegaCmsWebApiApi}.execute-api.${AWS::Region}.amazonaws.com/${BaseApiPath}/",
+                    {
+                        "BaseApiPath" : {
+                            "Ref" : "WebApiStageName"
+                        }
+                    }
+                ]
+            }
+        },
+        "OmegaCmsWebApiSocketsApiUrl" : {
+            "Description" : "WebApiSockets API endpoint URL for Prod environment",
+            "Value"       : {
+                "Fn::Sub" : [
+                    "wss://${OmegaCmsWebApiWebSocketsApi}.execute-api.${AWS::Region}.amazonaws.com/${BaseApiPath}/",
+                    {
+                        "BaseApiPath" : {
+                            "Ref" : "WebApiSocketsStageName"
+                        }
+                    }
+                ]
+            }
+        },
+        "OmegaCmsDomainName"          : {
+            "Description" : "Domain Name",
+            "Value"       : {
+                "Fn::GetAtt" : [
+                    "OmegaCmsCloudFormationDistribution",
+                    "DomainName"
+                ]
+            }
+        }
+    }
+}

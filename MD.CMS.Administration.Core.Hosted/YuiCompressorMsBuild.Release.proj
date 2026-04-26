@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
+
+  <UsingTask TaskName="CssCompressorTask" AssemblyFile="..\packages\YUICompressor.NET.MSBuild.2.7.0.0\lib\NET20\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
+  <UsingTask TaskName="JavaScriptCompressorTask" AssemblyFile="..\packages\YUICompressor.NET.MSBuild.2.7.0.0\lib\NET20\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
+
+  <Target Name="Minify">
+
+    <ItemGroup>
+      <CssFiles Include="node_modules\chartist\dist\chartist.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\datatables\media\css\jquery.dataTables.css" />
+      <CssFiles Include="node_modules\angular-datatables\dist\plugins\bootstrap\datatables.bootstrap.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\nvd3\build\nv.d3.css" />
+      <CssFiles Include="node_modules\fullcalendar\main.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\highlightjs\styles\default.css" />
+      <CssFiles Include="node_modules\perfect-scrollbar\css\perfect-scrollbar.css" />
+      <CssFiles Include="node_modules\toastr\build\toastr.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\angular-xeditable\dist\css\xeditable.css" />
+      <CssFiles Include="node_modules\angular-moment-picker\dist\angular-moment-picker.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\angular-ui-tree\dist\angular-ui-tree.css" />
+      <CssFiles Include="node_modules\angular-gantt\dist\angular-gantt.css" />
+      <CssFiles Include="node_modules\angular-gantt\dist\angular-gantt-plugins.css" />
+      <CssFiles Include="node_modules\angular-loading-bar\build\loading-bar.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\angular-material\angular-material.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\omega-cms-lf-ng-md-file-input\dist\omega-cms-lf-ng-md-file-input.css" />
+      <CssFiles Include="node_modules\mdi\css\materialdesignicons.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\angular-ui-grid\ui-grid.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\ng-material-datetimepicker\dist\material-datetimepicker.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\angular-material-time-picker\dist\md-time-picker.css" />
+      <CssFiles Include="node_modules\jsonformatter\dist\json-formatter.css" />
+      <CssFiles Include="node_modules\grapesjs\dist\css\grapes.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="node_modules\placeholder-loading\dist\css\placeholder-loading.min.css">
+        <CompressionType>None</CompressionType>
+      </CssFiles>
+      <CssFiles Include="wwwroot\assets\omega-logo-glyphs\fonts.css" />
+      <CssFiles Include="wwwroot\scripts\app\index.css" />
+
+
+
+
+
+      <JavaScriptFiles Include="wwwroot\scripts\app\fontawesome.min.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\crypto-js\crypto-js.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\jquery\dist\jquery.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\jquery-ui-dist\jquery-ui.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\lodash\lodash.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\fullcalendar\main.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular\angular.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-simple-logger\dist\angular-simple-logger.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-animate\angular-animate.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-aria\angular-aria.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-cookies\angular-cookies.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\datatables\media\js\jquery.dataTables.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\angular-datatables.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\bootstrap\angular-datatables.bootstrap.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\colreorder\angular-datatables.colreorder.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\columnfilter\angular-datatables.columnfilter.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\light-columnfilter\angular-datatables.light-columnfilter.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\colvis\angular-datatables.colvis.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\fixedcolumns\angular-datatables.fixedcolumns.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\fixedheader\angular-datatables.fixedheader.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\scroller\angular-datatables.scroller.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\tabletools\angular-datatables.tabletools.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\buttons\angular-datatables.buttons.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-datatables\dist\plugins\select\angular-datatables.select.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\datatables-responsive\js\dataTables.responsive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-messages\angular-messages.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-material\angular-material.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-resource\angular-resource.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-sanitize\angular-sanitize.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-translate\dist\angular-translate.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-translate-loader-partial\angular-translate-loader-partial.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-ui-router\release\angular-ui-router.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ngstorage\ngStorage.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\mobile-detect\mobile-detect.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\moment\min\moment.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\moment-timezone\builds\moment-timezone-with-data-1970-2030.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\perfect-scrollbar\dist\perfect-scrollbar.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\toastr\build\toastr.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-loading-bar\build\loading-bar.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\plupload\js\plupload.full.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-plupload\dist\angular-plupload.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-google-maps\dist\angular-google-maps.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\tinymce-dist\tinymce.full.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-ui-tinymce\dist\tinymce.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\omega-cms-lf-ng-md-file-input\dist\omega-cms-lf-ng-md-file-input.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\d3\d3.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\nvd3\build\nv.d3.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-nvd3\dist\angular-nvd3.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-ui-grid\ui-grid.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\jsplumb\dist\js\jsplumb.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-ui-sortable\dist\sortable.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ng-material-datetimepicker\dist\angular-material-datetimepicker.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-material-time-picker\dist\md-time-picker.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\jsonformatter\dist\json-formatter.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\angular-moment-picker\dist\angular-moment-picker.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\venn.js\build\venn.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\grapesjs\dist\grapes.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ngsticky\dist\sticky.min.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ace-builds\src-min-noconflict\ace.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ace-builds\src-min-noconflict\ext-language_tools.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ace-builds\src-min-noconflict\mode-javascript.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ace-builds\src-min-noconflict\worker-javascript.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\ace-builds\src-min-noconflict\snippets\javascript.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="node_modules\js-base64\base64.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="..\MD.CMS.Administration\public-repo\omega-cms-businesslogic\omegacms-businessLogic.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+      <JavaScriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </JavaScriptFiles>
+
+      <!--App Core-->
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\core.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-widget\ms-widget.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-timeline\ms-timeline.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-stepper\ms-stepper.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-splash-screen\ms-splash-screen.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-sidenav-helper\ms-sidenav-helper.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-search-bar\ms-search-bar.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-search-bar\ms-search-bar.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-scroll\ms-scroll.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-responsive-table\ms-responsive-table.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-random-class\ms-random-class.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-navigation\ms-navigation.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-material-color-picker\ms-material-color-picker.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-nav\ms-nav.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-form-wizard\ms-form-wizard.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-datepicker-fix\ms-datepicker-fix.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-card\ms-card.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\ms-repeat\ms-repeat.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-click-once\md-click-once.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer-preview\md-generictype-designer-preview.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer-form-datasource\md-generictype-designer-form-datasource.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\form\md-generictype-designer-form.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\form\md-generictype-designer-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\form\dialogs\edit\md-generictype-designer-form-editdialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\form\dialogs\preview\md-generictype-designer-form-previewdialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\element/md-generictype-designer-element.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\element/md-generictype-designer-element.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-generictype-designer\element/md-generictype-designer-element.constants.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-pager\md-pager.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-sort\md-sort.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-double-click\md-double-click.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-content-header\md-content-header.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-object-permissions\md-object-permissions.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-entity-permissions\md-entity-permissions.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-autocomplete\md-cms-autocomplete.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-multiple-autocomplete\md-cms-multiple-autocomplete.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-elementsummary\md-cms-elementsummary.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-map\md-cms-map.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-select\md-cms-select.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-fields\md-cms-fields.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-fields\md-cms-fields.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-fieldvalidation\md-cms-fieldvalidation.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-file\md-cms-file.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-file\md-cms-file.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-video\md-cms-video.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-textarea\md-cms-textarea.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-aliases\md-cms-aliases.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-calculated\md-cms-calculated.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-watch-change\md-cms-watch-change.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-root-user\md-root-user.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\highlight.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-resource-text\md-resource-text.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-grid\md-cms-grid.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-grid\md-cms-grid.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-dynamic-directive\md-cms-dynamic-directive.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-grid-tile\md-cms-grid-tile.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-grid-tile\md-cms-grid-tile.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-grid-toolbar\md-cms-grid-toolbar.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-grid-toolbar\md-cms-grid-toolbar.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-content-form\md-cms-content-form.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-content-form\md-cms-content-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-content-form\dialog\md-cms-content-form-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-datetime-picker\md-cms-datetime-picker.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-datetime-picker\md-cms-datetime-picker.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-button\md-cms-button.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-button\md-cms-button.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-placeholder\md-cms-placeholder.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-placeholder\md-cms-placeholder.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-authentication-provider-builtin\md-cms-authentication-provider-builtin.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-authentication-provider-builtin\md-cms-authentication-provider-builtin.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\directives\md-cms-password\md-cms-password.directive.js" />
+
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\tag.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\basic.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\cut.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\switchmbgb.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\capitalizeFirstLetter.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\memorySize.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\md-content.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\md-user.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\acronym.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\md-trust-url.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\filters\md-number.filter.js" />
+
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theme-options\theme-options.directive.js" />
+
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-saved-data.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-field.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\ms-utils.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\ms-api.provider.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\api-resolver.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-toast.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-sort.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-pagination.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-resource.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-feedback.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-custom-dialogs.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-check.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-autocomplete.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-socket.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-promise-resolver.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-permissions.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-permission-entities.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-permission-authenticate.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-generictype-designer-form.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-datagroup.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-memorySize.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-content.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-user.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-authentication-registry.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\services\md-ui-visibility.service.js" />
+
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theming\fuse-theming.provider.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theming\fuse-theming.config.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theming\fuse-themes.constant.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theming\fuse-palettes.constant.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theming\fuse-generator.factory.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\theming\omega-theming.provider.js" />
+
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\config\fuse-config.provider.js" />
+
+
+      <!--Main App-->
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\globalSearchResults\search-results.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\globalSearchResults\search-results.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\services\services.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\services\friendlyNameMaker.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\services\postfixEvaluator.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\filters\filters.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\filters\datetime.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\filters\md.mediaContentType.filter.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\forgetPassword\forget-password.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\forgetPassword\forget-password.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\settings.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\language_settings\language_settings.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\language_settings\language_settings.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\content-types\content-types.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\content-types\edit\content-types-edit.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\content-types\edit\content-types-edit.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\content-types\list\content-types-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\content-types\list\content-types-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\meta-data-field\meta-data-field.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\meta-data-field\list\meta-data-field-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\meta-data-field\list\meta-data-field-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\meta-data-field\form\meta-data-field-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\meta-data-field\form\meta-data-field-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\permissions\permissions.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\permissions\list\permissions-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\permissions\list\permissions-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\permissions\form\permissions-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\permissions\form\permissions-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\personal.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\mailbox.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\tinyMceMailbox.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\unreadMessages.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\mailbox.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\dialogs\addNewFolder\addNewFolder.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\dialogs\editFolder\editFolder.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\dialogs\chooseFolder\choose-folder.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\dialogs\compose\compose-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\mailbox\dialogs\reply\reply.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\profile\profile.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\personal\profile\profile.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\template.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\list\template-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\list\template-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\form\template-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\form\template-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\form\template-form.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\template\browse-dialog\browse-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\user\user.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\user\list\user-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\user\list\user-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\user\form\user-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\user\form\user-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\profile-types\profile-types.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\profile-types\list\profile-types-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\profile-types\list\profile-types-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\profile-types\form\profile-types-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\profile-types\form\profile-types-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\cache\cache.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\settings\configuration\cache\cache.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\login\login.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\login\login.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\login\reset.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\content.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\list\content-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\list\content-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\form\content-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\form\content-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\form\tiny-mce-controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\mediacontent\mediacontent.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\mediacontent\list\mediacontent-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\mediacontent\list\mediacontent-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\mediacontent\form\mediacontent-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\mediacontent\form\mediacontent-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\taxonomy\taxonomy.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\taxonomy\list\taxonomy-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\taxonomy\list\taxonomy-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\taxonomy\forms\taxonomy-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\taxonomy\forms\taxonomy-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\folderForm\folder-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\folderForm\folder-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\folderForm\approvalChain\approval-chain.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\folderForm\approvalChain\dialogs\approval-chain-user-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\folderForm\approvalChain\form\approval-chain-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\content\folderForm\approvalChain\form\approval-chain-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\menu\menu.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\menu\list\menu-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\menu\list\menu-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\menu\forms\menu-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\menu\forms\menu-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\support.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\javascript-documentation\javascript-documentation.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\javascript-documentation\javascript-documentation.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\typescript-documentation\typescript-documentation.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\typescript-documentation\typescript-documentation.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\assembly-documentation\assembly-documentation.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\assembly-documentation\assembly-documentation.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\webapi-documentation\webapi-documentation.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\support\webapi-documentation\webapi-documentation.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\dashboards\dashboards.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\reporting.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\report-definitions.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\list\report-definitions-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\list\report-definitions-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\report-definitions-designer.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\report-definitions-designer.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\directives\report-definitions-designer-entity.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\directives\report-definitions-designer-canvas.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\services\report-definitions-designer-joins.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\dialogs\report-definitions-designer-joins-form-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\dialogs\report-definitions-designer-preview-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\dialogs\report-definitions-designer-filter-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\dialogs\report-definitions-designer-customize-dialog.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-definitions\designer\services\report-definitions-designer.service.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\report-scheduler.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\list\report-scheduler-list.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\form\report-scheduler-form.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\list\report-scheduler-list.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\form\report-scheduler-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\form\actions\action-form.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\reporting\report-scheduler\form\actions\action-form.directive.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\errors.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\500\error-500.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\500\error-500.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\404\error-404.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\404\error-404.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\403\error-403.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\403\error-403.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\402\error-402.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\errors\402\error-402.controller.js" />
+
+
+      <!--General App Components-->
+      <JavaScriptFiles Include="wwwroot\scripts\app\quick-panel\quick-panel.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\quick-panel\tabs\chat\chat-tab.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\toolbar\toolbar.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\toolbar\toolbar.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\quick-panel\quick-panel.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\navigation\navigation.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\navigation\navigation.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.module.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\main\main.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\core.run.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\core\core.config.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.run.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.route.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.controller.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.constants.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.config.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\app\index.api.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\plugins\cms-image.plugin.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\plugins\cms-media.plugin.js" />
+      <JavaScriptFiles Include="wwwroot\scripts\plugins\cms-link.plugin.js" />
+
+      <BaseBusinessLoginc_JavascriptFiles Include="node_modules\crypto-js\crypto-js.js" />
+      <BaseBusinessLoginc_JavascriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </BaseBusinessLoginc_JavascriptFiles>
+      <BaseBusinessLoginc_JavascriptFiles Include="node_modules\lodash\lodash.min.js">
+        <CompressionType>None</CompressionType>
+      </BaseBusinessLoginc_JavascriptFiles>
+      <BaseBusinessLoginc_JavascriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </BaseBusinessLoginc_JavascriptFiles>
+      <BaseBusinessLoginc_JavascriptFiles Include="node_modules\moment\min\moment.min.js">
+        <CompressionType>None</CompressionType>
+      </BaseBusinessLoginc_JavascriptFiles>
+      <BaseBusinessLoginc_JavascriptFiles Include="wwwroot\scripts\app\spacer.js">
+        <CompressionType>None</CompressionType>
+      </BaseBusinessLoginc_JavascriptFiles>
+      <BaseBusinessLoginc_JavascriptFiles Include="node_modules\moment-timezone\builds\moment-timezone-with-data-1970-2030.min.js">
+        <CompressionType>None</CompressionType>
+      </BaseBusinessLoginc_JavascriptFiles>
+      <BaseBusinessLoginc_JavascriptFiles Include="wwwroot\scripts\businessLogicMinified\businessLogic.compiled.js"/>
+
+    
+  
+  
+  </ItemGroup>
+
+    <CssCompressorTask
+          SourceFiles="@(CssFiles)"
+          OutputFile="wwwroot\css\min\all.min.css"
+          LoggingType="Debug"
+       />
+
+    <JavaScriptCompressorTask
+          SourceFiles="@(BaseBusinessLoginc_JavascriptFiles)"
+          OutputFile="wwwroot\scripts\businessLogicMinified\md.cms.businessLogic.min.js"
+          LoggingType="Debug"
+       />
+
+    <JavaScriptCompressorTask
+          SourceFiles="@(JavaScriptFiles)"
+          OutputFile="wwwroot\js\min\all.min.js"
+          LoggingType="Debug"
+       />
+
+  </Target>
+</Project>

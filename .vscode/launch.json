@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MD.CMS.WebApi.Core.Hosted",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build (Web API Hosted)",
+      "program": "${workspaceFolder}/MD.CMS.WebApi.Core.Hosted/bin/Debug/net10.0/MD.CMS.WebApi.Core.Hosted.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/MD.CMS.WebApi.Core.Hosted",
+      "console": "internalConsole"
+    }
+  ]
+}

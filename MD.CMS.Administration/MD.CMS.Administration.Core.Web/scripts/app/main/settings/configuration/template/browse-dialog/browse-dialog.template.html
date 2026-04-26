@@ -1,0 +1,50 @@
+﻿<md-dialog ng-controller="BrowseDialogController as vm" style="min-width: 400px">
+    <form autocomplete="off" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 md-resource-text name="Titles.Templates"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancelDialog()">
+                    <md-icon md-font-icon="icon-close"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout="row">
+            <div layout="column" flex>
+                <div layout="row" layout-align="center stretch">
+                    <md-button class="md-icon-button md-accent" ng-click="vm.goBack()" ng-disabled="!vm.enableBack">
+                        <i class="icon-arrow-up-bold"></i>
+                    </md-button>
+                    <md-input-container class="hide-errors-spacer input-only" md-no-float flex>
+                        <input ng-model="vm.template.TemplateUrl" placeholder="{{$root.globals.resources.Labels.Path}}" ng-readonly="true">
+                    </md-input-container>
+                </div>
+                <div class="files-container" flex>
+                    <div layout="row" ng-repeat="folder in vm.templateData.Children | filter: vm.filterText" ng-click="vm.chooseFolder(folder.Name)">
+                        <md-icon md-font-icon="icon-folder"></md-icon>
+                        <span flex>
+                            {{folder.Name}}
+                        </span>
+                    </div>
+                    <div layout="row" ng-repeat="file in vm.templateData.Files | filter: vm.filterText" ng-click="vm.chooseFile(file.Name)">
+                        <md-icon md-font-icon="icon-document"></md-icon>
+                        <span flex>
+                            {{file.Name}}
+                        </span>
+                    </div>
+                    <div ng-show="(vm.templateData.Files | filter: vm.filterText).length === 0 && (vm.templateData.Children | filter: vm.filterText).length === 0">
+                        <span md-resource-text name="Labels.NoFilesOrFolders"></span>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center stretch">
+                    <md-input-container class="hide-errors-spacer input-only" md-no-float flex>
+                        <input ng-model="vm.searchText" ng-keydown="$event.keyCode === 13 && vm.filterFiles()" ng-change="!vm.searchText && vm.filterFiles()" placeholder="{{$root.globals.resources.Labels.Name}}">
+                    </md-input-container>
+                    <md-button class="md-fab md-mini md-accent" ng-click="vm.filterFiles()" ng-disabled="!vm.searchText">
+                        <md-icon class="icon-magnify" style="font-size:24px"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

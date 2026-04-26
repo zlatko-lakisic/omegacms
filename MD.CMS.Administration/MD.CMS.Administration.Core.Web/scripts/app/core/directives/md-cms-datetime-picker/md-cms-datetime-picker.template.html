@@ -1,0 +1,71 @@
+<div layout="row" id="{{vm.uniqueId}}">
+    <div ng-if="vm.mdCompactMode" style="visibility: hidden">
+        <div class="md-dialog-container dialog_box">
+            <md-dialog layout="row" layout-padding flex="50">
+                <div flex layout="row" layout-align="space-between center" ng-include="'md-cms-datetime-picker-form.template.html'"></div>
+                <md-button class="md-primary md-raised md-accent" ng-click="vm.closeDialog()">Ok</md-button>
+            </md-dialog>
+        </div>
+    </div>
+    <div ng-if="vm.mdCompactMode" layout="column" flex>
+        <span>{{vm.mdFloatingLabel}}</span>
+        <md-button class="md-raised md-primary md-accent" ng-click="vm.openDialog($event)">
+            <md-icon md-font-icon="icon-calendar-text"></md-icon>
+            {{vm.mdCompactModeDisplay}}
+        </md-button>
+    </div>
+    <div flex layout="row" layout-align="space-between center" ng-if="!vm.mdCompactMode" ng-include="'md-cms-datetime-picker-form.template.html'"></div>
+</div>
+<script type="text/ng-template" id="md-cms-datetime-picker-form.template.html">
+
+    <md-input-container class="md-block form-container" flex>
+        <label>{{vm.mdFloatingLabel}}</label>
+        <div class="input-group"
+             moment-picker="vm.momentValue"
+             format="{{vm.mdFormat}}"
+             start-view="{{vm.mdStartView}}"
+             layout="row"
+             disable="vm.ngDisabled"
+             change="vm.onDateChange(newValue, oldValue)"
+             selectable="vm.isSelectable(date, type)"
+             min-date="vm.mdMinDate"
+             max-date="vm.mdMaxDate">
+            <i class="icon icon-calendar-text s30" flex="31"></i>
+            <input class="form-control"
+                   name="{{vm.mdInputName}}"
+                   placeholder="{{vm.mdFloatingLabel}}"
+                   ng-model="vm.momentValue"
+                   ng-model-options="{ updateOn: 'blur' }"
+                   flex>
+        </div>
+        {{getInnerHtml()}}
+    </md-input-container>
+    <md-menu md-position-mode="target-right target">
+        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+            <md-tooltip md-direction="left">Timezone</md-tooltip>
+            <md-icon md-font-icon="icon-earth"></md-icon>
+        </md-button>
+        <md-menu-content width="4" style="background: #fff">
+            <md-content class="md-padding">
+                <label id="{{vm.uniqueId}}_timezone">Timezone</label>
+                <md-autocomplete class="time-zone-selector"
+                                    ng-if="vm.timezone"
+                                    ng-disabled="vm.ngDisabled"
+                                    md-selected-item="vm.selectedTimezone"
+                                    md-search-text="vm.selectedTimezoneSearchText"
+                                    md-items="item in vm.selectedTimezoneQuerySearch(vm.selectedTimezoneSearchText)"
+                                    md-item-text="item"
+                                    md-min-length="0"
+                                    placeholder="Ex. {{vm.selectedTimezoneSearchText}}"
+                                    input-aria-labelledby="{{vm.uniqueId}}_timezone">
+                    <md-item-template>
+                        <span md-highlight-text="vm.selectedTimezoneSearchText" md-highlight-flags="^i">{{item}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No timezone matching "{{vm.selectedTimezoneSearchText}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-content>
+        </md-menu-content>
+    </md-menu>
+</script>

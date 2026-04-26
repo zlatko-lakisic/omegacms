@@ -1,0 +1,1 @@
+dotnet pack .\MD.CMS.BusinessLogic.Core.csproj /p:PublishProfile=%1-%2 -o %3 -c %1

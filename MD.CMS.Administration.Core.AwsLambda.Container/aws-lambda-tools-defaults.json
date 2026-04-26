@@ -1,0 +1,18 @@
+
+{
+    "Information" : [
+        "This file provides default values for the deployment wizard inside Visual Studio and the AWS Lambda commands added to the .NET Core CLI.",
+        "To learn more about the Lambda commands with the .NET Core CLI execute the following command at the command line in the project root directory.",
+        "dotnet lambda help",
+        "All the command line options for the Lambda command can be specified in this file."
+    ],
+    "profile"     : "default",
+    "region"      : "us-east-1",
+    "configuration" : "Release",
+    "framework"     : "netcoreapp3.1",
+    "function-runtime" : "dotnetcore3.1",
+    "s3-bucket"        : "mdcmsadministrationcoreawslambdacontainer",
+    "template"         : "serverless.template",
+    "template-parameters" : "\"BasePluginsLayer\"=\"arn:aws:lambda:us-east-1:518606024901:layer:AwsLambdaPlugins:2\";\"ProductLayer\"=\"arn:aws:lambda:us-east-1:518606024901:layer:MD-CMS-Administration-Core-AwsLambda-v0-82-50:1\";\"StageName\"=\"admin\";\"WebAppPath\"=\"/opt/MD.CMS.Administration.Core.AwsLambda/\";\"AppReferencePath\"=\"MD.CMS.Administration.Core.AwsLambda.dll.MD.CMS.Administration.Core.AwsLambda.AwsStartup\";\"GatewayName\"=\"MD-CMS-Administration-Core-AwsLambda-Container\";\"MDCMSBusinessLogicCoreDefaultLcid\"=\"2057\";\"MDCMSBusinessLogicCoreGoogleApiTranslationKey\"=\"\";\"MDCMSBusinessLogicCoreGoogleMapsJsKey\"=\"\";\"MDToolsHelpersCoreProviderOptions\"=\"\";\"MDToolsHelpersCoreDefaultFileProvider\"=\"1\";\"BillingGroup\"=\"lambda.omegacms.io\";\"MDToolsHelpersCoreVerboseLoggingReflectionEnabled\"=\"true\";\"MDCMSAdministrationCorePluginsDirectory\"=\"/opt/AwsLambdaPlugins/\";\"MDCMSAdministrationCorePluginsFileProviderType\"=\"1\"",
+    "stack-name"          : "MD-CMS-Administration-Core-AwsLambda-Container"
+}

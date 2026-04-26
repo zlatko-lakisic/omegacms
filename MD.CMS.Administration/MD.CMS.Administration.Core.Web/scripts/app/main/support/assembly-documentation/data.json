@@ -1,0 +1,12 @@
+{
+  "menus": [
+    {
+      "name": "MD.Tools.Helpers.Core",
+      "link": "/scripts/documentation/assembly/api/md.tools.helpers.core/MD.Tools.Helpers.Core.html"
+    },
+    {
+      "name": "MD.CMS.BusinessLogic.Core",
+      "link": "/scripts/documentation/assembly/api/md.cms.businesslogic.core/MD.CMS.BusinessLogic.Core.html"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+<ul>
+    <li layout="column" layout-padding>
+        <div layout="row" layout-align="center start" flex>
+            <md-input-container class="md-block" flex>
+                <label md-resource-text name="Labels.Name"></label>
+                <input ng-model="vm.field.Name" type="text">
+            </md-input-container>
+            <md-input-container class="md-block" flex="30">
+                <label md-resource-text name="Labels.Type"></label>
+                <md-select ng-model="vm.field.AttributeTypeDefinition.InputType">
+                    <md-option ng-repeat="(key, value) in vm.attributeTypeEnumStrings" ng-value="value">
+                        <span md-resource-text name="Labels.Input-{{key}}"></span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <md-input-container class="md-block">
+            <label md-resource-text name="Labels.Description"></label>
+            <textarea ng-model="vm.field.Description" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-input-container ng-if="vm.hasListValues" class="md-block">
+            <label>List values</label>
+        </md-input-container>
+        <md-chips ng-if="vm.hasListValues" ng-model="vm.listValues" ng-change="vm.onListValuesChanged()" md-removable placeholder="Add list value">
+            <md-chip-template>
+                {{$chip}}
+            </md-chip-template>
+            <button md-chip-remove class="md-primary">
+                <i class="icon-close"></i>
+            </button>
+        </md-chips>
+        <md-input-container ng-if="vm.isCalculated" class="md-block">
+            <label>
+                Calculated Formula
+            </label>
+            <input name="calculatedFormulaInput" ng-model="vm.field.DefaultValue" style="display: none" />
+            <div flex layout="row" layout-align="space-between center">
+                <md-button class="md-icon-button test-tooltip" aria-label="Refresh">
+                    <md-tooltip md-direction="right">type "field." to get a list of fields</md-tooltip>
+                    <i class="icon icon-question-mark-circle s20"></i>
+                </md-button>
+                <div style="height:23px; position:relative;" flex>
+                    <div id="calculated-formula" style="margin: 0; position: absolute; top: 0; bottom: 0; left: 0; right: 0;">{{vm.field.DefaultValue}}</div>
+                </div>
+            </div>
+        </md-input-container>
+    </li>
+    <li layout="row" layout-padding>
+        <md-switch ng-model="vm.field.JsonField.enabled" aria-label="Required" flex="30">
+            <span md-resource-text name="Labels.Enabled"></span>
+        </md-switch>
+    </li>
+    <li layout="row" layout-padding>
+        <md-switch ng-model="vm.field.JsonField.validation.Required" aria-label="Required" flex="30">
+            <span md-resource-text name="Labels.Required"></span>
+        </md-switch>
+    </li>
+    <li layout="row" layout-padding ng-if="vm.isRepeatable">
+        <md-switch ng-model="vm.field.JsonField.validation.Repeatable" ng-disabled="vm.field.DataBound" aria-label="Repeatable" flex="30">
+            <span md-resource-text name="Labels.Repeatable"></span>
+        </md-switch>
+    </li>
+    <li layout="row" layout-padding ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.selectSingle">
+        <span md-resource-text name="Labels.DefaultValue"></span>
+        <md-select ng-model="vm.field.DefaultValue">
+            <md-option ng-repeat="item in vm.field.getListValueAsArray()" ng-value="item">
+                {{item}}
+            </md-option>
+        </md-select>
+    </li>
+    <li ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.contentSelectorSingle ||
+               vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.mediaContentSelectorSingle ||
+               vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.userSelectorSingle ||
+               vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.taxonomySelectorSingle ||
+               vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.taxonomySelectorMultiple">
+        <h3>Constraints</h3>
+        <md-card ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.contentSelectorSingle ||
+                        vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.mediaContentSelectorSingle">
+            <md-card-title>
+                <md-card-title-text id="folderPaths">
+                    <md-cms-multiple-autocomplete md-type="'None'"
+                                                  md-input-name="folderPaths"
+                                                  md-floating-label="Folder Paths Constraints"
+                                                  md-selected-item="vm.defaultConstraint.folderPaths"
+                                                  placeholder="Add Folder Paths" />
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+        <md-card ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.contentSelectorSingle">
+            <md-card-title>
+                <md-card-title-text id="contentIds">
+                    <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                         md-input-name="contentIds"
+                                         md-floating-label="Content Constraint"
+                                         md-selected-item="vm.defaultConstraint.contentIds"
+                                         placeholder="Add Contents" />
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+        <md-card ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.userSelectorSingle">
+            <md-card-title>
+                <md-card-title-text id="userIds">
+                    <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.User"
+                                         md-input-name="userIds"
+                                         md-floating-label="User Constraint"
+                                         md-selected-item="vm.defaultConstraint.userIds"
+                                         placeholder="Add Users" />
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+        <md-card ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.contentSelectorSingle ||
+                        vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.taxonomySelectorMultiple">
+            <md-card-title>
+                <md-card-title-text id="taxonomyIds">
+                    <md-cms-multiple-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Taxonomy"
+                                                  md-input-name="taxonomyIds"
+                                                  md-floating-label="Taxonomy Constraints"
+                                                  md-selected-item="vm.defaultConstraint.taxonomyIds"
+                                                  placeholder="Add Taxonomies" />
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+        <md-card ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.contentSelectorSingle">
+            <md-card-title>
+                <md-card-title-text id="contentTypeId">
+                    <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.ContentTypeDefinition"
+                                         md-input-name="contentTypeId"
+                                         md-floating-label="Content Type Constraint"
+                                         md-selected-item="vm.defaultConstraint.contentTypeId"
+                                         placeholder="Add Content Type" />
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+        <md-card ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.userSelectorSingle">
+            <md-card-title>
+                <md-card-title-text id="profileId">
+                    <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.ProfileType"
+                                         md-input-name="profileId"
+                                         md-floating-label="Profile Type Constraint"
+                                         md-selected-item="vm.defaultConstraint.profileId"
+                                         placeholder="Add Profile Type" />
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+    </li>
+</ul>

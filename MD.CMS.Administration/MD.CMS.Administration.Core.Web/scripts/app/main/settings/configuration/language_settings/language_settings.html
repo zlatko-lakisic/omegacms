@@ -1,0 +1,81 @@
+<div id="language_settings" class="page-layout simple right-sidenav" layout="row">
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+        <!-- HEADER -->
+        <div class="header md-accent-bg">
+            <div class="header-content" layout="column" layout-align="space-between">
+                <!-- TOOLBAR -->
+                <md-content-header has-search-box="false">
+                    <span md-resource-text name="Titles.LanguageSettings" class="md-display-1 font-weight-300" />
+                </md-content-header>
+                <!-- / TOOLBAR -->
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <md-content class="content" flex ms-scroll>
+            <table class="dataTable row-border hover" datatable="ng"
+                   dt-options="vm.dataTableOptions">
+                <thead>
+                    <tr>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title" md-resource-text name="Labels.Flag"></span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title" md-resource-text name="Labels.LCID"></span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title" md-resource-text name="Labels.Code"></span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title" md-resource-text name="Labels.Name"></span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title" md-resource-text name="Labels.Approved"></span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="culture in :: vm.cultures">
+                        <td>
+                            <span>
+                                <img class="flag" ng-src="assets/images/flags/{{culture.IsoCode}}.png">
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                {{culture.LCID }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                {{culture.Code }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                {{culture.Name }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                <md-switch ng-model="culture.IsApproved" ng-change="vm.Approve(culture, $index)" aria-label="{{culture.Name}}">{{culture.Name}} is {{culture.IsApproved ? 'approved' : 'not approved'}}</md-switch>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-content>
+        <!-- / CONTENT -->
+    </div>
+</div>

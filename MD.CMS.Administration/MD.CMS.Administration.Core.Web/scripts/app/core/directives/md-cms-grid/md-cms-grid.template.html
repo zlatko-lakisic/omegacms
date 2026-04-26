@@ -1,0 +1,70 @@
+<div class="grid-wrapper" layout="column" flex layout-fill>
+    <div class="md-menu-toolbar" ng-if="vm.hideToolbar !== true" layout="row">
+        <div flex="50">
+            <h2 class="md-toolbar-tools">{{vm.title}}</h2>
+        </div>
+        <div flex="50" layout="row" layout-align="end center" layout-padding="">
+            <md-button ng-if="!vm.editMode && (vm.hideToolbar === false || vm.hideToolbar.edit !== true)" class="md-fab md-mini md-raised" ng-click="vm.toggleEditMode(false)">
+                <md-icon md-font-icon="icon-pencil" />
+                <md-tooltip>Edit</md-tooltip>
+            </md-button>
+            <md-fab-speed-dial ng-if="vm.editMode && (vm.hideToolbar === false || vm.hideToolbar.device !== true)" md-direction="left" class="md-scale">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-mini md-raised md-primary md-accent">
+                        <md-icon md-font-icon="{{vm.displayIcon}}" />
+                        <md-tooltip>Change Display Resolution</md-tooltip>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button class="md-fab md-raised md-mini" ng-click="vm.gridAction('device-phone')">
+                        <md-icon md-font-icon="icon-cellphone-iphone" />
+                        <md-tooltip>Phone</md-tooltip>
+                    </md-button>
+                    <md-button class="md-fab md-raised md-mini" ng-click="vm.gridAction('device-tablet')">
+                        <md-icon md-font-icon="icon-tablet-ipad" />
+                        <md-tooltip>Tablet</md-tooltip>
+                    </md-button>
+                    <md-button class="md-fab md-raised md-mini" ng-click="vm.gridAction('device-desktop')">
+                        <md-icon md-font-icon="icon-desktop-mac" />
+                        <md-tooltip>Desktop</md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+            <md-button ng-if="vm.editMode && (vm.hideToolbar === false || vm.hideToolbar.undo !== true)" class="md-fab md-mini md-raised md-primary md-accent" ng-click="vm.gridAction('undo')">
+                <md-icon md-font-icon="icon-undo" />
+                <md-tooltip>Undo</md-tooltip>
+            </md-button>
+            <md-button ng-if="vm.editMode && (vm.hideToolbar === false || vm.hideToolbar.redo !== true)" class="md-fab md-mini md-raised md-primary md-accent" ng-click="vm.gridAction('redo')">
+                <md-icon md-font-icon="icon-redo" />
+                <md-tooltip>Redo</md-tooltip>
+            </md-button>
+            <md-button ng-if="vm.editMode && (vm.hideToolbar === false || vm.hideToolbar.save !== true)" class="md-fab md-mini md-raised md-primary md-accent" ng-click="vm.save($event)">
+                <md-icon md-font-icon="icon-file" />
+                <md-tooltip>Save</md-tooltip>
+            </md-button>
+            <md-button ng-if="vm.editMode && (vm.hideToolbar === false || vm.hideToolbar.cancel !== true)" class="md-fab md-mini md-raised md-primary" ng-click="vm.cancel($event)">
+                <md-icon md-font-icon="icon-close" />
+                <md-tooltip>Cancel</md-tooltip>
+            </md-button>
+        </div>
+    </div>
+    <div ng-if="vm.editMode && !vm.canvasRendered" layout="row" layout-align="center center" flex>
+        <md-progress-circular md-diameter="96" class="md-accent"></md-progress-circular>
+    </div>
+    <div ng-if="vm.editMode" class="panel__top">
+        <div class="panel__basic-actions"></div>
+        <div class="panel__switcher"></div>
+    </div>
+    <div ng-if="vm.editMode" ng-hide="!vm.canvasRendered" class="editor-row" flex layout-padding>
+        <div class="editor-canvas">
+            <div id="gjs"></div>
+        </div>
+        <div class="panel__right">
+            <div class="layers-container"></div>
+            <div class="styles-container"></div>
+            <div class="traits-container"></div>
+        </div>
+    </div>
+    <div ng-transclude="toolbar" />
+    <div ng-transclude="list" ng-show="!vm.editMode" layout="row" />
+</div>

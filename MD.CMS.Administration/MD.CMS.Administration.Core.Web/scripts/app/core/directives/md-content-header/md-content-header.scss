@@ -1,0 +1,73 @@
+.content-header-toolbar {
+
+    > .transclude-container {
+        opacity: 1;
+        visibility: visible;
+        width: 100%;
+
+        &.open {
+            opacity: 0;
+            visibility: hidden;
+            display: none;
+        }
+    }
+
+    > .search-box {
+        width: 100%;
+
+        &.open {
+            background-color: #fff;
+
+            md-icon {
+                color: rgba(0,0,0,0.54) !important;
+            }
+
+            input {
+                background-color: transparent;
+                border-bottom: 1px solid white;
+                color: white;
+                margin-left: 24px;
+                font-size: 16px;
+
+                &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+                    color: white;
+                }
+
+                &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                    color: white;
+                    opacity: 1;
+                }
+
+                &::-moz-placeholder { /* Mozilla Firefox 19+ */
+                    color: white;
+                    opacity: 1;
+                }
+
+                &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color: white;
+                }
+            }
+        }
+
+        > .search {
+            opacity: 0;
+            visibility: hidden;
+
+            &.open {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            > #contentSearch {
+                border: 0 !important;
+                line-height: 30px;
+                padding: 5px;
+                color: #000 !important;
+            }
+        }
+    }
+
+    &.large {
+        margin-bottom:100px;
+    }
+}

@@ -1,0 +1,88 @@
+<md-content class="element-summary" flex ms-scroll>
+    <div class="file-details">
+        <div ng-if="typeString !== 'Taxonomy'" class="file-icon" ng-class="{ 'preview': typeString == 'Content' }" layout="row" layout-align="center center">
+            <i ng-if="typeString == 'Content'" class="{{(mdSelectedItem.ContentType == null) ? 'icon-file' : 'icon-' + mdSelectedItem.ContentType.Icon}} s48"></i>
+            <div ng-if="typeString == 'MediaContent'" class="preview file-icon" layout="row" layout-align="center center">
+                <div class="preview file-icon" layout="row" layout-align="center center">
+                    <img alt="{{entity.Name}}" ng-src="{{uploadsBase + mdSelectedItem.PreviewUrl}}?mode=crop&w=320&h=240" style="height:240px;max-width:100%;max-height:100%;" ng-if="mdSelectedItem.FileType == '1'" />
+                    <video ng-if="mdSelectedItem.FileType == '2'" width="400" controls>
+                        <source ng-src="{{uploadsBase + mdSelectedItem.PreviewUrl}}" type="video/mp4" />
+                        <md-resource-text name="Labels.HTML5VideoNotSupported"></md-resource-text>
+                    </video>
+                    <audio ng-if="mdSelectedItem.FileType == '3'" controls>
+                        <source ng-src="{{uploadsBase + mdSelectedItem.PreviewUrl}}" type="audio/ogg" />
+                        <md-resource-text name="Labels.AudioNotSupported"></md-resource-text>
+                    </audio>
+                    <i class="icon-document s48" ng-if="mdSelectedItem.FileType == '4'"></i>
+                </div>
+            </div>
+        </div>
+        <div class="title">
+            <h3>
+                <a ng-if="typeString == 'User'" ui-sref="app.user_form({ id: mdSelectedItem.Id, action: 'edit' })">
+                    {{mdSelectedItem.Username}}
+                </a>
+                <a ng-if="typeString == 'Content'" ui-sref="app.content_form({ folderId: mdSelectedItem.FolderId, folderPath: mdSelectedItem.Path, id: mdSelectedItem.Id, lcid: mdSelectedItem.LCID, action: 'edit'})">
+                    {{mdSelectedItem.Title}}
+                </a>
+                <a ng-if="typeString == 'MediaContent'" ui-sref="app.mediacontent_form({ folderId: mdSelectedItem.FolderId, path: mdSelectedItem.Path, id: mdSelectedItem.Id, action: 'edit'})">
+                    {{mdSelectedItem.Name}}
+                </a>
+                <a ng-if="typeString == 'Taxonomy'" ui-sref="app.taxonomy_forms({ path: mdSelectedItem.TaxonomyPath, id: mdSelectedItem.Id, action: 'edit'})">
+                    {{mdSelectedItem.Name}}
+                </a>
+            </h3>
+        </div>
+        <table>
+            <tr class="id">
+                <th md-resource-text name="Labels.Id"></th>
+                <td>{{mdSelectedItem.Id}}</td>
+            </tr>
+
+            <tr class="type" ng-if="typeString !== 'Taxonomy'">
+                <th md-resource-text name="Labels.Type"></th>
+                <td>
+                    <span ng-if="typeString == 'Content'">
+                        {{mdSelectedItem.ContentType != null ? mdSelectedItem.ContentType.Name : $root.globals.resources.Labels.HtmlContent}}
+                    </span>
+                    <span ng-if="typeString == 'MediaContent'">
+                        {{(mdSelectedItem.InputType | mediaContentType)}}
+                    </span>
+                </td>
+            </tr>
+            <tr class="location">
+                <th md-resource-text name="Labels.Location"></th>
+                <td>
+                    <a ng-if="typeString == 'Content'" ui-sref="app.content_list({ path: mdSelectedItem.Path})">
+                        {{mdSelectedItem.Path}}
+                    </a>
+                    <a ng-if="typeString == 'MediaContent'" ui-sref="app.mediacontent_list({ path: mdSelectedItem.Path})">
+                        {{mdSelectedItem.Path}}
+                    </a>
+                    <a ng-if="typeString == 'Taxonomy'" ui-sref="app.taxonomy_list({taxonomyPath: mdSelectedItem.TaxonomyPath})">
+                        {{mdSelectedItem.TaxonomyPath}}
+                    </a>
+                </td>
+            </tr>
+            <tr class="owner" ng-if="typeString == 'Content'">
+                <th md-resource-text name="Labels.Author"></th>
+                <td>
+                    <span ng-if="typeString == 'Content'">
+                        {{mdSelectedItem.Author.Username}}
+                    </span>
+                </td>
+            </tr>
+            <tr class="modified" ng-if="typeString !== 'Taxonomy'">
+                <th md-resource-text name="Labels.Modified"></th>
+                <td>
+                    <span ng-if="typeString == 'Content'">
+                        {{mdSelectedItem.DateCreated | datetime}}
+                    </span>
+                    <span ng-if="typeString == 'MediaContent'">
+                        {{mdSelectedItem.DateCreated | datetime}}
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</md-content>

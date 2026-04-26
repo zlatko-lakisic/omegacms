@@ -1,0 +1,65 @@
+def publishProject(tempDir, targetFileDir, targetFile, target, targetPath, targetUser, targetPassword) {
+	script {   
+        bat "psexec \\\\${target} -u \"${targetUser}\" -p \"${targetPassword}\" xcopy \"${targetFileDir}\\${targetFile}\" \"${tempDir}\\\" /K /D /H /Y"
+        bat "psexec \\\\${target} -u \"${targetUser}\" -p \"${targetPassword}\" \"C:\\Program Files\\7-Zip\\7z.exe\" x \"${tempDir}\\${targetFile}\" -o${targetPath} -y -xr!appsettings.json -xr!web.config"
+		bat "psexec \\\\${target} -u \"${targetUser}\" -p \"${targetPassword}\" cmd -c \"if exist \\\"${tempDir}\\${targetFile}\\\" (del /f \\\"${tempDir}\\${targetFile}\\\")\""
+    }
+}
+
+    
+
+pipeline {
+    agent any
+	parameters {
+        string(defaultValue: "debug", description: "Build profile", name: "buildProfile")
+        string(defaultValue: "", description: "CMS Version", name: "cmsVersion")
+        string(defaultValue: "", description: "Target", name: "target")
+        string(defaultValue: "", description: "Target Site Name", name: "targetSite")
+        string(defaultValue: "", description: "Target Username", name: "targetUser")
+        password(defaultValue: "", description: "Target Password", name: "targetPassword")
+        string(defaultValue: "", description: "Target Admin Path", name: "targetAdminPath")
+        string(defaultValue: "", description: "Target Webapi Path", name: "targetWebapiPath")
+        string(defaultValue: "E:", description: "TempDrive", name: "tempDrive")
+        choice(choices: ["win-x64", "linux-x64", "osx-x64"], description: "Build Platform", name: "platform")
+    }
+    stages {
+        stage("Stop Remote Site") {
+            steps {
+				script {
+					bat "psexec \\\\${params.target} -u \"${params.targetUser}\" -p \"${params.targetPassword}\" c:\\windows\\system32\\inetsrv\\appcmd stop site /site.name:${params.targetSite}"
+				}
+			}
+        }
+        stage("Publish CMS") {
+            steps {
+                parallel(
+                    "Administration": {
+                        publishProject(params.tempDrive, 
+									"\\\\10.0.10.3\\IIS_Shares\\CMS\\Artifacts\\administration.hosted", 
+									"administration.hosted.${params.buildProfile}.${params.platform}.${params.cmsVersion.replace('release-', '')}.7z", 
+									params.target, 
+									params.targetAdminPath, 
+									params.targetUser, 
+									params.targetPassword)
+                    },
+                    "Web Api": {
+                        publishProject(params.tempDrive, 
+									"\\\\10.0.10.3\\IIS_Shares\\CMS\\Artifacts\\webapi.hosted", 
+									"webapi.hosted.${params.buildProfile}.${params.platform}.${params.cmsVersion.replace('release-', '')}.7z", 
+									params.target, 
+									params.targetWebapiPath, 
+									params.targetUser, 
+									params.targetPassword)
+                    }
+                )
+			}
+        }
+        stage("Start Remote Site") {
+            steps {
+				script {
+					bat "psexec \\\\${params.target} -u \"${params.targetUser}\" -p \"${params.targetPassword}\" c:\\windows\\system32\\inetsrv\\appcmd start site /site.name:${params.targetSite}"
+				}
+			}
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<!--<!-- SIDENAV HEADER -->
+<div class="header md-accent-bg" layout="column" layout-align="space-between">
+    <div class="toolbar" layout="row" layout-align="end center">
+        <md-button ng-disabled="!vm.selected" class="md-icon-button" ng-click="vm.deleteReportingDefinition(vm.selected.Id)">
+            <md-icon md-font-icon="icon-delete"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Delete1"></span></md-tooltip>
+        </md-button>
+
+        <md-button ng-disabled="!vm.selected"
+                   ui-sref="app.report_definitions_designer({ action: 'edit', id: vm.selected.Id })"
+                   class="md-icon-button">
+            <md-icon md-font-icon="icon-table-edit"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+        </md-button>
+    </div>
+    <div>      
+        <div class="title text-truncate">{{vm.selected.Name || "Reporting Definitions"}}</div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+<!-- SIDENAV CONTENT -->
+<md-content class="content" flex ms-scroll>
+    <div class="file-details" ng-if="vm.selected">
+        <div class="preview file-icon" layout="row" layout-align="center center">
+            <i class="icon-document s48"></i>
+        </div>
+        <div class="title" md-resource-text name="Labels.Info"></div>
+        <table>
+            <tr class="owner">
+                <th md-resource-text name="Labels.Owner"></th>
+                <td>{{vm.selected.Author.Username}}</td>
+            </tr>
+            <tr class="modified">
+                <th md-resource-text name="Labels.Modified"></th>
+                <td>{{vm.selected.DateModified | datetime}}</td>
+            </tr>
+        </table>
+    </div>
+</md-content>
+<!-- / SIDENAV CONTENT -->

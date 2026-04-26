@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>0.89.15</Version>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <Configurations>Debug;Release;Release_Publish_win_x64;Release_Publish_linux_x64;Release_Publish_osx_x64</Configurations>
+    <Copyright>2022</Copyright>
+    <PackageIcon>0.png</PackageIcon>
+    <Authors>Omega IT LLC</Authors>
+    <Company>Omega IT LLC</Company>
+    <Product>OmegaCMS Hosted Installer</Product>
+    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <AssemblyName>Omega Hosted Installer</AssemblyName>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\0.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Obfuscar" Version="2.2.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SevenZipSharp.Interop" Version="19.0.1" />
+    <PackageReference Include="SharpCompress" Version="0.31.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="IF ($(ConfigurationName)) == (Debug) GOTO END&#xD;&#xA;  CD $(TargetDir)&#xD;&#xA;  $(ProjectDir)..\3rdParty\Obfuscar.Console.exe Obfuscar.xml&#xD;&#xA;  xcopy &quot;$(TargetDir)Obfuscated\$(TargetFileName)&quot; &quot;$(TargetDir)&quot; /y/f/i&#xD;&#xA;:END" />
+  </Target>
+</Project>

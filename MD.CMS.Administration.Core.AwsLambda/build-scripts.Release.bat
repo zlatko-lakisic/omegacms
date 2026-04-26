@@ -1,0 +1,2 @@
+xcopy "%~dp0wwwroot\scripts\businessLogic_ts\compiled\businessLogic.compiled.d.ts" "%~dp0..\MD.CMS.Administration\public-repo\omega-cms-businesslogic" /y/f/i
+javascript-obfuscator businessLogic.compiled.js --output "%~dp0..\MD.CMS.Administration\public-repo\omega-cms-businesslogic\omegacms-businessLogic.js" --compact true --self-defending true --simplify true --identifier-names-generator "mangled-shuffled"

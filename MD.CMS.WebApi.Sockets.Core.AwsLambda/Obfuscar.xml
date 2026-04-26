@@ -1,0 +1,18 @@
+﻿<?xml version='1.0'?>
+<Obfuscator>
+  <AssemblySearchPath path=".\" />
+  <AssemblySearchPath path="..\..\..\..\MD.CMS.WebApi.Sockets.Core.AwsLambda\bin\Release\netcoreapp3.1" />
+  <Var name="InPath" value=".\" />
+  <Var name="OutPath" value=".\Obfuscated" />
+  <Var name="KeepPublicApi" value="true" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="RenameProperties" value="true" />
+  <Var name="RenameEvents" value="true" />
+  <Var name="RenameFields" value="true" />
+  <Var name="UseUnicodeNames" value="false" />
+  <Var name="HideStrings" value="true" />
+  <Var name="OptimizeMethods" value="true" />
+  <Var name="SuppressIldasm" value="true" />
+  
+  <Module file="$(InPath)\MD.CMS.WebApi.Sockets.Core.AwsLambda.dll" />
+</Obfuscator>

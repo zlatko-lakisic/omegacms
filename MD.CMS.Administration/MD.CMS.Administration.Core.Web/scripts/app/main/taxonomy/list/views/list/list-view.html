@@ -1,0 +1,73 @@
+<!-- LIST VIEW -->
+<table class="simple list-view" ng-cloak>
+    <thead>
+        <tr>
+            <th></th>
+            <th md-sort="Title" name="{{$root.globals.resources.Labels.Name}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide show-gt-sm md-sort="DateCreated" name="{{$root.globals.resources.Labels.LastModified}}" on-sort="vm.sort(sortingString)" hide show-gt-sm>
+            </th>
+            <th hide show-gt-md class="col-active" md-sort="Order" name="{{$root.globals.resources.Labels.Order}}" on-sort="vm.sort(sortingString)" hide show-gt-md>
+            </th>
+            <th hide-gt-md></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="file in vm.taxonomy.Items | filter:global.search"
+            ng-click="vm.selectContent(file)" 
+            md-double-click="vm.openContent(file)" 
+            ng-class="{'selected' : vm.selected === file}">
+            <td class="file-icon">
+                <md-icon md-font-icon="icon-document"></md-icon>
+            </td>
+            <td class="name">{{file.Title}}</td>
+            <td class="last-modified" hide show-gt-sm>{{file.DateCreated | datetime: 'ago' }}</td>
+            <td hide show-gt-md>
+                <md-button ng-hide="!vm.showOrder"
+                           ng-disabled="($last && (vm.pagesBorder != 0 || vm.pagesBorder != 3)) || vm.disableUntilFinishedChange || vm.searchTerm.length > 0"
+                           class="md-icon-button sidenav-toggle"
+                           ng-click="vm.orderDown($index);">
+                    <md-icon md-font-icon="icon-arrow-down"></md-icon>
+                </md-button>
+                <md-button ng-hide="!vm.showOrder"
+                           ng-disabled="($index == 0 && (vm.pagesBorder != 2 || vm.pagesBorder != 3)) || vm.disableUntilFinishedChange || vm.searchTerm.length > 0"
+                           class="md-icon-button sidenav-toggle"
+                           ng-click="vm.orderUp($index);">
+                    <md-icon md-font-icon="icon-arrow-up"></md-icon>
+                </md-button>
+            </td>
+            <td class="show-details" hide-gt-md>
+              <md-menu>
+                <md-button class="md-icon-button" aria-label="More" ng-click="vm.openMenu($mdMenu, $event);">
+                  <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                  <md-menu-item>
+                    <md-button ng-hide="!vm.showOrder"
+                               ng-disabled="($index == 0 && (vm.pagesBorder != 0 || vm.pagesBorder != 3)) || vm.disableUntilFinishedChange || vm.searchTerm.length != 0"
+                               ng-click="vm.orderUp($index);">
+                      <md-icon md-font-icon="icon-arrow-up"></md-icon>
+                      <span md-resource-text name="Labels.MoveUp"></span>
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-hide="!vm.showOrder"
+                               ng-disabled="($last && (vm.pagesBorder != 2 || vm.pagesBorder != 3)) || vm.disableUntilFinishedChange || vm.searchTerm.length != 0"
+                               ng-click="vm.orderDown($index);">
+                      <md-icon md-font-icon="icon-arrow-down"></md-icon>
+                      <span md-resource-text name="Labels.MoveDown"></span>
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item hide-gt-md ng-click="vm.toggleContentDetails(taxonomy, $event);">
+                    <md-button>
+                      <md-icon md-font-icon="icon-information-outline"></md-icon>
+                      <md-resource-text name="Labels.Details"></md-resource-text>
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- / LIST VIEW -->

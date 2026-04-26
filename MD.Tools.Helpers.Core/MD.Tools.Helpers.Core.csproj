@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Authors>Omega IT LLC</Authors>
+    <Product>OmegaCMS Helpers</Product>
+    <Copyright>2022</Copyright>
+    <Version>1.0.63</Version>
+    <Configurations>Debug;Release;Debug_Publish_win_x64;Debug_Publish_linux_x64;Debug_Publish_osx_x64;Release_Publish_win_x64;Release_Publish_linux_x64;Release_Publish_osx_x64</Configurations>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageIcon>0.png</PackageIcon>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <Nullable>disable</Nullable>
+    <NoWarn>$(NoWarn);SYSLIB0022;SYSLIB0001;CS8765;CS8601;CS8619;CS0025</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.CodeDom" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MD.Tools.Helpers.Core.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\0.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="IF ($(ConfigurationName)) == (Debug) GOTO END&#xD;&#xA;  CD $(TargetDir)&#xD;&#xA;  $(ProjectDir)..\3rdParty\Obfuscar.Console.exe Obfuscar.xml&#xD;&#xA;  xcopy &quot;$(TargetDir)Obfuscated\$(TargetFileName)&quot; &quot;$(TargetDir)&quot; /y/f/i&#xD;&#xA;:END" />
+  </Target>
+
+</Project>

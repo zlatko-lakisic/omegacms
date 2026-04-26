@@ -1,0 +1,143 @@
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="space-between">
+            <div>
+                <span class="md-display-1 font-weight-300" md-resource-text name="Titles.TaxonomyEditor"></span>
+            </div>
+            <!-- BREADCRUMB -->
+            <div class="breadcrumb text-truncate" layout="row" layout-align="start center">
+                <span data-ng-repeat="path in vm.taxonomy.ParentArray" ui-sref="app.taxonomy_list({taxonomyPath:vm.taxonomy.TaxonomyPath,currentView:vm.currentView})">
+                    {{path.Name}}
+                    <md-icon md-font-icon="icon-chevron-right" class="icon separator"></md-icon>
+                </span>
+            </div>
+            <!-- / BREADCRUMB -->
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <!-- BASIC FORM -->
+        <div class="form-wrapper md-whiteframe-1dp" flex="60">
+            <div class="form-title">{{vm.formTitle | uppercase}}</div>
+
+            <form autocomplete="off" name="basicForm" class="md-inline-form" novalidate onkeypress="return event.keyCode != 13;">
+                <md-tabs md-dynamic-height>
+                    <md-tab label="{{$root.globals.resources.Labels.Taxonomies}}">
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <label md-resource-text name="Labels.Name"></label>
+                                <input type="text" name="name" ng-model="vm.taxonomy.Name" required>
+                                <div ng-messages="basicForm.firstname.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <md-input-container class="md-block">
+                            <label md-resource-text name="Labels.Description"></label>
+                            <textarea ng-model="vm.taxonomy.Description" columns="1" md-maxlength="150" rows="5"></textarea>
+                        </md-input-container>
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.Contents}}">
+                        <md-card class="md-block form-container" layout="row" flex>
+                            <div flex>
+                                <md-card-content>
+                                    <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                                         md-input-name="contentSearch"
+                                                         md-floating-label="{{$root.globals.resources.Labels.SearchPlaceholder}}"
+                                                         md-selected-entity="vm.selectedContentItemToAdd"
+                                                         placeholder="{{$root.globals.resources.Labels.SearchForContent}}">
+                                    </md-cms-autocomplete>
+                                </md-card-content>
+                            </div>
+                            <div flex="20" flex-gt-sm="10">
+                                <md-card-content>
+                                    <md-button type="submit" class="md-raised md-accent" aria-label="Submit" ng-click="vm.addContent($event)">
+                                        Add Content
+                                    </md-button>
+                                </md-card-content>
+                            </div>
+                        </md-card>
+                        <md-list ng-cloak>
+                            <md-subheader class="md-no-sticky">Secondary Buttons</md-subheader>
+                            <md-list-item class="secondary-button-padding" ng-repeat="content in vm.taxonomy.Contents">
+                                <p>{{content.Title}}</p>
+                                <md-button class="md-secondary" ng-click="vm.previewContent($event, content)">More Info</md-button>
+                                <md-button class="md-secondary" ng-click="vm.removeContent($event, content)">Remove</md-button>
+                            </md-list-item>
+                        </md-list>
+                        <div style="visibility: hidden">
+                            <div class="md-dialog-container" id="taxonomyContent_moreInfoDialog">
+                                <md-dialog layout-padding>
+                                    <md-cms-elementsummary md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Content" md-selected-item="vm.selectedContentItemToPreview" />
+                                </md-dialog>
+                            </div>
+                        </div>
+
+                        <!--<div>
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <md-chips class="custom-chips"
+                              ng-model="vm.content"
+                              md-on-add="vm.addContent($chip)"
+                              md-on-remove="vm.RemoveContent($chip)"
+                              md-autocomplete-snap
+                              md-require-match="true">
+                        <md-autocomplete md-selected-item="selectedcontentItem"
+                                         md-search-text="contentSearchText"
+                                         md-items="content in vm.queryAllContent(contentSearchText)"
+                                         md-item-text="content.Title"
+                                         placeholder="{{$root.globals.resources.Labels.SearchPlaceholder}}">
+                            <md-item-template>
+                                <span md-highlight-text="contentSearchText">{{content.Title}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span>
+                                <strong>{{$chip.Title}}</strong>
+                            </span>
+                        </md-chip-template>
+                        <button type="button" ng-disabled="false" md-chip-remove class="md-primary">
+                            <md-icon style="margin: 4px" class="s24" md-font-icon="icon-close"></md-icon>
+                        </button>
+                    </md-chips>
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+    </div>-->
+                        <!--<md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+               ng-disabled="basicForm.$invalid || basicForm.$pristine" ng-click="vm.sendFormContent($event);">
+        Submit
+    </md-button>
+    <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+               ng-click="vm.DeleteContent($event)" >
+        Delete content
+    </md-button>-->
+                    </md-tab>
+
+                </md-tabs>
+                <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                           ng-disabled="basicForm.$invalid "
+                           ng-click="vm.save($event);">
+                    <md-resource-text name="Labels.Submit"></md-resource-text>
+                </md-button>
+                <md-button class="md-raised"
+                           type="button"
+                           aria-label="Back to previous page"
+                           ng-click="vm.redirect()">
+                    <span class="ng-scope" md-resource-text name="Labels.Back"></span><div class="md-ripple-container"></div>
+                </md-button>
+
+            </form>
+            <!--ui-sref="app.taxonomy_list({taxonomyPath:vm.taxonomy.TaxonomyPath,currentView:vm.currentView})"-->
+        </div>
+        <!-- / BASIC FORM -->
+    </div>
+</div>
+
+<!-- / CONTENT -->

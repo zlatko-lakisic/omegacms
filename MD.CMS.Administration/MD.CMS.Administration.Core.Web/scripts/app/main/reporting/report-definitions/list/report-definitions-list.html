@@ -1,0 +1,115 @@
+<div id="file-manager" class="page-layout simple right-sidenav" layout="row">
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+        <!-- HEADER -->
+        <div class="header md-accent-bg">
+            <div class="header-content" layout="column" layout-align="space-between">
+                <!-- TOOLBAR -->
+                <md-content-header on-search="vm.search(searchTerm)">
+                    <span md-resource-text name="Titles.ReportDefinitionsList" class="md-display-1 font-weight-300"></span>
+                </md-content-header>
+                <!-- / TOOLBAR -->
+            </div>
+            <!-- ADD FILE BUTTON -->
+            <md-fab-speed-dial md-direction="right" class="add-file-button md-scale">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn" ng-disabled="!vm.folder.Id">
+                        <md-icon md-font-icon="icon-plus"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button class="md-fab md-raised md-mini"
+                               ui-sref="app.report_definitions_designer({ action:'add'})">
+                        <md-tooltip md-direction="bottom"><md-resource-text name="Labels.CreateReportDefinition" /></md-tooltip>
+                        <md-icon md-font-icon="icon-document"></md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+            <!-- / ADD FILE BUTTON -->
+        </div>
+
+        <!--<div class="header md-accent-bg">
+            <div class="header-content" layout="column" layout-align="space-between">
+                <div class="toolbar" layout="row" layout-align="space-between">
+                    <div>
+                        <span class="md-display-1 font-weight-300" md-resource-text name="Titles.ReportDefinitionsList"></span>
+                    </div>
+                    <div class="search" layout="row" ng-show="vm.isSearchVisible" layout-align="start center" flex>
+                        <input id="contentSearch" ng-keyup="$event.keyCode == 13 ? vm.search() : null;$event.keyCode == 27 ? vm.cancelSearch() : null" ng-disabled="!vm.searchGotResponse" ng-model="vm.searchTerm" ng-model-options="{debounce:1000}" ng-change="vm.search()" type="text" placeholder="{{$root.globals.resources.Labels.SearchPlaceholder}}" flex>
+                        <md-menu ng-show="false">
+                            <md-button class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-font-icon="icon-cog"></md-icon>
+                            </md-button>
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <md-button ng-click="vm.search('All')">
+                                        <p md-resource-text name="Labels.SearchByAll"></p>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.search('Name')">
+                                        <p md-resource-text name="Labels.SearchByName"></p>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.search('Author')">
+                                        <p md-resource-text name="Labels.SearchByAuthor"></p>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                    <div class="right-side" layout="row">
+                        <md-button ng-click="vm.toggleSearch();" class="md-icon-button">
+                            <md-icon md-font-icon="icon-magnify"></md-icon>
+                            <md-tooltip><md-resource-text name="Labels.Search" /></md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button" ng-click="vm.toggleView()" ng-if="false">
+                            <md-icon md-font-icon="{{vm.CurrentView.Icon}}"></md-icon>
+                            <md-tooltip><md-resource-text name="{{vm.CurrentView.Label}}" /></md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <md-fab-speed-dial md-direction="right" class="add-file-button md-scale">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <md-icon md-font-icon="icon-plus"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button class="md-fab md-raised md-mini"
+                               ui-sref="app.report_definitions_designer({ action:'add'})">
+                        <md-tooltip md-direction="bottom"><md-resource-text name="Labels.CreateReportDefinition"></md-resource-text></md-tooltip>
+                        <md-icon md-font-icon="icon-menu"></md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>-->
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <md-content class="content" flex>
+            <!-- PAGINATION -->
+            <md-pager page="vm.currentPage" total="vm.totalItems" no-tabs="true" on-pager-change="vm.updatePager(currentPage, pageSize, pagesBorder)"></md-pager>
+            <!-- / PAGINATION -->
+            <div class="table-container">
+                <div ng-if="vm.currentView.Name === 'grid'">
+                    <div ng-include="'scripts/app/main/reporting/report-definitions/list/views/grid/grid-view.html'"></div>
+                </div>
+                <div ng-if="vm.currentView.Name === 'list'">
+                    <div ng-include="'scripts/app/main/reporting/report-definitions/list/views/list/list-view.html'"></div>
+                </div>
+            </div>
+            <div flex="100" style="text-align:center;" ng-if="vm.noData"><h1>No result</h1></div>
+        </md-content>
+        <!-- / CONTENT -->
+    </div>
+<!-- / CENTER -->
+    <!-- SIDENAV -->
+    <md-sidenav class="sidenav details-sidenav md-sidenav-right" md-is-open="vm.selected !== undefined" md-is-locked-open="$mdMedia('gt-md') && vm.selected !== undefined"
+                md-component-id="details-sidenav"
+                ng-include="'scripts/app/main/reporting/report-definitions/list/sidenavs/details/details-sidenav.html'" ms-scroll
+                ms-sidenav-helper>
+    </md-sidenav>
+    <!-- / SIDENAV -->
+</div>

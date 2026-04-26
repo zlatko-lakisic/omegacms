@@ -1,0 +1,103 @@
+<form autocomplete="off" name="userForm" class="md-inline-form" novalidate>
+    <div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="space-between">
+                <div>
+                    <span class="md-display-1 font-weight-300" md-resource-text name="Titles.UserEditor"></span>
+                </div>
+
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="content" layout="column">
+            <!-- USER FORM -->
+            <div class="form-wrapper md-whiteframe-1dp" flex="60">
+                <div ng-if="vm.isNew" class="form-title" md-resource-text name="Titles.AddUser"></div>
+                <div ng-if="!vm.isNew" class="form-title" md-resource-text name="Titles.EditUser"></div>
+
+
+                <md-tabs md-selected="vm.tab" md-dynamic-height>
+                    <md-tab label="Main user details">
+                        <md-cms-dynamic-directive dynamic-shortcode="{{vm.authenticationProvider.shortcode}}" on-save="vm.processSave" mode="vm.authMode.form" reference-id="vm.user.Id" />
+
+                        <!--<div layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <input type="text" name="name" ng-model="vm.user.Username"
+                                       placeholder="{{$root.globals.resources.Labels.Username}}"
+                                       required>
+                                <div ng-messages="userForm.name.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <input type="password" name="password" ng-model="vm.user.Password"
+                                       placeholder="{{$root.globals.resources.Labels.Password}}"
+                                       ng-change="vm.registerChangePassword()"
+                                       ng-required="vm.changePass">
+                                <div ng-messages="userForm.password.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div ng-if="vm.changePass" layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <input type="password" name="password" ng-model="vm.passwordConfirmm"
+                                       placeholder="{{$root.globals.resources.Labels.PasswordConfirm}}"
+                                       required>
+                                <div ng-messages="userForm.password.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>-->
+
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <md-checkbox name="administrationAllowed"
+                                             ng-model="vm.user.AdministrationAllowed">Allowed to login to admin console?</md-checkbox>
+                            </md-input-container>
+                        </div>
+                    </md-tab>
+                    <md-tab ng-repeat="profileType in vm.user.ProfileTypes" label="{{profileType.Name}}">
+                        <md-cms-fields md-fields="profileType.Fields" md-form-name="userForm" register-upload-events="vm.registerProfileTypeUploadEvents" on-save="vm.onSave(event)" md-folder-path="'users'" />
+                        <h3 ng-if="profileType.Fields.length == 0">This profile type has no fields to fill in!</h3>
+                    </md-tab>
+                    <md-tab label="Assign roles" ng-if="!vm.isNew">
+                        <md-list>
+                            <md-list-item ng-repeat="profileType in vm.allProfileTypes">
+                                <p> {{ profileType.name }} </p>
+                                <md-checkbox class="md-secondary" ng-model="profileType.selected" ng-change="vm.toggleProfileTypes()"></md-checkbox>
+                            </md-list-item>
+                        </md-list>
+                    </md-tab>
+                </md-tabs>
+                <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                            ng-disabled="userForm.$invalid || userForm.$pristine"
+                            ng-click="vm.save('', $event);">
+                    <md-resource-text name="Labels.Submit"></md-resource-text>
+                </md-button>
+                <a ui-sref="app.user_list({folderPath:vm.folder.FolderPath,currentView:vm.currentView})">
+                    <md-button type="button" class="md-accent" aria-label="Submit">
+                        <md-resource-text name="Labels.Back"></md-resource-text>
+                    </md-button>
+                </a>
+            </div>
+            <!-- / USER FORM -->
+        </div>
+    </div>
+
+</form>
+
+<!-- / CONTENT -->

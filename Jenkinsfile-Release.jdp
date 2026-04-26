@@ -1,0 +1,304 @@
+def adminVersion = 0
+def webApiVersion = 0
+def getCommandOutput(cmd) {
+    if (isUnix()){
+         return sh(returnStdout:true , script: "#!/bin/sh -e\n" + cmd).trim()
+     } else{
+       stdout = bat(returnStdout:true , script: cmd).trim()
+       result = stdout.readLines().drop(1).join(" ")       
+       return result
+    } 
+}
+def robocopy(cmd) {
+    // robocopy uses non-zero exit code even on success, status below 3 is fine
+    def status = bat returnStatus: true, script: "ROBOCOPY ${cmd}"
+    println "ROBOCOPY returned ${status}"
+    if (status < 0 || status > 3)
+    {
+        error("ROBOCOPY failed")
+    }
+}
+def mkdir(path, delete = false) {
+    if(delete) {
+        bat "if exist \"${path}\" (rmdir /Q/S \"${path}\")"
+    }
+    bat "if not exist \"${path}\" (mkdir \"${path}\")"
+}
+def publish(isLibs, project, projectShort, version, mode, platform, postPublishRoboCopyCommand = "") {
+    def libsPrefix = ""
+    if(isLibs){
+        libsPrefix = "lib\\"
+    }
+    def publishDirectory = "E:\\Projects\\cms-dist\\${libsPrefix}${projectShort}"
+    def artifactsDirectory = "Y:\\CMS\\Artifacts\\${libsPrefix}${projectShort}"
+    dir("E:\\Projects\\cms") {
+        echo("Working with version v${version}")
+        dir(project) {
+            if(isLibs){
+                try { mkdir("E:\\Projects\\cms-dist\\${libsPrefix}") } finally {}
+            }
+            try { mkdir("${publishDirectory}") } finally {}
+            try { mkdir("${publishDirectory}\\source") } finally {}
+            try { mkdir("${publishDirectory}\\source\\${mode}") } finally {}
+            try { mkdir("${publishDirectory}\\source\\${mode}\\${platform}", true) } finally {}
+            bat "publish-project.bat \"${mode}\" \"${platform}\" \"${publishDirectory}\\source\\${mode}\\${platform}\""
+            if (mode == "debug" && postPublishRoboCopyCommand != "") {
+                try {
+                    robocopy(postPublishRoboCopyCommand)
+                    bat "if exist output.log del output.log"
+                } finally {
+                }
+            } else if (mode == "release") {
+                try {
+                    dir("${publishDirectory}\\source\\${mode}\\${platform}\\wwwroot\\scripts") {
+                        bat "rd businessLogic"
+                        bat "rd businessLogic_ts"
+                        bat "rd businessLogicMinified"
+                        bat "rd plugins"
+                        dir("app") {
+                            bat "del /s *.js"
+                            bat "del /s *.css"
+                            bat "del /s *.scss"
+                            bat "for /f \"delims=\" %i in ('dir /s /b /ad ^| sort /r') do rd \"%i\" 2>NUL"
+                        }
+                    }
+                } finally {
+                }
+            }
+        }
+    }
+}
+
+def publishArtifact(isLibs, projectShort, version, mode, platform){
+    def libsPrefix = ""
+    def baseArtifactDirectory = "\\\\10.0.10.3\\IIS_Shares\\CMS\\Artifacts"
+    if(isLibs){
+        libsPrefix = "lib\\"
+    }
+    script {
+        if(isLibs){
+            try { mkdir("${baseArtifactDirectory}\\${libsPrefix}") } finally {}
+        }
+        try { mkdir("${baseArtifactDirectory}\\${libsPrefix}${projectShort}") } finally {}
+    }
+    def artifactsDirectory = "${baseArtifactDirectory}\\${libsPrefix}${projectShort}"
+    script {
+        try {
+            bat "if exist ${artifactsDirectory}\\${projectShort}.${mode}.${platform}.${version}.7z del ${artifactsDirectory}\\${projectShort}.${mode}.${platform}.${version}.7z"
+        } catch(e) {
+            echo "File not found for deletion! Continuing..."
+        }
+    }
+    dir("E:\\Projects\\cms-dist\\${libsPrefix}${projectShort}"){
+        bat "\"C:\\Program Files\\7-Zip\\7z.exe\" a -r -t7z -m0=LZMA2 -mmt=16 \"${artifactsDirectory}\\${projectShort}.${mode}.${platform}.${version}.7z\" \".\\source\\${mode}\\${platform}\\*\""
+    }
+}
+
+def publishNuget(project, projectShort, version, mode, platform){
+    def feed = System.getenv("NUGET_SOURCE_URL")
+    if (feed == null || feed == "") {
+        error "Set NUGET_SOURCE_URL (e.g. https://api.nuget.org/v3/index.json) in the Jenkins job environment. See .env.example."
+    }
+    def apiKey = System.getenv("NUGET_KEY")
+    if (apiKey == null || apiKey == "") {
+        error "Set NUGET_KEY in the Jenkins job environment (or credentials) for dotnet nuget push."
+    }
+    def libsPrefix = "lib\\"
+    dir("E:\\Projects\\cms-dist\\${libsPrefix}${projectShort}\\source\\${mode}\\${platform}\\"){
+        bat "dotnet nuget push -s ${feed} -k ${apiKey} ${project}.${version}.nupkg"
+    }
+}
+
+def publishAll(isLibs, project, projectShort, version, mode, def postPublishRoboCopyCommand = "") {
+    publish(isLibs, project, projectShort, version, mode, "win-x64", postPublishRoboCopyCommand)
+    publish(isLibs, project, projectShort, version, mode, "linux-x64", postPublishRoboCopyCommand)
+    publish(isLibs, project, projectShort, version, mode, "osx-x64", postPublishRoboCopyCommand)
+}
+
+def buildAndPublishLib(project, projectShort, mode) {
+    script {
+        def version = 1
+        dir("E:\\Projects\\cms") {
+            version = getCommandOutput(".\\get-version.bat ${project}\\${project}.csproj")
+            echo version;
+        }
+        publish(true, project, projectShort, version, mode, "portable")
+        publishArtifact(true, projectShort, version, mode, "portable")
+        publishNuget(project, projectShort, version, mode, "portable")
+    }
+}
+
+pipeline {
+    agent any
+    parameters {
+        string(defaultValue: "debug", description: "Build profile", name: "buildProfile")
+    }
+    stages {
+        stage("Git Pull"){
+            steps{
+                dir("E:\\Projects\\cms"){
+                    bat "git reset --hard"
+                    bat "git pull"
+                }
+            }
+        }
+        stage("Build Dependencies") {
+            steps{
+                dir("E:\\Projects\\cms\\MD.Tools.Helpers.Core"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.Tools.Licensing"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.Tools.BaseDataAccess.Core"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.Tools.BaseDataAccess.Plugins.Core"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.Tools.BaseDataAccess.PluginMethods.Core"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.CMS.BusinessLogic.Core"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.CMS.BusinessLogic.WebApi.Core"){
+                    bat "build-project.bat Release"
+                }
+                dir("E:\\Projects\\cms\\MD.CMS.BusinessLogic.Administration.Core"){
+                    bat "build-project.bat Release"
+                }
+            }
+        }
+        stage("Build and Publish Libs") {
+            steps {
+                buildAndPublishLib("MD.Tools.Helpers.Core", "md-tools-helpers-core", "Release")
+                buildAndPublishLib("MD.Tools.Licensing", "md-tools-licensing", "Release")
+                buildAndPublishLib("MD.Tools.BaseDataAccess.Core", "md-tools-basedataaccess-core", "Release")
+                buildAndPublishLib("MD.Tools.BaseDataAccess.Plugins.Core", "md-tools-basedataaccess-plugins-core", "Release")
+                buildAndPublishLib("MD.Tools.BaseDataAccess.PluginMethods.Core", "md-tools-basedataaccess-pluginmethods-core", "Release")
+                buildAndPublishLib("MD.CMS.BusinessLogic.Core", "md-cms-businesslogic-core", "Release")
+                buildAndPublishLib("MD.CMS.BusinessLogic.WebApi.Core", "md-cms-businesslogic-webapi-core", "Release")
+                buildAndPublishLib("MD.CMS.BusinessLogic.Administration.Core", "md-cms-businesslogic-administration-core", "Release")
+            }
+        }
+        stage("Build Administration Hosted") {
+            steps {
+                script {
+                    def nodeCopyDirectory = "wwwroot\\"
+                    dir("E:\\Projects\\cms") {
+                        dir("MD.CMS.Administration"){
+                            bat "yarn install"
+                        }
+                        dir("MD.CMS.BusinessLogic.Administration.Core"){
+                            bat "build-project.bat Release"
+                        }
+                        dir("MD.CMS.Administration.Core.Hosted"){
+                            bat "create-links.bat"
+                            bat "build-project.bat Release"
+                        }
+
+                        adminVersion = getCommandOutput(".\\get-version.bat MD.CMS.Administration.Core.Hosted\\MD.CMS.Administration.Core.Hosted.csproj")
+
+                        if(params.buildProfile == "debug"){
+                            nodeCopyDirectory = ""
+                        }
+                        dir("MD.CMS.Administration\\MD.CMS.Administration.Core"){
+                            bat "build-project.bat Release"
+                        }
+                        dir("MD.CMS.Administration"){
+                            bat "yarn run build-jsdoc"
+                            bat "yarn run build-typedoc"
+                        }
+                        dir("MD.CMS.Administration\\MD.CMS.Administration.Core.Web\\scripts\\businessLogic"){
+                            bat "tsc"
+                        }
+                        dir("MD.CMS.Administration.Core.Hosted"){
+                            bat "build-scripts.Release.bat"
+                        }
+                    }
+                    publish(false, "MD.CMS.Administration.Core.Hosted", "administration.hosted", adminVersion, "Release", "win-x64", ".\\node_modules\\ E:\\Projects\\cms-dist\\administration.hosted\\source\\release\\win-x64\\${nodeCopyDirectory}node_modules /S /E /Z /ZB /R:5 /W:5 /TBD /NP /V /MT:32")
+                    publish(false, "MD.CMS.Administration.Core.Hosted", "administration.hosted", adminVersion, "Release", "linux-x64", ".\node_modules\\ E:\\Projects\\cms-dist\\administration.hosted\\source\\release\\linux-x64\\${nodeCopyDirectory}node_modules /S /E /Z /ZB /R:5 /W:5 /TBD /NP /V /MT:32")
+                    publish(false, "MD.CMS.Administration.Core.Hosted", "administration.hosted", adminVersion, "Release", "osx-x64", ".\\node_modules\\ E:\\Projects\\cms-dist\\administration.hosted\\source\\release\\osx-x64\\${nodeCopyDirectory}node_modules /S /E /Z /ZB /R:5 /W:5 /TBD /NP /V /MT:32")
+                }
+            }
+        }
+        stage("Publish Administration Hosted") {
+            steps {
+                parallel(
+                    "win-x64": {
+                        publishArtifact(false, "administration.hosted", adminVersion, "Release", "win-x64")
+                    },
+                        "linux-x64": {
+                        publishArtifact(false, "administration.hosted", adminVersion, "Release", "linux-x64")
+                    },
+                        "osx-x64": {
+                        publishArtifact(false, "administration.hosted", adminVersion, "Release", "osx-x64")
+                    }
+                )
+            }
+        }
+        stage("Publish Client Business Logic Library") {
+            steps {
+                dir("E:\\Projects\\cms\\MD.CMS.Administration\\public-repo"){
+                    script {
+                        def packageFileObject = null;
+                        try {
+                            dir("omega-cms-businesslogic") {
+                                bat "git commit -am \"Automated publishing of business logic library version (${adminVersion}).\""
+                                bat "git push"
+                                packageFileObject = readJSON file: "package.json"
+                                packageFileObject.version = adminVersion
+                                def packageFile = new File("package.json")
+                                packageFile.write(groovy.json.JsonOutput.prettyPrint(packageFileObject.toString()))
+                            }
+                            //bat "powershell -File Npm-MdBusinessLogic-PublishVersion.ps1 -version ${adminVersion}"
+                        } catch (Exception e) {
+                            println "Error while updating and publishing external business logic library."
+                        }
+                    }
+                }
+            }
+        }
+        stage("Build WebApi Hosted") {
+            steps {
+                script {
+                    dir("E:\\Projects\\cms\\MD.CMS.BusinessLogic.WebApi.Core"){
+                        bat "build-project.bat Release"
+                    }
+                    dir("E:\\Projects\\cms\\MD.CMS.WebApi.Core.Hosted"){
+                        bat "build-project.bat Release"
+                    }
+                    dir("E:\\Projects\\cms") {
+                        webApiVersion = getCommandOutput(".\\get-version.bat MD.CMS.WebApi.Core.Hosted\\MD.CMS.WebApi.Core.Hosted.csproj")
+                    }
+                    publishAll(false, "MD.CMS.WebApi.Core.Hosted", "webapi.hosted", webApiVersion, "Release")
+                }
+            }
+        }
+        stage("Publish WebApi Hosted") {
+            steps {
+                parallel(
+                    "win-x64": {
+                        publishArtifact(false, "webapi.hosted", webApiVersion, "Release", "win-x64")
+                    },
+                    "linux-x64": {
+                        publishArtifact(false, "webapi.hosted", webApiVersion, "Release", "linux-x64")
+                    },
+                    "osx-x64": {
+                        publishArtifact(false, "webapi.hosted", webApiVersion, "Release", "osx-x64")
+                    }
+                )
+            }
+        }
+        stage("Add new version to git"){
+            steps{
+                dir("E:\\Projects\\cms"){
+                    bat "git tag release-${adminVersion} production"
+                    bat "git push --tags"
+                    echo("Published new version of CMS release-${adminVersion}")
+                }
+            }
+        }
+    }
+}

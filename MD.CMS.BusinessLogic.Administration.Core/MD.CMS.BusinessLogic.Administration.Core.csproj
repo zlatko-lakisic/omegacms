@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Product>OmegaCMS</Product>
+    <Authors>Omega IT LLC</Authors>
+    <Version>1.0.25</Version>
+    <Copyright>2022</Copyright>
+    <Configurations>Debug;Release;Release_Publish_win_x64;Release_Publish_linux_x64;Release_Publish_osx_x64</Configurations>
+    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageIcon>0.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Obfuscar" Version="2.2.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MD.CMS.BusinessLogic.Core\MD.CMS.BusinessLogic.Core.csproj" />
+    <ProjectReference Include="..\MD.Tools.Helpers.Core\MD.Tools.Helpers.Core.csproj" />
+    <ProjectReference Include="..\MD.Tools.Licensing\MD.Tools.Licensing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\0.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="IF ($(ConfigurationName)) == (Debug) GOTO END&#xD;&#xA;  CD $(TargetDir)&#xD;&#xA;  $(ProjectDir)..\3rdParty\Obfuscar.Console.exe Obfuscar.xml&#xD;&#xA;  xcopy &quot;$(TargetDir)Obfuscated\$(TargetFileName)&quot; &quot;$(TargetDir)&quot; /y/f/i&#xD;&#xA;:END" />
+  </Target>
+
+</Project>

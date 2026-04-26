@@ -1,0 +1,7 @@
+<div ng-messages="mdFormName[mdField.uniqueId].$error" ng-if="mdFormName[mdField.uniqueId].$touched">
+    <div ng-if="mdField.jsonField.validation.Required" ng-message="required"><span md-resource-text name="Labels.Required"></span></div>
+    <div ng-if="mdField.isSelector" ng-message="md-require-match"><span md-resource-text name="Labels.MatchRequired"></span></div>
+    <div ng-if="mdField.validation.MaxLength.Edit" ng-message="maxlength"><span md-resource-text name="Labels.MaxLength"></span></div>
+    <div ng-if="mdField.validation.MaxLength.Edit" ng-message="minlength"><span md-resource-text name="Labels.MinLength"></span></div>
+    <div ng-if="mdField.isYoutube" ng-message="pattern"><span md-resource-text name="Labels.MatchRequired"></span></div>
+</div>

@@ -1,0 +1,48 @@
+<md-dialog>
+    <form autocomplete="off" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 md-resource-text name="Titles.ErrorException"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon style="color: white;" class="icon-close"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="About">
+                    <md-content class="md-padding">
+                        <p>
+                            Exception message:
+                        </p>
+                        <pre class="code-block" style="padding:24px;background-color:rgb(237,237,237)">{{exceptionMessage}}</pre>
+                    </md-content>
+                    <md-content class="md-padding" ng-if="exceptionMessageInner != ''">
+                        <p>
+                            Server exception message:
+                        </p>
+                        <pre class="code-block" style="padding:24px;background-color:rgb(237,237,237)">{{exceptionMessageInner}}</pre>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Technical Details">
+                    <md-content class="md-padding">
+                        <p>
+                            Exception:
+                        </p>
+                        <div class="code-block" style="padding:24px;background-color:rgb(237,237,237)"><json-formatter json="exceptionError" open="1"></json-formatter></div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()">
+                <md-resource-text name="Labels.Close">
+                </md-resource-text>
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,174 @@
+@if (error()) {
+  <p class="err">{{ error() }}</p>
+} @else if (data()) {
+  <header class="page-head">
+    <div class="page-head__text">
+      <h1 class="page-title">Overview of Project Alpha</h1>
+      <p class="page-sub">Summary of project performance and statistics</p>
+    </div>
+    <div class="page-head__actions">
+      <mat-button-toggle-group
+        [value]="range()"
+        (change)="onRangeChange($event)"
+        class="range-toggle"
+        appearance="standard"
+        hideSingleSelectionIndicator
+      >
+        <mat-button-toggle value="2W">2W</mat-button-toggle>
+        <mat-button-toggle value="LW">Last week</mat-button-toggle>
+        <mat-button-toggle value="TW">This week</mat-button-toggle>
+      </mat-button-toggle-group>
+      <button mat-stroked-button type="button" class="customize">
+        <mat-icon>tune</mat-icon>
+        Customize
+      </button>
+    </div>
+  </header>
+
+  <div class="layout-main">
+    <mat-card class="card chart-card">
+      <div class="card-head">
+        <h2 class="card-title">New vs. closed</h2>
+        <span class="card-sub">Issues opened (bars) and closed (line) by day</span>
+      </div>
+      <div class="chart-stat">
+        <div class="chart-wrap">
+          @if (chartLayout(); as ch) {
+            <svg
+              class="issue-chart"
+              viewBox="0 0 700 200"
+              preserveAspectRatio="xMidYMid meet"
+              aria-label="New versus closed issues chart"
+            >
+              <defs>
+                <linearGradient id="barFill" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" class="bar-stop-a" stop-opacity="0.9" />
+                  <stop offset="100%" class="bar-stop-b" stop-opacity="0.45" />
+                </linearGradient>
+              </defs>
+              @for (g of gridLines(); track g) {
+                <line
+                  [attr.x1]="40"
+                  [attr.x2]="680"
+                  [attr.y1]="g"
+                  [attr.y2]="g"
+                  class="grid-line"
+                />
+              }
+              @for (b of ch.bars; track $index) {
+                <rect
+                  [attr.x]="b.x"
+                  [attr.y]="b.y"
+                  [attr.width]="b.w"
+                  [attr.height]="b.h"
+                  rx="3"
+                  fill="url(#barFill)"
+                />
+              }
+              <polyline [attr.points]="linePointsStr()" class="line-main" fill="none" />
+              @for (p of linePoints(); track $index) {
+                <circle [attr.cx]="p.x" [attr.cy]="p.y" r="3.5" class="line-dot" />
+              }
+              @for (d of ch.xLabels; track d; let i = $index) {
+                <text [attr.x]="dayLabelX(i)" y="196" class="day-label">{{ d }}</text>
+              }
+              <g class="legend" transform="translate(48, 12)">
+                <line x1="0" y1="0" x2="20" y2="0" class="line-main" />
+                <text x="28" y="4" class="leg-text">Closed issues</text>
+                <rect x="140" y="-8" width="14" height="14" rx="2" fill="url(#barFill)" />
+                <text x="160" y="4" class="leg-text">Open issues</text>
+              </g>
+            </svg>
+          }
+        </div>
+        <div class="stat-side">
+          <div class="stat-grid">
+            @for (row of supportRows(); track row.key) {
+              <div class="stat-row" [class.stat-row--total]="row.isTotal">
+                <span class="stat-label">{{ row.label }}</span>
+                <span class="stat-value">{{ row.value }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="kpi-row">
+    <mat-card class="kpi">
+      <div class="kpi-label">{{ w1Label() }}</div>
+      <div class="kpi-value">{{ w1Value() }}</div>
+      <div class="kpi-trend" [class.kpi-trend--good]="k1Good()" [class.kpi-trend--bad]="!k1Good()">
+        <mat-icon>{{ k1Icon() }}</mat-icon>
+        {{ k1Delta() }}
+      </div>
+    </mat-card>
+    <mat-card class="kpi">
+      <div class="kpi-label">{{ w2()?.title ?? 'Overdue' }}</div>
+      <div class="kpi-value">{{ w2()?.data?.count ?? '—' }}</div>
+      <div class="kpi-trend" [class.kpi-trend--good]="k2Good()" [class.kpi-trend--bad]="!k2Good()">
+        <mat-icon>{{ k2Icon() }}</mat-icon>
+        {{ k2Delta() }}
+      </div>
+    </mat-card>
+    <mat-card class="kpi">
+      <div class="kpi-label">{{ w3()?.title ?? 'Issues' }}</div>
+      <div class="kpi-value">{{ w3()?.data?.count ?? '—' }}</div>
+      <div class="kpi-trend" [class.kpi-trend--good]="k3Good()" [class.kpi-trend--bad]="!k3Good()">
+        <mat-icon>{{ k3Icon() }}</mat-icon>
+        {{ k3Delta() }}
+      </div>
+    </mat-card>
+    <mat-card class="kpi">
+      <div class="kpi-label">{{ w4()?.title ?? 'Features' }}</div>
+      <div class="kpi-value">{{ w4()?.data?.count ?? '—' }}</div>
+      <div class="kpi-trend" [class.kpi-trend--good]="k4Good()" [class.kpi-trend--bad]="!k4Good()">
+        <mat-icon>{{ k4Icon() }}</mat-icon>
+        {{ k4Delta() }}
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="layout-bottom">
+    <mat-card class="card">
+      <h2 class="card-title">Task distribution</h2>
+      <p class="card-sub">This period</p>
+      <div class="td-list">
+        @for (b of taskDistBars(); track b.label) {
+          <div class="td-item">
+            <div class="td-head">
+              <span>{{ b.label }}</span>
+              <span class="td-val">{{ b.value }}</span>
+            </div>
+            <div class="td-track">
+              <div class="td-bar" [style.width.%]="b.pct"></div>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="td-foot">
+        <div>
+          <div class="td-foot__t">{{ w6()?.footerLeft?.title ?? 'Tasks added' }}</div>
+          <div class="td-foot__n">{{ w6()?.footerLeft?.count?.[range()] ?? '—' }}</div>
+        </div>
+        <div class="td-foot__right">
+          <div class="td-foot__t">{{ w6()?.footerRight?.title ?? 'Tasks completed' }}</div>
+          <div class="td-foot__n">{{ w6()?.footerRight?.count?.[range()] ?? '—' }}</div>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="card">
+      <h2 class="card-title">Upcoming schedule</h2>
+      <p class="card-sub">Today</p>
+      <mat-list>
+        @for (ev of scheduleItems(); track ev.title) {
+          <mat-list-item>
+            <span matListItemTitle>{{ ev.title }}</span>
+            <span matListItemLine class="sched-meta">{{ ev.time }}{{ ev.location ? ' — ' + ev.location : '' }}</span>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card>
+  </div>
+}

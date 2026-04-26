@@ -1,0 +1,111 @@
+<div id="file-manager" class="page-layout simple right-sidenav" layout="row">
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+        <!-- HEADER -->
+        <div class="header md-accent-bg">
+            <div class="header-content" layout="column" layout-align="space-between">
+                <span class="md-display-1 font-weight-300">
+                    <md-resource-text name="Titles.PermissionSettings" />
+                </span>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <md-content class="content" flex ms-scroll>
+            <table class="simple list-view">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th md-sort="name" name="{{$root.globals.resources.Labels.Name}}" on-sort="vm.sort(sortingString);" class="col-active">
+                        </th>
+                        <th>{{$root.globals.resources.Labels.Permissions}}</th>
+                        <th hide-gt-md></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="group in vm.entityGroups track by $index"
+                        ng-click="vm.select(group, $index);"
+                        md-double-click="vm.open(group)"
+                        ng-class="{'selected' : vm.selected === group}">
+                        <td style="text-align:center;" ng-click="vm.selectContent(file);vm.validateAutoClick()">
+                            <i class="icon {{group.icon}} s26"></i>
+                        </td>
+                        <td class="name">{{group.name }}</td>
+                        <td>
+                            <i ng-repeat="entity in group.entities" ng-click="vm.showAlert($event, entity.name + ' Permission Description', entity.description)" class="icon {{entity.icon}} s26">
+                                <md-tooltip md-direction="top">
+                                    {{entity.name}}
+                                </md-tooltip>
+                            </i>
+                        </td>
+                        <td class="show-details" hide-gt-md>
+                            <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleContentTypeDetails(contentType, $event)">
+                                <md-icon md-font-icon="icon-information-outline"></md-icon>
+                            </md-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-content>
+        <!-- / CONTENT -->
+    </div>
+    <!-- SIDENAV -->
+    <md-sidenav class="sidenav details-sidenav md-sidenav-right" md-is-open="vm.selected !== undefined" md-is-locked-open="$mdMedia('gt-md') && vm.selected !== undefined"
+                md-component-id="details-sidenav" ms-scroll
+                ms-sidenav-helper>
+        <!-- SIDENAV HEADER -->
+        <div class="header md-accent-bg" layout="column" layout-align="space-between">
+            <div class="toolbar" layout="row" layout-align="end center" ng-if="vm.selected">
+                <md-button ng-disabled="vm.disablebtn"
+                           ui-sref="app.permissions-form({id:vm.selected.id})"
+                           class=" md-icon-button">
+                    <md-icon md-font-icon="icon-table-edit"></md-icon>
+                    <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+                </md-button>
+
+            </div>
+
+            <div ng-if="vm.selected">
+                <div class="title text-truncate"><h2>{{vm.selected.name}}</h2></div>
+            </div>
+        </div>
+        <!-- / SIDENAV HEADER -->
+        <!-- SIDENAV CONTENT -->
+        <md-content class="content" flex ms-scroll>
+
+            <div class="file-details" ng-if="vm.selected">
+                <div class="preview file-icon" layout="row" layout-align="center center">
+                    <i class="icon {{ vm.selected.icon }} s48"></i>
+                </div>
+
+                <table>
+                    <tr class="title">
+                        <th md-resource-text name="Labels.Name"></th>
+                        <td>{{vm.selected.name}}</td>
+                    </tr>
+                    <tr class="description">
+                        <th md-resource-text name="Labels.Permissions" colspan="2"></th>
+                    </tr>
+                    <tr class="description">
+                        <td colspan="2">
+                            <md-list class="md-dense" flex>
+                                <md-list-item class="md-3-line md-long-text" ng-repeat="entity in vm.selected.entities">
+                                    <md-icon md-font-icon="{{entity.icon}}" />
+                                    <div class="md-list-item-text">
+                                        <h4>{{ entity.name }}</h4>
+                                        <p>
+                                            {{entity.description}}
+                                        </p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </md-content>
+        <!-- / SIDENAV CONTENT -->
+    </md-sidenav>
+    <!-- / SIDENAV -->
+</div>

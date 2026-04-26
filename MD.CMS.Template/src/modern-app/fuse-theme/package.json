@@ -1,0 +1,8 @@
+{
+  "name": "fuse-theme-preview",
+  "private": true,
+  "scripts": {
+    "serve": "npx --yes serve \"../wwwroot/modern\" -l 4321 -C --single",
+    "dev": "npm run start --prefix .."
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application that uses the ASP.NET Core framework running in Amazon Lambda.",
+  "Parameters": {
+      "GatewayName" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreDefaultLcid" : {
+        "Type" : "Number",
+        "Default" : "0"
+      },
+      "MDCMSBusinessLogicCoreEmailEnableSsl" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreEmailHost" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreEmailPort" : {
+        "Type" : "Number",
+        "Default" : "0"
+      },
+      "MDCMSBusinessLogicCorePassword" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreRootAdminAccount" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreSessionDomain" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreSessionTimeout" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreUsername" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCoreCorsOrigins" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCorePluginsDirectory" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCorePluginsFileProviderType" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "MDToolsHelpersCoreProviderOptions" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsHelpersCoreDefaultFileProvider" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "MDCMSWebApiCoreBaseApiPath" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCoreBaseFolder" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "BillingGroup" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "VpcSecurityGroupId" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "VpcSubnet1Id" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "VpcSubnet2Id" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "ApiTimeout" : {
+        "Type" : "Number",
+        "Default" : 30
+      },
+      "TraceLevel" : {
+        "Type" : "Number",
+        "Default" : 1
+      },
+      "MDToolsHelpersCoreVerboseLoggingReflectionEnabled": {
+        "Type" : "String",
+        "Default" : "false"
+      }
+  },
+  "Conditions": {
+    "VpcSecurityGroupIdNotEmpty": {
+        "Fn::Not": [{
+            "Fn::Equals": [
+                {
+                    "Ref": "VpcSecurityGroupId"
+                },
+                ""
+            ]
+        }]
+    },
+    "VpcSubnet1IdNotEmpty": {
+        "Fn::Not": [{
+            "Fn::Equals": [
+                {
+                    "Ref": "VpcSubnet1Id"
+                },
+                ""
+            ]
+        }]
+    },
+    "VpcSubnet2IdNotEmpty": {
+        "Fn::Not": [{
+            "Fn::Equals": [
+                {
+                    "Ref": "VpcSubnet2Id"
+                },
+                ""
+            ]
+        }]
+    }
+  },
+  "Resources": {
+    "AspNetCoreFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "MD.CMS.WebApi.Core.AwsLambda::MD.CMS.WebApi.Core.AwsLambda.LambdaEntryPoint::FunctionHandlerAsync",
+        "Runtime": "dotnetcore3.1",
+        "CodeUri": "",
+        "MemorySize": 512,
+        "Timeout": { "Ref" : "ApiTimeout" },
+        "Role": null,
+        "Policies": [
+          "AWSLambda_FullAccess"
+        ],
+        "Environment": {
+          "Variables": {
+            "MD_CMS_BusinessLogic_Core_DefaultLcid": { "Ref" : "MDCMSBusinessLogicCoreDefaultLcid" },
+            "MD_CMS_BusinessLogic_Core_EmailEnableSsl": { "Ref" : "MDCMSBusinessLogicCoreEmailEnableSsl" },
+            "MD_CMS_BusinessLogic_Core_EmailHost": { "Ref" : "MDCMSBusinessLogicCoreEmailHost" },
+            "MD_CMS_BusinessLogic_Core_EmailPort": { "Ref" : "MDCMSBusinessLogicCoreEmailPort" },
+            "MD_CMS_BusinessLogic_Core_Password": { "Ref" : "MDCMSBusinessLogicCorePassword" },
+            "MD_CMS_BusinessLogic_Core_RootAdminAccount": { "Ref" : "MDCMSBusinessLogicCoreRootAdminAccount" },
+            "MD_CMS_BusinessLogic_Core_SessionDomain": { "Ref" : "MDCMSBusinessLogicCoreSessionDomain" },
+            "MD_CMS_BusinessLogic_Core_SessionTimeout": { "Ref" : "MDCMSBusinessLogicCoreSessionTimeout" },
+            "MD_CMS_BusinessLogic_Core_Username": { "Ref" : "MDCMSBusinessLogicCoreUsername" },
+            "MD_CMS_WebApi_Core_CorsOrigins": { "Ref" : "MDCMSWebApiCoreCorsOrigins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_ProviderOptions": { "Ref" : "MDToolsHelpersCoreProviderOptions" },
+            "MD_Tools_Helpers_Core_DefaultFileProvider": { "Ref" : "MDToolsHelpersCoreDefaultFileProvider" },
+            "MD_CMS_WebApi_Core_BaseApiPath": { "Ref" : "MDCMSWebApiCoreBaseApiPath" },
+            "MD_CMS_WebApi_Core_BaseFolder": { "Ref" : "MDCMSWebApiCoreBaseFolder" },
+            "MD_CMS_WebApi_Core_PluginsDirectory": { "Ref" : "MDCMSWebApiCorePluginsDirectory" },
+            "MD_CMS_WebApi_Core_PluginsFileProviderType": { "Ref" : "MDCMSWebApiCorePluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_TraceSwitches": {
+                "Fn::Sub": [
+                    "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                    { "TraceLevel": { "Ref" : "TraceLevel" } }
+                ]
+            },
+            "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled": { "Ref" : "MDToolsHelpersCoreVerboseLoggingReflectionEnabled" }
+          }
+        },
+        "Events": {
+          "ProxyResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "ANY"
+            }
+          },
+          "RootResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/",
+              "Method": "ANY"
+            }
+          }
+        },
+        "Tags": {
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        },
+        "VpcConfig": {
+            "SecurityGroupIds": [{
+              "Fn::If" : [
+                "VpcSecurityGroupIdNotEmpty",
+                {"Ref" : "VpcSecurityGroupId"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }],
+            "SubnetIds": [{
+              "Fn::If" : [
+                "VpcSubnet1IdNotEmpty",
+                {"Ref" : "VpcSubnet1Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            },{
+              "Fn::If" : [
+                "VpcSubnet2IdNotEmpty",
+                {"Ref" : "VpcSubnet2Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ApiURL": {
+      "Description": "API endpoint URL for Prod environment",
+      "Value": {
+        "Fn::Sub": [
+            "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${BaseApiPath}/",
+            { "BaseApiPath": { "Ref" : "MDCMSWebApiCoreBaseApiPath" } }
+        ]
+      }
+    }
+  }
+}

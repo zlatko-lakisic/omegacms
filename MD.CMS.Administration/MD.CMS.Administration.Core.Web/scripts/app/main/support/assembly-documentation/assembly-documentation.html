@@ -1,0 +1,43 @@
+<div id="assembly-documentation" class="page-layout simple right-sidenav" layout="row">
+
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="column" layout-align="space-between">
+            <div layout="row" layout-align="space-between">
+                <div>
+                    <span class="md-display-1 font-weight-300">Omega CMS Assembly Documentation</span>
+                </div>
+            </div>
+
+            <div layout="row">
+                <div class="selected-project">{{vm.selectedDocumentation.name}}</div>
+
+                <md-menu id="projects-menu" md-offset="0 48">
+                    <md-button class="md-icon-button project-selector" ng-click="$mdOpenMenu()"
+                               aria-label="Select project" md-menu-origin md-menu-align-target>
+                        <md-icon md-font-icon="icon-dots-horizontal"></md-icon>
+                    </md-button>
+
+                    <md-menu-content width="3" class="md-background-bg">
+                        <md-menu-item ng-repeat="doc in vm.documentationData">
+                            <md-button ng-click="vm.selectedDocumentation = doc" aria-label="{{doc.name}}">
+                                <span ng-class="{'secondary-text': vm.selectedDocumentation.name == doc.name}">{{doc.name}}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div id="javascript-documentation" class="page-layout simple" layout="column" flex>
+            <iframe ng-src="{{vm.trustSrc(vm.selectedDocumentation.link)}}" style="border:0; margin:0; padding:0; width:100%; height: 100%;"></iframe>
+        </div>
+        <!-- / CONTENT -->
+
+    </div>
+    <!-- / CENTER -->
+</div>

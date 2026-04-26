@@ -1,0 +1,9 @@
+<md-input-container class="md-block form-container" flex>
+    <label style="position:relative">{{mdFloatingLabel}}</label>
+    <textarea ui-tinymce="tinymceOptions"
+              name="{{mdInputName}}"
+              ng-model="mdModel.value"
+              ng-required="mdModel.jsonField.validation.Required"
+              ng-disabled="ngDisabled" />
+    <md-cms-fieldValidation md-field="field" md-form-name="{{mdFormName}}" />
+</md-input-container>

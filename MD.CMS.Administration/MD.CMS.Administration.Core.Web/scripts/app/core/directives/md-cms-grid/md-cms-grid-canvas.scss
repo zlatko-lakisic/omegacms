@@ -1,0 +1,82 @@
+﻿@import '../../../../../../node_modules/angular-material/angular-material.scss';
+
+body {
+    > div[data-gjs-type="wrapper"] {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px 0 0 10px;
+        align-items: flex-start;
+        align-content: start;
+
+        md-cms-grid-tile {
+            overflow: hidden;
+            cursor: all-scroll;
+
+            > md-whiteframe {
+                margin-right: 18px;
+                margin-bottom: 18px;
+                & > div {
+                    align-items: self-start;
+
+                    & > h3 {
+                        flex: 1;
+                        align-items: stretch;
+                        align-content: flex-start;
+                        display: flex;
+                        flex-direction: row;
+                    }
+                }
+            }
+
+            $flexHeightCounter: 100;
+
+            @while $flexHeightCounter < 1000 {
+
+                &.flexheight-#{$flexHeightCounter} {
+                    height: #{$flexHeightCounter}px;
+                    min-height: #{$flexHeightCounter}px;
+                    max-height: #{$flexHeightCounter}px;
+
+                    &[data-droppable="true"] {
+                        height: inherit;
+                        max-height: inherit;
+                        padding: 8px;
+                    }
+                }
+
+                $flexHeightCounter: $flexHeightCounter + 50;
+            }
+
+            md-whiteframe {
+                margin: 8px;
+            }
+        }
+    }
+
+    &[data-device="medium"] {
+        $flexCounter: 5;
+
+        @while $flexCounter < 105 {
+
+            & .flex-md-#{$flexCounter} {
+                max-width: #{percentage($flexCounter/100)};
+            }
+
+            $flexCounter: $flexCounter + 5;
+        }
+    }
+
+    &[data-device="small"] {
+        $flexCounter: 5;
+
+        @while $flexCounter < 105 {
+
+            & .flex-sm-#{$flexCounter} {
+                max-width: #{percentage($flexCounter/100)};
+            }
+
+            $flexCounter: $flexCounter + 5;
+        }
+    }
+}

@@ -1,0 +1,2 @@
+xcopy /F %~dp0src\Web.config %~dp0bower_components\Web.config
+%systemroot%\system32\inetsrv\AppCmd.exe add vdir /app.name:local.cms.mostardesigns.com/admin /path:/bower_components /physicalPath:%~dp0bower_components

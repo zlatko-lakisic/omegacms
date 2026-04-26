@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MD.CMS.WebApi.Core.AwsLambda</name>
+    </assembly>
+    <members>
+        <member name="M:MD.CMS.WebApi.Core.AwsLambda.AwsStartup.UseAwsStartup(Microsoft.AspNetCore.Hosting.IWebHostBuilder,System.String,System.Collections.IDictionary)">
+            <summary>
+            
+            </summary>
+            <param name="hostBuilder"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

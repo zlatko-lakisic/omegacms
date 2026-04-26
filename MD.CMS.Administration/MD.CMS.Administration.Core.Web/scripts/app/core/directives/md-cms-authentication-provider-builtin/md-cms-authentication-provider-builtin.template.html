@@ -1,0 +1,105 @@
+<div ng-if="vm.authMode.form == vm.mode">
+    <md-input-container class="md-block" md-no-float>
+        <label md-resource-text name="Labels.Username"></label>
+        <input type="text" name="username" ng-model="vm.form.username" autocomplete="off" placeholder="{{$root.globals.resources.Labels.Username}}"
+                required>
+        <div ng-messages="userForm.username.$error" role="alert">
+            <div ng-message="required">
+                <span md-resource-text name="Labels.Required"></span>
+            </div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block" md-no-float>
+        <label md-resource-text name="Labels.Password"></label>
+        <input type="password" name="password" ng-model="vm.form.password" autocomplete="off" placeholder="{{$root.globals.resources.Labels.Password}}"
+                md-cms-password 
+                ng-change="vm.changePass = vm.form.password.length > 0"
+                ng-required="vm.form.password.length > 0">
+        <div ng-messages="userForm.password.$error" role="alert">
+            <div ng-message="required">
+                <span md-resource-text name="Labels.Required"></span>
+            </div>
+        </div>
+    </md-input-container>
+
+    <md-input-container ng-if="vm.changePass" class="md-block" md-no-float>
+        <label md-resource-text name="Labels.PasswordConfirm"></label>
+        <input type="password" name="passwordConfirm" ng-model="vm.form.passwordConfirm" autocomplete="off" placeholder="{{$root.globals.resources.Labels.PasswordConfirm}}"
+                md-cms-password
+                required>
+        <div ng-messages="userForm.passwordConfirm.$error" role="alert">
+            <div ng-message="required">
+                <span md-resource-text name="Labels.Required"></span>
+            </div>
+        </div>
+    </md-input-container>
+</div>
+<div ng-if="vm.authMode.login == vm.mode">
+    <div ng-if="!vm.IsForgotPassword">
+        <div class="title" md-resource-text name="Titles.Login"></div>
+        <form autocomplete="off" name="loginForm" novalidate>
+            <md-input-container class="md-block" md-no-float>
+                <label md-resource-text name="Labels.Username"></label>
+                <input type="text" name="username" ng-model="vm.form.username" autocomplete="off" placeholder="{{$root.globals.resources.Labels.Username}}"
+                       required>
+                <div ng-messages="loginForm.username.$error" role="alert">
+                    <div ng-message="required">
+                        <span md-resource-text name="Labels.Required"></span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" md-no-float>
+                <label md-resource-text name="Labels.Password"></label>
+                <input type="password" name="password" ng-model="vm.form.password" autocomplete="off" placeholder="{{$root.globals.resources.Labels.Password}}"
+                       md-cms-password
+                       required>
+                <div ng-messages="loginForm.password.$error" role="alert">
+                    <div ng-message="required">
+                        <span md-resource-text name="Labels.Required"></span>
+                    </div>
+                </div>
+            </md-input-container>
+
+            <div class="remember-forgot-password" layout="row" layout-sm="column"
+                 layout-align="space-between center">
+                <md-checkbox class="remember-me" ng-model="vm.rememberMe" aria-label="Remember Me">
+                    <span>Remember Me</span>
+                </md-checkbox>
+
+                <a ui-sref="app.login" ng-click="vm.IsForgotPassword = !vm.IsForgotPassword" class="forgot-password md-accent-color">Forgot Password?</a>
+            </div>
+
+            <md-cms-button type="submit" class="md-raised md-accent submit-button"
+                           ng-disabled="loginForm.$invalid"
+                           ng-click="vm.processLogin(e)">
+                <md-resource-text name="Labels.Login"></md-resource-text>
+            </md-cms-button>
+        </form>
+    </div>
+    <div ng-if="vm.IsForgotPassword">
+        <div class="title" md-resource-text name="Titles.RecoverPassword"></div>
+        <form autocomplete="off" name="forgotPasswordForm" novalidate>
+            <md-input-container class="md-block" md-no-float>
+                <label md-resource-text name="Labels.EmailAddress"></label>
+                <input type="email" name="email" ng-model="vm.form.username" autocomplete="off" placeholder="{{$root.globals.resources.Labels.EmailAddress}}"
+                       ng-pattern="/^.+@.+\..+$/" required>
+                <div ng-messages="forgotPasswordForm.email.$error" role="alert" multiple>
+                    <div ng-message="required">
+                        <span md-resource-text name="Labels.Required">Email field is required</span>
+                    </div>
+                    <div ng-message="pattern">
+                        <span md-resource-text name="Labels.Invalid"></span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-button type="submit" class="md-raised md-accent submit-button" aria-label="RESET MY PASSWORD"
+                       ng-disabled="forgotPasswordForm.$invalid || forgotPasswordForm.$pristine"
+                       ng-click="vm.resetPassword()">
+                <md-resource-text name="Labels.SendResetLink"></md-resource-text>
+            </md-button>
+        </form>
+        <div class="login" layout="row" layout-align="center center">
+            <a class="link" ui-sref="app.login" ng-click="vm.IsForgotPassword = !vm.IsForgotPassword" md-resource-text name="Labels.GoBackToLogin"></a>
+        </div>
+    </div>
+</div>

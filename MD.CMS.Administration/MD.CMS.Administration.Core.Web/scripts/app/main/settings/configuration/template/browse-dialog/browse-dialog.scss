@@ -1,0 +1,14 @@
+﻿.files-container{
+    overflow: scroll;
+    overflow-x: hidden;
+    margin: 24px 0;
+
+    > div {
+        cursor: pointer;
+        padding: 14px;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(0,0,0,0.12);
+        }
+    }
+}

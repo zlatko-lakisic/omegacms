@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage("Git Pull"){
+            steps{
+                dir("E:\\Projects\\cms-master"){
+                    bat "git reset --hard"
+                    bat "git pull"
+                }
+            }
+        }
+        stage("Scan Server Side Code") {
+            steps{
+                dir("E:\\Projects\\cms-master"){
+                    bat "scan-code.bat \"4519e9c9b99cc269c2f6f89ea280a5c24e7c16e8\""
+                }
+            }
+        }
+        stage("Scan Client Side Code") {
+            steps{
+                dir("E:\\Projects\\cms-master\\MD.CMS.Administration"){
+                    bat "scan-code.bat \"4519e9c9b99cc269c2f6f89ea280a5c24e7c16e8\""
+                }
+            }
+        }
+    }
+}

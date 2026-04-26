@@ -1,0 +1,27 @@
+<md-dialog flex="80">
+    <form autocomplete="off" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 md-resource-text name="Labels.Value"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon style="color: white;" class="icon-close"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-content class="md-padding">
+                <p md-resource-text name="Labels.Value"></p>
+                <div class="code-block" style="padding:24px;background-color:rgb(237,237,237)"><json-formatter json="jsonValue" open="1"></json-formatter></div>
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()">
+                <md-resource-text name="Labels.Close">
+                </md-resource-text>
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

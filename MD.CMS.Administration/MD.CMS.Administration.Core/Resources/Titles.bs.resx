@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionCompleted" xml:space="preserve">
+    <value>Akcija završena</value>
+  </data>
+  <data name="ActionNotCompleted" xml:space="preserve">
+    <value>Akcija nije završena</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Akcije</value>
+  </data>
+  <data name="AddConnection" xml:space="preserve">
+    <value>Kreirajte novu vezu</value>
+  </data>
+  <data name="AddContent" xml:space="preserve">
+    <value>Dodaj sadržaj</value>
+  </data>
+  <data name="AddContentType" xml:space="preserve">
+    <value>Dodaj sadržaj sadržaja</value>
+  </data>
+  <data name="AddFolder" xml:space="preserve">
+    <value>Dodaj folder</value>
+  </data>
+  <data name="AddMediaContent" xml:space="preserve">
+    <value>Dodajte sadržaj medija</value>
+  </data>
+  <data name="AddMenu" xml:space="preserve">
+    <value>Dodajte meni</value>
+  </data>
+  <data name="AddMetaDataField" xml:space="preserve">
+    <value>Dodajte Meta Data polje</value>
+  </data>
+  <data name="AddProfileType" xml:space="preserve">
+    <value>Dodajte tip profila</value>
+  </data>
+  <data name="AddReportScheduler" xml:space="preserve">
+    <value>Dodajte planer izveštaja</value>
+  </data>
+  <data name="AddTaxonomy" xml:space="preserve">
+    <value>Dodajte taksonomiju</value>
+  </data>
+  <data name="AddTemplate" xml:space="preserve">
+    <value>Dodaj template</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Dodaj korisnika</value>
+  </data>
+  <data name="AliasNotFinished" xml:space="preserve">
+    <value>Niste završili svoj pseudonim, da li ste sigurni da želite nastaviti?</value>
+  </data>
+  <data name="CMSContent" xml:space="preserve">
+    <value>Sadržaj CMS-a</value>
+  </data>
+  <data name="CMSDashboard" xml:space="preserve">
+    <value>Dobrodošli nazad, {0}</value>
+  </data>
+  <data name="ContentsList" xml:space="preserve">
+    <value>Lista sadržaja</value>
+  </data>
+  <data name="ContentTypeEditor" xml:space="preserve">
+    <value>Sadržaj tipa uređivač</value>
+  </data>
+  <data name="ContentTypeNotFinished" xml:space="preserve">
+    <value>Niste dovršili vrstu sadržaja, da li ste sigurni da želite nastaviti?</value>
+  </data>
+  <data name="ContentTypesEdit" xml:space="preserve">
+    <value>Sadržaj tipa uređivač</value>
+  </data>
+  <data name="ContentTypesList" xml:space="preserve">
+    <value>Lista tipova sadržaja</value>
+  </data>
+  <data name="ContentTypeTemplateNotFinished" xml:space="preserve">
+    <value>Niste završili svoj tip sadržaja i predložak za vašu mapu, da li ste sigurni da želite nastaviti?</value>
+  </data>
+  <data name="DuplicateAlias" xml:space="preserve">
+    <value>Alias ​​je već u upotrebi!</value>
+  </data>
+  <data name="EditConnection" xml:space="preserve">
+    <value>Izmenite postojeću vezu</value>
+  </data>
+  <data name="EditContent" xml:space="preserve">
+    <value>Izmeni sadržaj</value>
+  </data>
+  <data name="EditContentType" xml:space="preserve">
+    <value>Izmeni vrstu sadržaja</value>
+  </data>
+  <data name="EditFolder" xml:space="preserve">
+    <value>Uredi folder</value>
+  </data>
+  <data name="EditMediaContent" xml:space="preserve">
+    <value>Uredite medijske sadržaje</value>
+  </data>
+  <data name="EditMenu" xml:space="preserve">
+    <value>Uredi meni</value>
+  </data>
+  <data name="EditMessageFolder" xml:space="preserve">
+    <value>Izmeni folder poruka</value>
+  </data>
+  <data name="EditMetaDataField" xml:space="preserve">
+    <value>Izmenite polje Meta podataka</value>
+  </data>
+  <data name="EditProfileType" xml:space="preserve">
+    <value>Izmenite tip profila</value>
+  </data>
+  <data name="EditReportScheduler" xml:space="preserve">
+    <value>Uredi planer izveštaja</value>
+  </data>
+  <data name="EditStepX" xml:space="preserve">
+    <value>Izmeni Korak {0}</value>
+  </data>
+  <data name="EditTaxonomy" xml:space="preserve">
+    <value>Izmenite taksonomiju</value>
+  </data>
+  <data name="EditTemplate" xml:space="preserve">
+    <value>Izmeni šablon</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>EditUser</value>
+  </data>
+  <data name="ErrorException" xml:space="preserve">
+    <value>Izuzetak greške</value>
+  </data>
+  <data name="FileManager" xml:space="preserve">
+    <value>Upravljač datotekama</value>
+  </data>
+  <data name="FoldersList" xml:space="preserve">
+    <value>Lista papira</value>
+  </data>
+  <data name="FolderTemplateNotFinished" xml:space="preserve">
+    <value>Niste završili svoj šablon za mape, da li ste sigurni da želite da nastavite?</value>
+  </data>
+  <data name="Form" xml:space="preserve">
+    <value>Obrazac</value>
+  </data>
+  <data name="FormFields" xml:space="preserve">
+    <value>Oblast polja</value>
+  </data>
+  <data name="LanguageSettings" xml:space="preserve">
+    <value>Postavke jezika</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Prijavite se na svoj nalog</value>
+  </data>
+  <data name="Mailbox" xml:space="preserve">
+    <value>Poštansko sanduče</value>
+  </data>
+  <data name="MediaContent" xml:space="preserve">
+    <value>Sadržaj medija</value>
+  </data>
+  <data name="MediaContentsList" xml:space="preserve">
+    <value>Lista medijskih sadržaja</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Meni</value>
+  </data>
+  <data name="MenuEditor" xml:space="preserve">
+    <value>Urednik menija</value>
+  </data>
+  <data name="MenuList" xml:space="preserve">
+    <value>Lista menija</value>
+  </data>
+  <data name="MessageFolderReplaceAfterDelete" xml:space="preserve">
+    <value>Izaberite fasciklu da biste zamijenili poruke nakon brisanja</value>
+  </data>
+  <data name="MetaData" xml:space="preserve">
+    <value>Meta podaci</value>
+  </data>
+  <data name="MetaDataFieldEditor" xml:space="preserve">
+    <value>Meta Data Field Editor</value>
+  </data>
+  <data name="MetaDataFieldsList" xml:space="preserve">
+    <value>Spisak polja Meta podataka</value>
+  </data>
+  <data name="MetaDataList" xml:space="preserve">
+    <value>Spisak polja Meta podataka</value>
+  </data>
+  <data name="NewMessage" xml:space="preserve">
+    <value>Nova poruka</value>
+  </data>
+  <data name="NewMessageFolder" xml:space="preserve">
+    <value>Dodaj novu mapu poruka</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Ostalo</value>
+  </data>
+  <data name="PasswordMismatch" xml:space="preserve">
+    <value>Lozinke se ne podudaraju</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Dozvole</value>
+  </data>
+  <data name="ProcessExplorer" xml:space="preserve">
+    <value>Process Explorer</value>
+  </data>
+  <data name="ProfilePermissions" xml:space="preserve">
+    <value>Dozvole za profil</value>
+  </data>
+  <data name="ProfileTypeEditor" xml:space="preserve">
+    <value>Profil tipa ditor</value>
+  </data>
+  <data name="ProfileTypeList" xml:space="preserve">
+    <value>Lista tipova profila</value>
+  </data>
+  <data name="ProfileTypesList" xml:space="preserve">
+    <value>Lista tipova profila</value>
+  </data>
+  <data name="RecoverPassword" xml:space="preserve">
+    <value>Oporavite svoju lozinku</value>
+  </data>
+  <data name="RemoveContentWithVersions" xml:space="preserve">
+    <value>Da li želite da izbrišete svu verziju ovog sadržaja ili samo ovu verziju?</value>
+  </data>
+  <data name="RemoveQuestion" xml:space="preserve">
+    <value>Da li ste sigurni da želite ukloniti ovo</value>
+  </data>
+  <data name="ReplyX" xml:space="preserve">
+    <value>Odgovor {0}</value>
+  </data>
+  <data name="ReportDefinitionEditor" xml:space="preserve">
+    <value>Urednik definicije izveštaja</value>
+  </data>
+  <data name="ReportDefinitionsList" xml:space="preserve">
+    <value>Prijavite definicije</value>
+  </data>
+  <data name="ReportPreview" xml:space="preserve">
+    <value>Pregled izveštaja</value>
+  </data>
+  <data name="ReportSchedulerEditor" xml:space="preserve">
+    <value>Izveštaj o planerima izveštaja</value>
+  </data>
+  <data name="ReportSchedulerList" xml:space="preserve">
+    <value>Izveštaj liste planera</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Resetujte svoju lozinku</value>
+  </data>
+  <data name="SaveApprovalChainError" xml:space="preserve">
+    <value>Lanac odobrenja nije sačuvan</value>
+  </data>
+  <data name="SaveQuestion" xml:space="preserve">
+    <value>Da li ste sigurni da želite da sačuvate ovo?</value>
+  </data>
+  <data name="ServerDashboard" xml:space="preserve">
+    <value>Status sistema (uživo)</value>
+  </data>
+  <data name="ServerDashboardProcessExplorer" xml:space="preserve">
+    <value>Process Explorer</value>
+  </data>
+  <data name="Successfull" xml:space="preserve">
+    <value>Successful</value>
+  </data>
+  <data name="SystemStatusLive" xml:space="preserve">
+    <value>Status sistema (uživo)</value>
+  </data>
+  <data name="TaxonomiesList" xml:space="preserve">
+    <value>Lista taksonomija</value>
+  </data>
+  <data name="TaxonomyAliasNotFinished" xml:space="preserve">
+    <value>Niste završili svoj alijas i vašu taksonomiju, da li ste sigurni da želite da nastavite?</value>
+  </data>
+  <data name="TaxonomyEditor" xml:space="preserve">
+    <value>Taxonomy Editor</value>
+  </data>
+  <data name="TaxonomyList" xml:space="preserve">
+    <value>Lista taksonomije</value>
+  </data>
+  <data name="TaxonomyNotFinished" xml:space="preserve">
+    <value>Niste završili svoju taksonomiju, da li ste sigurni da želite nastaviti?</value>
+  </data>
+  <data name="TemplateEditor" xml:space="preserve">
+    <value>Template Editor</value>
+  </data>
+  <data name="Templates" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="TemplatesList" xml:space="preserve">
+    <value>Lista lista</value>
+  </data>
+  <data name="UserEditor" xml:space="preserve">
+    <value>User Editor</value>
+  </data>
+  <data name="UserPermissions" xml:space="preserve">
+    <value>Korisničke dozvole</value>
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>Lista korisnika</value>
+  </data>
+  <data name="Waning" xml:space="preserve">
+    <value>Upozorenje!</value>
+  </data>
+  <data name="ContentTypePreview" xml:space="preserve">
+    <value>Prikaz Vrste Sadržaja</value>
+  </data>
+  <data name="PermissionSettings" xml:space="preserve">
+    <value>Permission Settings</value>
+  </data>
+  <data name="Cache" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+</root>

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="aws-lambda-tools-defaults.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="aws-lambda-tools-defaults.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MD.CMS.AwsLambda.Container.Core\MD.CMS.AwsLambda.Container.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\3rdParty\System.Collections.Immutable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>..\3rdParty\System.Reflection.Metadata.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

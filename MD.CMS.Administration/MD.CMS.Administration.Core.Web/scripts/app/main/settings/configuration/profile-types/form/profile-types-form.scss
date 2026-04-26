@@ -1,0 +1,70 @@
+#profile-types-preview {
+    .content {
+        .form-wrapper {
+            .buttonContainerBackground,
+            .buttonContainer {
+                display: none;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+
+            .buttonContainerBackground {
+                background: white;
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .content:hover {
+        .form-wrapper {
+            position: relative;
+        }
+    }
+
+    .content:hover {
+        .form-wrapper {
+            .buttonContainerBackground,
+            .buttonContainer {
+                display: flex;
+            }
+        }
+    }
+
+    &.full-screen {
+        .header {
+            min-height: 0;
+            height: 0;
+            -webkit-transition: height 1s; /* Safari */
+            transition: height 1s;
+            -webkit-transition-delay: 0.5s; /* Safari */
+            transition-delay: 0.5s;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            .md-display-1 {
+                visibility: hidden;
+                opacity: 0;
+                transition: visibility 0s 0.5s, opacity 0.5s linear;
+            }
+        }
+
+        .content:hover {
+            .form-wrapper {
+                position: inherit;
+
+                .buttonContainerBackground,
+                .buttonContainer {
+                    display: none;
+                }
+            }
+        }
+    }
+}

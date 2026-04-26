@@ -1,0 +1,64 @@
+<ul ng-if="!vm.isAddEditMode">
+    <li layout="row" layout-padding>
+        <md-switch ng-model="vm.field.DataBound" aria-label="DataBound" flex="30">
+            <span>Field is Data Bound</span>
+        </md-switch>
+    </li>
+    <li layout="column" ng-if="vm.field.DataBound">
+        <div layout="row" flex>
+            <md-input-container ng-if="vm.allDataSources.length > 0" flex>
+                <label>Data Source</label>
+                <md-select ng-model="vm.selectedDataSource.selectedId" ng-change="vm.changeSelectedDataSource()">
+                    <md-option ng-repeat="dataSource in vm.allDataSources" ng-value="dataSource.Id">{{dataSource.toString()}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-button ng-if="vm.allDataSources.length > 0 && vm.fields.length != 1" aria-label="menu" class="md-fab md-mini" ng-click="vm.toggleAddEditMode(true)">
+                <md-tooltip md-direction="top">Add new datasource</md-tooltip>
+                <md-icon md-font-icon="icon-plus"></md-icon>
+            </md-button>
+            <md-button ng-if="vm.allDataSources.length > 0 && vm.selectedDataSource.selected" aria-label="menu" class="md-fab md-mini" ng-click="vm.editDataSource(vm.selectedDataSource.selected)">
+                <md-tooltip md-direction="top">Edit datasource</md-tooltip>
+                <md-icon md-font-icon="icon-pencil"></md-icon>
+            </md-button>
+            <md-button ng-if="vm.allDataSources.length > 0 && vm.selectedDataSource.selected" aria-label="menu" class="md-fab md-mini md-warn" ng-click="deleteDataSource(vm.selectedDataSource.selected)">
+                <md-tooltip md-direction="top">Delete datasource</md-tooltip>
+                <md-icon md-font-icon="icon-delete"></md-icon>
+            </md-button>
+            <md-button ng-if="vm.allDataSources.length == 0" ng-click="vm.toggleAddEditMode(true)">
+                Add new datasource
+            </md-button>
+        </div>
+        <md-progress-circular ng-if="vm.fieldsLoading" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+        <md-input-container ng-if="vm.selectedDataSource.fields != null">
+            <label>Field</label>
+            <md-select ng-model="vm.field.DataSourceField" flex>
+                <md-optgroup ng-repeat="(key, value) in vm.selectedDataSource.fields" label="{{key}}">
+                    <md-option ng-value="item.raw" ng-repeat="item in value">{{item.friendly}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+        <md-input-container ng-if="vm.selectedDataSource.fields != null && (vm.fields.length == 0 || vm.field.IsDataBoundPrimaryKey)" flex>
+            <md-switch ng-model="vm.field.IsDataBoundPrimaryKey" aria-label="IsDataBoundPrimaryKey" flex="30">
+                <span>Is Primary Key?</span>
+            </md-switch>
+        </md-input-container>
+        <md-input-container ng-if="vm.selectedDataSource.fields != null" flex>
+            <md-switch ng-model="vm.field.DataBoundReadOnly" aria-label="DataBoundReadOnly" flex="30">
+                <span>Is Read Only?</span>
+            </md-switch>
+        </md-input-container>
+    </li>
+</ul>
+<form name="mdGenerictypeDesignerForm" id="mdGenerictypeDesignerForm">
+    <ul ng-if="vm.isAddEditMode">
+        <li layout="column" layout-padding>
+            <md-input-container>
+                <label>Type</label>
+                <md-select ng-model="vm.dataSourceModel.DbType" ng-change="vm.changeSelectedDataBoundType()" flex>
+                    <md-option ng-repeat="dataBoundType in vm.allDataBoundTypes" ng-value="dataBoundType">{{dataBoundType}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-generictype-designer-form-datasource ng-if="vm.selectedDataBoundType != ''" type="vm.dataSourceModel.DbType" ng-model="vm.dataSourceModel" on-before-save="vm.registerBeforeSaveEvent" on-after-save="vm.registerAfterSaveEvent" on-before-cancel="vm.registerBeforeCancelEvent" on-after-cancel="vm.registerAfterCancelEvent" layout-padding />
+        </li>
+    </ul>
+</form>

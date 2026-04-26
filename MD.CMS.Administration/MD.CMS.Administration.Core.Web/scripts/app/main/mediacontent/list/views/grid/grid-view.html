@@ -1,0 +1,22 @@
+<!-- GRID VIEW -->
+<div class="grid-view" layout="column">
+    <div flex="100" style="text-align:center;" ng-if="!vm.folder.Children.length"><h1 md-resource-text name="Labels.NoResults"></h1></div>
+    <div class="folders" layout="row" layout-wrap>
+        <div class="md-background-bg md-hue-1 md-whiteframe-1dp item folder" ng-repeat="folder in vm.folder.Children | filter:global.search"
+             layout="row" layout-align="space-between center"
+             ng-class="{'selected' : vm.selected === folder}" ng-click="vm.selectFolder(folder)" md-double-click="vm.openFolder(folder);">
+            <div layout="row" flex="100" class="title" layout-align="none center">
+                <span class="file-icon">
+                    <md-icon md-font-icon="{{folder.Children.length > 0 ? 'icon-folder-multiple-image' : 'icon-folder-image'}}"></md-icon>
+                </span>
+                <span flex class="name">{{folder.Name}}</span>
+                <div class="show-details" ng-click="vm.toggleFolderDetails(folder, $event)" hide-gt-md>
+                    <md-button class="md-icon-button sidenav-toggle" aria-label="Details">
+                        <md-icon md-font-icon="icon-information-outline"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / GRID VIEW -->

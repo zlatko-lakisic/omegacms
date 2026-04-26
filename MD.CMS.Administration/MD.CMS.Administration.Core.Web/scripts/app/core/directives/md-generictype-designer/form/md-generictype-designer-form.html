@@ -1,0 +1,115 @@
+<div layout="column" layout-padding>
+    <div layout="row" layout-align="center start">
+        <div layout="row">
+            <span><i class="icon icon-{{vm.genericTypeObj.Icon}} s40"></i>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <md-autocomplete md-no-cache="false"
+                             md-input-name="icon"
+                             md-selected-item="vm.genericTypeObj.Icon"
+                             md-search-text="vm.searchText"
+                             md-items="item in vm.querySearch(vm.searchText)"
+                             md-item-text="item"
+                             md-min-length="0"
+                             placeholder="Pick an icon"
+                             md-menu-class="autocomplete-custom-template"
+                             ng-disabled="!vm.editMode"
+                             ng-if="vm.editMode"
+                             required
+                             flex>
+                <md-item-template>
+                    <i class="icon icon-{{item}} s26"></i> {{item}}
+                </md-item-template>
+            </md-autocomplete>
+            <div ng-if="vm.formName" ng-messages="form[vm.formName].icon.$error" role="alert">
+                <div ng-message="required">
+                    <span md-resource-text name="Labels.Required"></span>
+                </div>
+            </div>
+        </div>
+        <md-input-container flex>
+            <label md-resource-text name="Labels.Name"></label>
+            <input flex type="text" name="name" required ng-model="vm.genericTypeObj.Name"
+                   ng-disabled="!vm.editMode" />
+            <div ng-if="vm.formName" ng-messages="form[vm.formName].name.$error" role="alert">
+                <div ng-message="required">
+                    <span md-resource-text name="Labels.Required"></span>
+                </div>
+            </div>
+        </md-input-container>
+    </div>
+    <md-input-container flex>
+        <label md-resource-text name="Labels.Description"></label>
+        <input type="text" name="description" required ng-model="vm.genericTypeObj.Description"
+               ng-disabled="!vm.editMode" />{{form[vm.formName].description.$error}}
+        <div ng-if="vm.formName" ng-messages="form[vm.formName].description.$error" role="alert">
+            <div ng-message="required">
+                <span md-resource-text name="Labels.Required"></span>
+            </div>
+        </div>
+    </md-input-container>
+</div>
+<div ng-if="!vm.attributesLoaded" layout="row" layout-align="center center" flex>
+    <md-progress-circular md-diameter="96" class="md-accent"></md-progress-circular>
+</div>
+<md-cms-grid ng-if="vm.attributesLoaded"
+             md-options="vm.options"
+             md-on-tile-event="vm.onTileEvent(event, data)"
+             register-edit-event="vm.registerToggleEditEvent"
+             md-grid-tile-count="vm.fields.parent.length"
+             register-update-tile-data-model-event="vm.registerUpdateTileDataModelEvent"
+             md-hide-toolbar="vm.hideToolbar"
+             reinit-event-name="md-cms-grid-reinit"
+             style-dependencies="vm.styleDependencies"
+             layout="column"
+             grid-actions="vm.gridActions"
+             defailt-grid-tile-data="vm.defailtGridTileData"
+             layout-fill
+             flex>
+    <md-cms-grid-list>
+        <md-cms-grid-tile class="control"
+                          ng-repeat="field in vm.genericTypeObj.Fields | mdGenerictypeDesignerFormFilter: undefined | orderBy:'+Order' track by field.Id"
+                          tile-data="field.JsonField.gridTileData"
+                          data-id="{{field.Id}}"
+                          data-type="{{field.AttributeTypeDefinition.InputType}}"
+                          data-droppable="{{(field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section)}}"
+                          data-name="{{field.Name}}"
+                          data-layout="{{vm.gridTileLayout[field.JsonField.gridTileData.layout]}}"
+                          data-tileid="{{field.JsonField.gridTileData.id}}"
+                          index="{{$index}}"
+                          is-nestable="field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section"
+                          ng-class="{'md-generictype-designer-element-parent':true}"
+                          meta-data="{'input-type':field.AttributeTypeDefinition.InputType}"
+                          min-height="{{vm.mdGenerictypeDesignerElementConstatns.getMinHeight(field)}}">
+            <md-generictype-designer-element ng-hide="vm.collapsed[field.Id]"
+                                             md-on-tile-event="vm.onTileEvent(event, data)"
+                                             md-on-register-edit-event="vm.registerTileToggleEditEvent"
+                                             md-field="field"
+                                             md-index="$index"
+                                             md-edit-mode="vm.editMode"
+                                             md-show-edit-dialog="vm.elementShowEditDialog(ev, id)"
+                                             md-fields="vm.genericTypeObj.Fields" />
+        </md-cms-grid-tile>
+    </md-cms-grid-list>
+    <md-cms-grid-toolbar md-title="Control Toolbox" ng-class="'md-generictype-designer-form-toolbox'" flex>
+        <div ng-repeat="(groupKey, groupLabel) in vm.mdGenerictypeDesignerElementConstatns.controlLabels">
+            <md-content class="md-padding" ms-scroll>
+                <div class="toolbox grid" layout="column" flex layout-wrap="">
+                    <md-cms-grid-tile ng-repeat="(key, item) in vm.mdGenerictypeDesignerElementConstatns.controls[groupKey]"
+                                      is-addable="true"
+                                      data-id="{{item.id}}"
+                                      data-type="{{item.id}}"
+                                      data-layout="{{vm.gridTileLayout[item.JsonField.gridTileData.layout]}}"
+                                      is-nestable="item.id == 13"
+                                      data-name="{{$root.globals.resources.Labels['Input-' + vm.attributeTypeEnum[item.id]]}}"
+                                      data-tileid="{{item.JsonField.gridTileData.id}}"
+                                      ng-class="{'toolbox-control':true}"
+                                      group="groupLabel"
+                                      flex>
+                        <div class="container" ng-class="vm.mdGenerictypeDesignerElementConstatns.fieldClass[item.id]">
+                            <h3 data-value="Name" md-resource-text name="Labels.Input-{{vm.attributeTypeEnum[item.id]}}"></h3>
+                        </div>
+                    </md-cms-grid-tile>
+                </div>
+            </md-content>
+        </div>
+    </md-cms-grid-toolbar>
+</md-cms-grid>

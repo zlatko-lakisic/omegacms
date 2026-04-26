@@ -1,0 +1,12 @@
+md-cms-diagram-element {
+    md-whiteframe {
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        background: #fff;
+    }
+
+    &.toolbar md-whiteframe {
+        border-radius: 0;
+        border: none;
+    }
+}

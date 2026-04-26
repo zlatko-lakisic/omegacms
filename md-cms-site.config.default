@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+        ServerName omegacms-test.local.omegacms.run
+        ServerAdmin info@omegacms.io
+        ErrorLog ${APACHE_LOG_DIR}/omegacms-test.local.omegacms.run.log
+
+        ProxyPreserveHost On
+        RequestHeader set X-Forwarded-Proto "http"
+        ProxyPassMatch    "/admin(.*)" "http://localhost:5000" timeout=60
+        ProxyPassReverse  "/admin(.*)" "http://localhost:5000" timeout=60
+
+        ProxyPassMatch    "/ws/web-sockets/(.*)" "ws://localhost:5001/web-sockets/$1" timeout=60
+        ProxyPassReverse  "/ws/web-sockets/(.*)" "ws://localhost:5001/web-sockets/$1" timeout=60
+
+        ProxyPassMatch    "/ws/(.*)" "http://localhost:5001/$1" timeout=60
+        ProxyPassReverse  "/ws/(.*)" "http://localhost:5001/$1" timeout=60
+
+</VirtualHost>

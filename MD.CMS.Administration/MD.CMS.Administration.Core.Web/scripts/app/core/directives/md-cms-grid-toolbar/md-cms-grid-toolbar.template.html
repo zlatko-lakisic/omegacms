@@ -1,0 +1,14 @@
+<md-sidenav id="{{vm.toolbarUniqueId}}" md-disable-scroll-target="#content" ng-style="vm.toolbarStyle" ng-if="vm.editMode" md-disable-backdrop="true" class="sidenav md-sidenav-right md-whiteframe-4dp" md-component-id="md-cms-grid-right-toolbar" ms-sidenav-helper>
+    <md-toolbar class="md-theme-light" layout="row" layout-align="space-between center">
+        <div flex>
+            <h1 class="md-toolbar-tools">{{vm.title}}</h1>
+        </div>
+        <md-button class="md-fab md-mini" aria-label="Close Toolbar" ng-click="vm.toggleRightToolbar()">
+            <md-icon md-font-icon="icon-chevron-double-right" />
+            <md-tooltip>Close Toolbar</md-tooltip>
+        </md-button>
+    </md-toolbar>
+    <div id="blocks"></div>
+    <div ng-hide="true" layout="row" layout-margin flex ng-transclude></div>
+</md-sidenav>
+<md-button id="{{vm.toolbarButtonUniqueId}}" ng-if="vm.editMode" class="md-raised md-primary controlToolBarButton" ng-style="vm.buttonStyle" ng-click="vm.toggleRightToolbar()"><md-icon md-font-icon="icon-cog-box" /> <span md-resource-text name="Labels.OpenToolbox"></span></md-button>

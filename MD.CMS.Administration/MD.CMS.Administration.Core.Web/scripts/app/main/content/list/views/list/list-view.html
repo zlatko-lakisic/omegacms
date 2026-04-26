@@ -1,0 +1,36 @@
+<!-- LIST VIEW -->
+<table class="simple list-view" ng-cloak>
+    <thead>
+        <tr>
+            <th></th>
+            <th class="col-active" md-sort="title" name="{{$root.globals.resources.Labels.Name}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide show-gt-md md-sort="ContentType" name="{{$root.globals.resources.Labels.Type}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide show-gt-md md-sort="DateCreated" name="{{$root.globals.resources.Labels.LastModified}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide-gt-md></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="file in vm.folder.Contents"
+            ng-click="vm.selectContent(file)"
+            md-double-click="vm.openContent(file)"
+            ng-class="{'selected' : vm.selected === file}">
+
+            <td class="file-icon">
+                <md-icon md-font-icon="icon-{{(file.ContentType == null ? 'file-document-box' : file.ContentType.Icon)}}"></md-icon>
+            </td>
+            <td class="name">{{file.Title}}</td>
+            <td class="type" hide show-gt-sm>{{((file.ContentType != null) ? file.ContentType.Name : $root.globals.resources.Labels.HtmlContent)}}</td>
+            <td class="last-modified" hide show-gt-md>{{file.DateCreated | datetime: 'ago' }}</td>
+            <td class="show-details" hide-gt-md>
+                <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleContentDetails(file, $event)">
+                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                </md-button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div flex="100" style="text-align:center;" ng-if="!vm.folder.Contents.length"><h1 md-resource-text name="Labels.NoResults"></h1></div>
+<!-- / LIST VIEW -->

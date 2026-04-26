@@ -1,0 +1,48 @@
+<!-- GRID VIEW -->
+<div class="grid-view" layout="column" ng-cloak>
+    <div flex="100" style="text-align:center;" ng-if="vm.noResults"><h1 md-resource-text name="Labels.NoResults"></h1></div>
+    <div class="folders" layout="row" layout-wrap>
+        <div class="md-background-bg md-hue-1 md-whiteframe-1dp item folder" ng-click="vm.selectTaxonomy(taxonomy)" md-double-click="vm.openTaxonomy(taxonomy)"
+             ng-repeat="taxonomy in vm.taxonomy.Children | filter:global.search" layout="row" layout-align=" center" ng-class="{'selected' : vm.selected === taxonomy}">
+            <div flex layout="row" class="title" layout-align="start center">
+                <span class="file-icon">
+                    <md-icon md-font-icon="icon-bookmark"></md-icon>
+                </span>
+                <span class="name">{{taxonomy.Name}}</span>
+                <span flex></span>
+                <span class="show-more">
+                    <md-menu>
+                        <md-button class="md-icon-button" aria-label="More" ng-click="vm.openMenu($mdMenu, $event);">
+                            <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                        </md-button>
+                        <md-menu-content width="4">
+                            <md-menu-item>
+                                <md-button ng-hide="!vm.showOrder"
+                                           ng-disabled="($index == 0 && (vm.pagesBorder != 0 || vm.pagesBorder != 3)) || vm.disableUntilFinishedChange || vm.searchTerm.length != 0"
+                                           ng-click="vm.orderUp($index);">
+                                    <md-icon md-font-icon="icon-arrow-up"></md-icon>
+                                    <span md-resource-text name="Labels.MoveUp"></span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-hide="!vm.showOrder"
+                                           ng-disabled="($last && (vm.pagesBorder != 2 || vm.pagesBorder != 3)) || vm.disableUntilFinishedChange || vm.searchTerm.length != 0"
+                                           ng-click="vm.orderDown($index);">
+                                    <md-icon md-font-icon="icon-arrow-down"></md-icon>
+                                    <span md-resource-text name="Labels.MoveDown"></span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item hide-gt-md ng-click="vm.toggleTaxonomyDetails(taxonomy, $event);">
+                                <md-button>
+                                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                                    <md-resource-text name="Labels.Details"></md-resource-text>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / GRID VIEW -->

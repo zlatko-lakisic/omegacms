@@ -1,0 +1,48 @@
+﻿<div id="file-manager" class="page-layout simple right-sidenav" layout="row" ng-cloak>
+    <div class="center" layout="column" flex>
+        <!-- HEADER-->
+        <div class="header md-accent-bg">
+            <div class="header-content" layout="column" layout-align="space-between">
+                <!-- TOOLBAR -->
+                <md-content-header has-search-box="false">
+                    <span class="md-display-1 font-weight-300">Search results</span>
+                    <div class="right-side" layout="row">
+                        <md-button flex-offset="95" ng-if="vm.currentView === 'list'" class="md-icon-button"
+                                   ng-click="vm.toggleView()"
+                                   aria-label="view type"
+                                   translate-attr-aria-label="FM.GRID_VIEW">
+                            <md-icon md-font-icon="icon-view-module"></md-icon>
+                            <md-tooltip><span md-resource-text name="Labels.GridView"></span></md-tooltip>
+                        </md-button>
+                        <md-button flex-offset="95" ng-if="vm.currentView === 'grid'" class="md-icon-button" aria-label="view type"
+                                   ng-click="vm.toggleView()"
+                                   translate-attr-aria-label="FM.LIST_VIEW">
+                            <md-icon md-font-icon="icon-view-headline"></md-icon>
+                            <md-tooltip><span md-resource-text name="Labels.ListView"></span></md-tooltip>
+                        </md-button>
+                    </div>
+                </md-content-header>
+                <!-- / TOOLBAR -->
+                <!-- BREADCRUMB -->
+                <div ms-scroll class="breadcrumb text-truncate layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    You are searching for "{{$root.globalSearchTerm}}"
+                </div>
+                <!-- / BREADCRUMB -->
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <md-tabs md-dynamic-height>
+            <md-tab label="{{key}} ({{value.length}})" ng-disabled="!value.length" ng-repeat="(key, value) in vm.searchResults" ng-click="vm.changeIcon(key)">
+                <div ng-if="vm.currentView === 'grid'" ng-include="'scripts/app/main/globalSearchResults/grid-view.html'"></div>
+                <div ng-if="vm.currentView === 'list'" ng-include="'scripts/app/main/globalSearchResults/list-view.html'"></div>
+            </md-tab>
+        </md-tabs>
+        <md-card ng-show="vm.noResults">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline align-vertical-middle" md-resource-text name="Labels.NoResults"></span>
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+    </div>
+</div>

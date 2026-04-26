@@ -1,0 +1,30 @@
+<!--LIST VIEW-->
+<table class="simple list-view">
+    <thead>
+        <tr>
+            <th>
+                <div ng-show="vm.searchMode">{{vm.numberOfSearchResults}} Results</div>
+            </th>
+            <th md-sort="Name" name="{{$root.globals.resources.Labels.Name}}" on-sort="vm.sort(sortingString);" class="col-active">
+            </th>
+            <th hide-gt-md></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="contentType in vm.contentTypes track by $index"
+            ng-click="vm.select(contentType, $index);"
+            md-double-click="vm.openContentType(contentType)"
+            ng-class="{'selected' : vm.selected === contentType}">
+            <td style="text-align:center;" ng-click="vm.selectContent(file);vm.validateAutoClick()">
+                <i class="icon icon-{{contentType.Icon}} s26"></i>
+            </td>
+            <td class="name">{{contentType.Name }}</td>
+            <td class="show-details" hide-gt-md>
+                <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleContentTypeDetails(contentType, $event)">
+                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                </md-button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!--LIST VIEW-->

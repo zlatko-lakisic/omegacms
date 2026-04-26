@@ -1,0 +1,72 @@
+/*----------------------------------------------------------------*/
+/*  md-generictype-designer-form-icons
+/*----------------------------------------------------------------*/
+
+$mdGenericDesignerFormIconsPath: 'core/directives/md-generictype-designer/';
+@if variable-exists(mdGenericDesignerFormIconsPathOverride) {
+    $mdGenericDesignerFormIconsPath: $mdGenericDesignerFormIconsPathOverride;
+}
+
+.container {
+    background-color: #fff;
+
+    &.textbox {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Textbox.png");
+    }
+
+    &.textarea {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Textarea.png");
+    }
+
+    &.fileupload {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/file-upload.png");
+    }
+
+    &.checkbox {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Checkbox.png");
+    }
+
+    &.checkboxgroup {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Checkbox-group.png");
+    }
+
+    &.selectlist {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Select-list.png");
+    }
+
+    &.calculated {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Calculated.png");
+    }
+
+    &.number {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Number.png");
+    }
+
+    &.contentpicker {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Content-picker.png");
+    }
+
+    &.contentmediapicker {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Content-media-picker.png");
+    }
+
+    &.taxonomypicker {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Taxonomy-picker.png");
+    }
+
+    &.userpicker {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/User-picker.png");
+    }
+
+    &.youtube {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Youtube.png");
+    }
+
+    &.calendarfield {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Calendar-field.png");
+    }
+
+    &.googlemap {
+        background-image: url("#{$mdGenericDesignerFormIconsPath}form/FormBuilderImages/Google-map.png");
+    }
+}

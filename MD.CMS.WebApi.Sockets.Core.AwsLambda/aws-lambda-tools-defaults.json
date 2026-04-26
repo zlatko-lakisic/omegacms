@@ -1,0 +1,19 @@
+
+{
+    "Information" : [
+        "This file provides default values for the deployment wizard inside Visual Studio and the AWS Lambda commands added to the .NET Core CLI.",
+        "To learn more about the Lambda commands with the .NET Core CLI execute the following command at the command line in the project root directory.",
+        "dotnet lambda help",
+        "All the command line options for the Lambda command can be specified in this file."
+    ],
+    "profile"     : "default",
+    "region"      : "us-east-1",
+    "configuration" : "Release",
+    "framework"     : "netcoreapp3.1",
+    "function-runtime" : "dotnetcore3.1",
+    "s3-prefix"        : "MD.CMS.WebApi.Sockets.Core.AwsLambda/",
+    "template"         : "serverless.template",
+    "template-parameters" : "\"GatewayName\"=\"OmegaCmsWebApiWebSockets\";\"MDCMSBusinessLogicCoreDefaultLcid\"=\"2057\";\"MDCMSBusinessLogicCoreEmailEnableSsl\"=\"true\";\"MDCMSBusinessLogicCoreEmailHost\"=\"\";\"MDCMSBusinessLogicCoreEmailPort\"=\"587\";\"MDCMSBusinessLogicCorePassword\"=\"\";\"MDCMSBusinessLogicCoreRootAdminAccount\"=\"{ \"Username\": \"root\", \\\"Password\\\": \\\"\\\" }\";\"MDCMSBusinessLogicCoreSessionDomain\"=\"lambda.omegacms.run\";\"MDCMSBusinessLogicCoreSessionTimeout\"=\"01:00:00\";\"MDCMSBusinessLogicCoreUsername\"=\"\";\"MDCMSWebApiCoreCorsOrigins\"=\"[ \"https://lambda.omegacms.run\" ]\";\"MDCMSWebApiCorePluginsDirectory\"=\"/opt/AwsLambdaPlugins/\";\"MDCMSWebApiCorePluginsFileProviderType\"=\"1\";\"MDToolsBaseDataAccessPluginsCoreDataAccessPlugins\"=\"[ \"MD.Tools.BaseDataAccess.Plugins.WebService.Core\", \"MD.Tools.BaseDataAccess.Plugins.MySql.Core\" ]\";\"MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings\"=\"{\"MD.Tools.BaseDataAccess.Plugins.MySql.Core\": \"DataSource=10.90.20.10;Database=md_cms;User=lambda_omega;Password=;CharSet=utf8;convert zero datetime=True;Default Command Timeout=60\",\"MD.Tools.BaseDataAccess.Plugins.WebService.Core\": \"\",\"MD.Tools.BaseDataAccess.Plugins.Solr.Core\": \"{ \\\"solr_host\\\": \\\"http://solr2-ubuntu.mostardesigns.com:8983/solr/\\\", \\\"solr_postfix\\\": \\\"\\\", \\\"solr_jobFileLocation\\\": \\\"D:/Projects/pluginJobs.omega\\\", \\\"config\\\": { \\\"jdbcurl\\\": \\\"jdbc:mysql://10.0.10.4:3306/md_cms\\\", \\\"jdbcuser\\\": \\\"root\\\", \\\"jdbcpassword\\\": \\\"\\\"}}\"}\";\"MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory\"=\"/opt/AwsLambdaPlugins/\";\"MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType\"=\"1\";\"MDToolsHelpersCoreProviderOptions\"=\"\";\"MDToolsHelpersCoreDefaultFileProvider\"=\"1\";\"MDCMSWebApiCoreBaseApiPath\"=\"\";\"BillingGroup\"=\"lambda.omegacms.run\";\"VpcSecurityGroupId\"=\"sg-0303e1eb251e28112\";\"VpcSubnet1Id\"=\"subnet-0a8a9bea74e94485f\";\"VpcSubnet2Id\"=\"subnet-0fb117c385eebce93\";\"ApiTimeout\"=\"600\";\"TraceLevel\"=\"3\";\"MDToolsHelpersCoreVerboseLoggingReflectionEnabled\"=\"false\";\"DebugMode\"=\"true\"",
+    "s3-bucket"           : "omega-cms-webapi-websockets",
+    "stack-name"          : "OmegaCmsWebApiWebSockets"
+}

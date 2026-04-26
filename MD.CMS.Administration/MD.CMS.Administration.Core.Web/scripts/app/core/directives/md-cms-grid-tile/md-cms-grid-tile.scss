@@ -1,0 +1,107 @@
+md-whiteframe {
+    &.gjs-grid-toolbar-tile, 
+    &.gjs-grid-tile {
+        margin: 8px;
+
+        &.edit-mode {
+            margin: 0px 8px 8px 8px;
+        }
+    }
+}
+
+md-cms-grid-tile-header {
+    &.gjs-grid-toolbar-tile,
+    &.gjs-grid-tile {
+        background: rgb(45,50,62);
+        margin: 8px 8px 0px 8px;
+
+        &,
+        .icon {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .md-fab {
+            &,
+            .icon {
+                color: rgba(0,0,0,0.54) !important;
+            }
+
+            .icon {
+                line-height: 40px;
+            }
+        }
+
+        .handle {
+            line-height: 40px;
+            width: 40px;
+            height: 40px;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+            cursor: grab;
+            border-radius: 50%;
+            vertical-align: middle;
+            display: inline-block;
+            position: relative;
+            align-items: center;
+            text-align: center;
+            min-height: 36px;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 14px;
+            font-style: inherit;
+            font-variant: inherit;
+            font-family: inherit;
+            text-decoration: none;
+            background-color: rgb(250,250,250);
+            font-size: 24px;
+            font-family: 'icomoon';
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            -webkit-font-smoothing: antialiased;
+            color: rgba(0, 0, 0, 0.54) !important;
+
+            &:before {
+                content: "\e8ff";
+            }
+        }
+
+        .md-cms-grid-tile-header-info-box {
+            margin-left: 20px;
+
+            &.ng-hide {
+                opacity: 0;
+            }
+
+            &.ng-hide-add,
+            &.ng-hide-remove {
+                transition: all linear 0.2s;
+            }
+        }
+    }
+}
+
+
+md-cms-grid-tile {
+
+    $flexHeightCounter: 100;
+
+    @while $flexHeightCounter < 1000 {
+
+        &.flexheight-#{$flexHeightCounter} {
+            height: #{$flexHeightCounter}px;
+            min-height: #{$flexHeightCounter}px;
+            max-height: #{$flexHeightCounter}px;
+
+            &[data-droppable="true"] {
+                height: inherit;
+                max-height: inherit;
+                padding: 8px;
+            }
+        }
+
+        $flexHeightCounter: $flexHeightCounter + 50;
+    }
+}

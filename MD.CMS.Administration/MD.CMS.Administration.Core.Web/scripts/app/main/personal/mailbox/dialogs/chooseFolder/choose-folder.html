@@ -1,0 +1,29 @@
+﻿<md-dialog class="compose-dialog" aria-label="New Message">
+    <form autocomplete="off" class="md-inline-form">
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                <span class="title" md-resource-text name="Titles.MessageFolderReplaceAfterDelete"></span>
+                <md-button class="md-icon-button" ng-click="vm.closeDialog()" aria-label="Close dialog">
+                    <md-icon md-font-icon="icon-close"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <md-input-container>
+                <label md-resource-text name="Labels.Folders">Folders</label>
+                <md-select ng-model="vm.choosenFolder">
+                    <md-option ng-repeat="folder in vm.folders" value="{{folder}}">
+                        {{folder.Name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button ng-click="vm.chooseFolder()" class="send-button md-accent md-raised">
+                    <md-resource-text name="Labels.Send"></md-resource-text>
+                </md-button>
+            </div>            
+        </md-dialog-actions>
+    </form>
+</md-dialog>

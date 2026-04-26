@@ -1,0 +1,53 @@
+<!-- MAIL CONTENT -->
+<div class="mail-header">
+    <div class="subject" flex>{{vm.selectedMessage.Subject}}</div>
+</div>
+<div class="mail-content" ng-repeat="message in vm.threadMessages" ng-class="{rpl: vm.threadMessages[0].FromUserId == message.FromUserId}">
+    <div class="info" layout="row" layout-align="space-between start">
+        <div layout="row" layout-align="start center" flex>
+            <div>
+                <div ng-if="!vm.selectedMail.from.avatar" class="avatar" ms-random-class="vm.colors" layout="row" layout-align="center center">
+                    <span ng-if="message.FromUser.Id" flex>
+                        {{message.FromUser.Username[0]}}
+                    </span>
+                    <span ng-if="!message.FromUser.Id" flex class="logo-image icon-omega-logo s20"></span>
+                </div>
+            </div>
+            <div layout="column" layout-align="start start">
+                <div class="name" md-truncate>
+                    <span ng-if="message.FromUser.Id">
+                        {{message.FromUser.Username}}
+                    </span>
+                    <span ng-if="!message.FromUser.Id">Omega</span>
+                </div>
+                <div class="to" layout="row" layout-align="start center">
+                    <div class="to-text" md-resource-text name="Labels.ToSmall"></div>
+                    <div md-truncate>{{message.ToUser.Username || 'me'}}</div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" layout-align="end center">
+            {{message.DateAdded | datetime}}          
+        </div>
+        <md-menu>
+            <md-button aria-label="More" class="md-icon-button"
+                       ng-click="$mdMenu.open($event)">
+                <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                <md-tooltip><span md-resource-text name="Labels.More"></span></md-tooltip>
+            </md-button>
+            <md-menu-content width="3">
+                <md-menu-item>
+                    <md-button aria-label="Reply"
+                               ng-disabled="!message.FromUser"
+                               translate-aria-label="REPLY"
+                               ng-click="vm.replyDialog($event)">
+                        <md-icon md-font-icon="icon-reply"></md-icon>
+                        <span md-resource-text name="Labels.Reply"></span>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div ng-bind-html="message.MessageContent"></div>
+</div>
+<!-- / MAIL CONTENT -->

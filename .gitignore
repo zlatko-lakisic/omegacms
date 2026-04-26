@@ -1,0 +1,57 @@
+.git
+**/.vs
+**/bin
+**/obj
+**/node_modules
+**/bower_components
+**/.yarn/
+**/*.lock
+!MD.CMS.Template/src/modern-app/package-lock.json
+**/.pnp.js
+**/*.user
+*.log
+**/aspnetcore-stdout*.log
+**/dist
+**/wwwroot/assets
+**/wwwroot/scripts
+**/wwwroot/css
+**/wwwroot/js
+**/businessLogic_ts
+**/*key
+**/*lic
+**/*id
+**/appsettings.json
+**/web.config
+/MD.CMS.Administration/MD.CMS.Administration.Core.Web/scripts/businessLogicMinified/businessLogic.compiled.mangled.js
+**/documentation/javascript/*
+**/documentation/typescript/*
+**/documentation/assembly/*
+**/docfx/*
+!**/docfx/docfx.json
+**/.sonarqube
+**/.scannerwork
+!**/sonarscanner/**/bin
+**/scripts/app/index.css
+**/min/all.min.*
+**/scripts/app/index.css
+**/scripts/**/tinymce-dist
+**/scripts/**/ace
+**/aws-logger-errors.txt
+3rdParty/dotnet-sdk-2.2.107-win-x64.exe
+
+# Local secrets and environment (templates stay tracked: *.example)
+.env
+.env.local
+.env.*.local
+**/lambda.env
+Jenkins/credentials.env
+**/TestRun.env
+!**/.env.example
+!**/*.env.example
+
+# ThemeForest / purchased admin theme (not part of the CMS product source tree)
+# Drop the extracted theme here while integrating; do not commit vendor bundles.
+themeforest-*/
+**/themeforest-*/
+# Angular Material shell build output (run npm run build in MD.CMS.Template/src/modern-app)
+MD.CMS.Template/src/wwwroot/modern/

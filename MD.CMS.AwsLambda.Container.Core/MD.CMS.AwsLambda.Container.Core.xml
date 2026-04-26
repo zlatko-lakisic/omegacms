@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MD.CMS.AwsLambda.Container.Core</name>
+    </assembly>
+    <members>
+        <member name="T:MD.CMS.AwsLambda.Container.Core.LambdaEntryPoint">
+            <summary>
+            This class extends from APIGatewayProxyFunction which contains the method FunctionHandlerAsync which is the 
+            actual Lambda function entry point. The Lambda handler field should be set to
+            
+            MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPoint::FunctionHandlerAsync
+            </summary>
+        </member>
+        <member name="M:MD.CMS.AwsLambda.Container.Core.LambdaEntryPoint.Init(Microsoft.AspNetCore.Hosting.IWebHostBuilder)">
+            <summary>
+            The builder has configuration, logging and Amazon API Gateway already configured. The startup class
+            needs to be configured in this method using the UseStartup() method.
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="T:MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets.OnConnectHandler(Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest,Amazon.Lambda.Core.ILambdaContext)">
+            <summary>
+            OnConnect event handler
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets.SendMessageHandler(Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest,Amazon.Lambda.Core.ILambdaContext)">
+            <summary>
+            SendMessage event handler
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MD.CMS.AwsLambda.Container.Core.LambdaEntryPointSockets.OnDisconnectHandler(Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest,Amazon.Lambda.Core.ILambdaContext)">
+            <summary>
+            OnDisconnect event handler
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MD.CMS.AwsLambda.Container.Core.LocalEntryPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MD.CMS.AwsLambda.Container.Core.LocalEntryPoint.Main(System.String[])">
+            <summary>
+            Default main application entry point
+            </summary>
+            <param name="args"></param>
+        </member>
+    </members>
+</doc>

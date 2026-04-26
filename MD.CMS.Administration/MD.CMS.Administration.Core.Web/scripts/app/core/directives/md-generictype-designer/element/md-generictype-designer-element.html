@@ -1,0 +1,29 @@
+<div ng-if="vm.field.AttributeTypeDefinition.InputType != vm.attributeTypeEnum.section" type="{{ vm.mdGenerictypeDesignerElementConstatns.fieldType[vm.field.AttributeTypeDefinition.InputType] }}" class="container" layout="column" ng-class="vm.mdGenerictypeDesignerElementConstatns.fieldClass[vm.field.AttributeTypeDefinition.InputType]">
+    <h3 ng-if="!vm.editMode">{{vm.field.Name}}</h3>
+</div>
+<div ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section" layout="{{vm.gridTileLayout[vm.field.JsonField.gridTileData.layout].toLowerCase()}}">
+    <md-cms-grid-tile class="control"
+                      ng-repeat="field in vm.fields | mdGenerictypeDesignerFormFilter: vm.field.JsonField.gridTileData.uniqueId | orderBy:'+Order' track by field.Id"
+                      tile-data="field.JsonField.gridTileData"
+                      data-id="{{field.Id}}"
+                      data-type="{{field.AttributeTypeDefinition.InputType}}"
+                      data-droppable="{{(field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section)}}"
+                      data-name="{{field.Name}}"
+                      data-layout="{{vm.gridTileLayout[field.JsonField.gridTileData.layout]}}"
+                      data-parentid="{{field.JsonField.gridTileData.parentId}}"
+                      data-tileid="{{field.JsonField.gridTileData.id}}"
+                      is-nestable="field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section"
+                      index="{{$index}}"
+                      ng-class="{'md-generictype-designer-element-parent':true}"
+                      meta-data="{'input-type':field.AttributeTypeDefinition.InputType}"
+                      min-height="150">
+        <md-generictype-designer-element ng-hide="vm.collapsed"
+                                         md-on-tile-event="vm.mdOnTileEvent(event, data)"
+                                         md-field="field"
+                                         md-index="$index"
+                                         md-edit-mode="vm.editMode"
+                                         md-show-edit-dialog="vm.showElementEditDialog(ev, id)"
+                                         md-fields="vm.fields"
+                                         md-start-index="{{mdBaseStartIndex + mdIndex}}" />
+    </md-cms-grid-tile>
+</div>

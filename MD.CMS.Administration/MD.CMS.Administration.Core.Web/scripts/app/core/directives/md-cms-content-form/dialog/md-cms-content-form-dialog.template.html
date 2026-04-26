@@ -1,0 +1,57 @@
+<md-dialog layout-padding flex="80">
+    <form autocomplete="off" name="{{vm.data.uniqueId}}_newcontentform" id="{{vm.data.uniqueId}}_newcontentform" class="md-inline-form" novalidate>
+        <md-tabs md-selected="vm.selectedTab" md-dynamic-height>
+            <md-tab label="Select Folder">
+                <div layout="row" flex>
+                    <div>
+                        <span ng-repeat="path in vm.folder.FolderPath.split('/') track by $index">
+                            <md-button ng-click="vm.selectFolder(vm.folder.FolderPath.split(path)[0] + path)">{{path}}</md-button>/
+                        </span>
+                    </div>
+                    <div ng-if="vm.folder.Children.length">
+                        <md-input-container>
+                            <md-select ng-model="vm.folder" ng-change="vm.selectFolder(vm.folder.FolderPath)">
+                                <md-option ng-repeat="folder in vm.folder.Children" ng-value="folder">
+                                    {{folder.Name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div>
+                        <md-button class="md-raised md-accent" aria-label="Select Folder" ng-click="vm.selectedTab = 1">
+                            <span class="ng-scope" md-resource-text name="Labels.Next"></span>
+                        </md-button>
+                    </div>
+                </div>
+            </md-tab>
+            <md-tab label="Create Content">
+                <div layout="column" flex>
+                    <div flex>
+                        <md-cms-content-form ng-if="vm.loaded != null"
+                                             md-content-form-name="{{vm.data.uniqueId}}_newcontentform"
+                                             md-content-type-definition="vm.contentTypeDefinition"
+                                             md-folder="vm.folder"
+                                             md-content="vm.content"
+                                             md-on-pre-save="vm.onContentPreSave()"
+                                             md-on-post-save="vm.onContentPostSave(data)"
+                                             md-on-error="vm.onError(error)"
+                                             md-save-event="vm.registerContentSaveEvent(event)" />
+                    </div>
+                    <div layout="row" layout-align="space-between" flex>
+                        <md-button id="save-content-button" type="submit" class="md-raised md-accent" aria-label="Submit"
+                                   ng-disabled="form[vm.data.uniqueId + '_newcontentform'].$invalid" ng-click="vm.save()">
+                            <span class="ng-scope" md-resource-text name="Labels.Submit"></span>
+                        </md-button>
+
+                        <md-button class="md-raised"
+                                   type="button"
+                                   aria-label="Back to previous page"
+                                   ng-click="vm.cancelNewElementDialog()">
+                            <span class="ng-scope" md-resource-text name="Labels.Cancel"></span><div class="md-ripple-container"></div>
+                        </md-button>
+                    </div>
+                </div>
+            </md-tab>
+        </md-tabs>
+    </form>
+</md-dialog>

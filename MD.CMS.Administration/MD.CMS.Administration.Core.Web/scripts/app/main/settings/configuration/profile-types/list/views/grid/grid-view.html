@@ -1,0 +1,26 @@
+<!-- GRID VIEW -->
+<div class="grid-view" layout="column">
+    <div class="folders" layout="row" layout-wrap>
+        <div class="md-background-bg md-hue-1 md-whiteframe-1dp item folder"
+             ng-repeat="profileType in vm.profileTypes | filter:global.search"
+             layout="row" layout-align="space-between center"
+             ng-class="{'selected' : vm.selected === profileType}"
+             ng-click="vm.select(profileType, $index)">
+            <div layout="row" class="title"
+                 layout-align="start center">                
+                <span class="file-icon" ui-sref="app.profile-types-form({id:profileType.Id, form:'profileTypeForm',currentView:vm.currentView})">
+                    <md-icon ng-if="profileType.Icon == ''" md-font-icon="icon-document"></md-icon>
+                    <md-icon ng-if="profileType.Icon != ''" md-font-icon="icon-{{profileType.Icon}}"></md-icon>
+                </span>
+                <span class="name">{{profileType.Name}}</span>
+            </div>
+            <div class="show-details">
+                <md-button ng-click="vm.deleteProfileType()" class="md-icon-button sidenav-toggle" aria-label="Details" translate translate-attr-aria-label="FM.DETAILS">
+                    <md-icon md-font-icon="icon-delete"></md-icon>
+                    <md-tooltip><span translate="FM.DELETE">Delete</span></md-tooltip>
+                </md-button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / GRID VIEW -->

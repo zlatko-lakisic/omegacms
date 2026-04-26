@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CMSDashboard" xml:space="preserve">
+    <value>Welcome back, {0}</value>
+  </data>
+  <data name="ContentsList" xml:space="preserve">
+    <value>Contents List</value>
+  </data>
+  <data name="ContentTypesEdit" xml:space="preserve">
+    <value>Content Type Editor</value>
+  </data>
+  <data name="ContentTypesList" xml:space="preserve">
+    <value>Content type list</value>
+  </data>
+  <data name="FoldersList" xml:space="preserve">
+    <value>Folders List</value>
+  </data>
+  <data name="LanguageSettings" xml:space="preserve">
+    <value>Language Settings</value>
+  </data>
+  <data name="MediaContentsList" xml:space="preserve">
+    <value>Media Content List</value>
+  </data>
+  <data name="MenuList" xml:space="preserve">
+    <value>Menu list</value>
+  </data>
+  <data name="MetaDataList" xml:space="preserve">
+    <value>Meta data fields list</value>
+  </data>
+  <data name="ProfileTypesList" xml:space="preserve">
+    <value>Profile types list</value>
+  </data>
+  <data name="ReportDefinitionsList" xml:space="preserve">
+    <value>Report definitions</value>
+  </data>
+  <data name="ReportSchedulerList" xml:space="preserve">
+    <value>Report Scheduler List</value>
+  </data>
+  <data name="TaxonomyList" xml:space="preserve">
+    <value>Taxonomy list</value>
+  </data>
+  <data name="TemplatesList" xml:space="preserve">
+    <value>Templates list</value>
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>Users list</value>
+  </data>
+  <data name="ServerDashboard" xml:space="preserve">
+    <value>System Status (Live)</value>
+  </data>
+  <data name="AddContent" xml:space="preserve">
+    <value>Add Content</value>
+  </data>
+  <data name="EditContent" xml:space="preserve">
+    <value>Edit Content</value>
+  </data>
+  <data name="ServerDashboardProcessExplorer" xml:space="preserve">
+    <value>Process Explorer</value>
+  </data>
+  <data name="ActionCompleted" xml:space="preserve">
+    <value>Action Completed</value>
+  </data>
+  <data name="ActionNotCompleted" xml:space="preserve">
+    <value>Action is not completed</value>
+  </data>
+  <data name="AliasNotFinished" xml:space="preserve">
+    <value>You didn't finish your alias, are you sure you want to continue?</value>
+  </data>
+  <data name="ContentTypeNotFinished" xml:space="preserve">
+    <value>You didn't finish your content type, are you sure you want to continue?</value>
+  </data>
+  <data name="ContentTypeTemplateNotFinished" xml:space="preserve">
+    <value>You didn't finish your content type and your folder template, are you sure you want to continue?</value>
+  </data>
+  <data name="DuplicateAlias" xml:space="preserve">
+    <value>Alias is already in use!</value>
+  </data>
+  <data name="EditMessageFolder" xml:space="preserve">
+    <value>Edit message folder</value>
+  </data>
+  <data name="EditStepX" xml:space="preserve">
+    <value>Edit Step {0}</value>
+  </data>
+  <data name="FileManager" xml:space="preserve">
+    <value>File Manager</value>
+  </data>
+  <data name="FolderTemplateNotFinished" xml:space="preserve">
+    <value>You didn't finish your folder template, are you sure you want to continue?</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login into your account</value>
+  </data>
+  <data name="Mailbox" xml:space="preserve">
+    <value>Mailbox</value>
+  </data>
+  <data name="MediaContent" xml:space="preserve">
+    <value>Media Content</value>
+  </data>
+  <data name="MessageFolderReplaceAfterDelete" xml:space="preserve">
+    <value>Choose folder to replace messages after deleting</value>
+  </data>
+  <data name="MetaData" xml:space="preserve">
+    <value>Meta Data</value>
+  </data>
+  <data name="NewMessage" xml:space="preserve">
+    <value>New Message</value>
+  </data>
+  <data name="NewMessageFolder" xml:space="preserve">
+    <value>Add new message folder</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="ProcessExplorer" xml:space="preserve">
+    <value>Process Explorer</value>
+  </data>
+  <data name="ProfilePermissions" xml:space="preserve">
+    <value>Profile permissions</value>
+  </data>
+  <data name="RecoverPassword" xml:space="preserve">
+    <value>Recover your password</value>
+  </data>
+  <data name="RemoveContentWithVersions" xml:space="preserve">
+    <value>Do you want to delete all version of this content or just this version?</value>
+  </data>
+  <data name="RemoveQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove this</value>
+  </data>
+  <data name="ReplyX" xml:space="preserve">
+    <value>Reply {0}</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset your password</value>
+  </data>
+  <data name="SaveApprovalChainError" xml:space="preserve">
+    <value>Approval Chain not saved</value>
+  </data>
+  <data name="SaveQuestion" xml:space="preserve">
+    <value>Are you sure you want to save this</value>
+  </data>
+  <data name="Successfull" xml:space="preserve">
+    <value>Successfull</value>
+  </data>
+  <data name="SystemStatusLive" xml:space="preserve">
+    <value>System Status (Live)</value>
+  </data>
+  <data name="TaxonomyAliasNotFinished" xml:space="preserve">
+    <value>You didn't finish your alias and your taxonomy, are you sure you want to continue?</value>
+  </data>
+  <data name="TaxonomyNotFinished" xml:space="preserve">
+    <value>You didn't finish your taxonomy, are you sure you want to continue?</value>
+  </data>
+  <data name="UserPermissions" xml:space="preserve">
+    <value>User permissions</value>
+  </data>
+  <data name="Waning" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="AddConnection" xml:space="preserve">
+    <value>Create a new connection</value>
+  </data>
+  <data name="AddContentType" xml:space="preserve">
+    <value>Add Content Type</value>
+  </data>
+  <data name="AddFolder" xml:space="preserve">
+    <value>Add Folder</value>
+  </data>
+  <data name="AddMediaContent" xml:space="preserve">
+    <value>Add Media Content</value>
+  </data>
+  <data name="AddMenu" xml:space="preserve">
+    <value>Add Menu</value>
+  </data>
+  <data name="AddMetaDataField" xml:space="preserve">
+    <value>Add Meta Data Field</value>
+  </data>
+  <data name="AddProfileType" xml:space="preserve">
+    <value>Add Profile Type</value>
+  </data>
+  <data name="AddReportScheduler" xml:space="preserve">
+    <value>Add Report Scheduler</value>
+  </data>
+  <data name="AddTaxonomy" xml:space="preserve">
+    <value>Add Taxonomy</value>
+  </data>
+  <data name="AddTemplate" xml:space="preserve">
+    <value>Add Template</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="CMSContent" xml:space="preserve">
+    <value>CMS Content</value>
+  </data>
+  <data name="ContentTypeEditor" xml:space="preserve">
+    <value>Content Type Editor</value>
+  </data>
+  <data name="EditConnection" xml:space="preserve">
+    <value>Edit existing connection</value>
+  </data>
+  <data name="EditContentType" xml:space="preserve">
+    <value>Edit Content Type</value>
+  </data>
+  <data name="EditFolder" xml:space="preserve">
+    <value>Edit Folder</value>
+  </data>
+  <data name="EditMediaContent" xml:space="preserve">
+    <value>Edit Media Content</value>
+  </data>
+  <data name="EditMenu" xml:space="preserve">
+    <value>Edit Menu</value>
+  </data>
+  <data name="EditMetaDataField" xml:space="preserve">
+    <value>Edit Meta Data Field</value>
+  </data>
+  <data name="EditProfileType" xml:space="preserve">
+    <value>Edit Profile Type</value>
+  </data>
+  <data name="EditReportScheduler" xml:space="preserve">
+    <value>Edit Report Scheduler</value>
+  </data>
+  <data name="EditTaxonomy" xml:space="preserve">
+    <value>Edit Taxonomy</value>
+  </data>
+  <data name="EditTemplate" xml:space="preserve">
+    <value>Edit Template</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>EditUser</value>
+  </data>
+  <data name="FormFields" xml:space="preserve">
+    <value>Form Fields</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MenuEditor" xml:space="preserve">
+    <value>Menu Editor</value>
+  </data>
+  <data name="MetaDataFieldEditor" xml:space="preserve">
+    <value>Meta Data Field Editor</value>
+  </data>
+  <data name="MetaDataFieldsList" xml:space="preserve">
+    <value>Meta Data Fields List</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="PasswordMismatch" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="ProfileTypeEditor" xml:space="preserve">
+    <value>Profile type ditor</value>
+  </data>
+  <data name="ReportDefinitionEditor" xml:space="preserve">
+    <value>Report definition editor</value>
+  </data>
+  <data name="ReportPreview" xml:space="preserve">
+    <value>Report Preview</value>
+  </data>
+  <data name="ReportSchedulerEditor" xml:space="preserve">
+    <value>Report Scheduler Editor</value>
+  </data>
+  <data name="TaxonomyEditor" xml:space="preserve">
+    <value>Taxonomy Editor</value>
+  </data>
+  <data name="TemplateEditor" xml:space="preserve">
+    <value>Template Editor</value>
+  </data>
+  <data name="Templates" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="UserEditor" xml:space="preserve">
+    <value>User Editor</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Form" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="ProfileTypeList" xml:space="preserve">
+    <value>Profile Types List</value>
+  </data>
+  <data name="TaxonomiesList" xml:space="preserve">
+    <value>Taxonomies List</value>
+  </data>
+  <data name="ErrorException" xml:space="preserve">
+    <value>Error exception</value>
+  </data>
+  <data name="ContentTypePreview" xml:space="preserve">
+    <value>Content Type Preview</value>
+  </data>
+  <data name="PermissionSettings" xml:space="preserve">
+    <value>Permission Settings</value>
+  </data>
+  <data name="Cache" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+</root>

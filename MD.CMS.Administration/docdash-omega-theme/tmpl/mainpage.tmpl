@@ -1,0 +1,23 @@
+<?js
+var data = obj;
+var self = this;
+?>
+
+
+<?js if (data.kind !== 'package') { ?>
+	<h3><?js= data.name ?> <?js= data.version ?></h3>
+    <?js this.nav.topLevelNav.forEach(function(entry){ ?>
+		<div class="omega-panel">
+			<h3><?js= entry.title ?></h3>
+			<ul>
+				<?js entry.members.forEach(function(member){ ?><li><?js= member ?></li><?js	}); ?>
+			</ul>
+		</div>
+	<?js }); ?>
+<?js } ?>
+
+<?js if (data.readme) { ?>
+    <section class="readme-section">
+        <article><?js= data.readme ?></article>
+    </section>
+<?js } ?>

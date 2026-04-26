@@ -1,0 +1,43 @@
+<div class="navigation-toggle" hide-gt-sm>
+    <md-button class="md-icon-button" ng-click="vm.toggleHorizontalMobileMenu()"
+               aria-label="Toggle Mobile Navigation">
+        <md-icon md-font-icon="icon-menu"></md-icon>
+    </md-button>
+</div>
+
+<ul class="horizontal">
+    <li ng-repeat="node in vm.navigation" ms-navigation-horizontal-node="node"
+        ng-class="{'has-children': node.children.length > 0}"
+        ng-include="'navigation-horizontal-nested.html'"></li>
+</ul>
+
+<script type="text/ng-template" id="navigation-nested-reloaded.html"><div ng-include="'navigation-nested.html'" class="reloaded"></div></script>
+
+<!-- Nested horizontal navigation template -->
+<script type="text/ng-template" id="navigation-horizontal-nested.html">
+    <div ms-navigation-horizontal-item layout="row" ng-if="node.display">
+        <div class="ms-navigation-horizontal-button" ng-if="!node.uisref && node.title"
+             ng-class="{'active md-accent-bg': vm.isActive}">
+            <i class="icon s18 {{node.icon}}" ng-if="node.icon"></i>
+            <md-resource-text ng-if="node.noTransform === undefined" name="{{node.title}}" class="title" flex></md-resource-text>
+            <span ng-if="node.noTransform" class="title" flex>{{node.title}}</span>
+            <span class="badge white-fg" style="background: {{node.badge.color}}" ng-if="node.badge">{{node.badge.content}}</span>
+            <i class="icon-chevron-right s18 arrow" ng-if="node.children.length > 0"></i>
+        </div>
+        <a class="ms-navigation-horizontal-button" ui-sref="{{node.uisref}}" ui-sref-active="active md-accent-bg"
+           ng-class="{'active md-accent-bg': vm.isActive}"
+           ng-if="node.uisref && node.title">
+            <i class="icon s18 {{node.icon}}" ng-if="node.icon"></i>
+            <md-resource-text ng-if="node.noTransform === undefined" name="{{node.title}}" class="title" flex></md-resource-text>
+            <span ng-if="node.noTransform" class="title" flex>{{node.title}}</span>
+            <span class="badge white-fg" style="background: {{node.badge.color}}" ng-if="node.badge">{{node.badge.content}}</span>
+            <i class="icon-chevron-right s18 arrow" ng-if="node.children.length > 0"></i>
+        </a>
+    </div>
+    <ul ng-if="node.children.length > 0 && node.display">
+        <li ng-repeat="node in node.children" ms-navigation-horizontal-node="node"
+            ng-class="{'has-children': node.children.length > 0}"
+            ng-include="'navigation-horizontal-nested.html'"></li>
+    </ul>
+</script>
+<!-- / Nested navigation template -->

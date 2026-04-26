@@ -1,0 +1,63 @@
+<!-- SIDENAV HEADER -->
+<div class="header md-accent-bg" layout="column" layout-align="space-between">
+    <div class="toolbar" layout="row" layout-align="end center">
+        <md-button ng-if="!(vm.getSelectedType() == 2 && vm.selected.Id == 1)" ng-disabled="vm.selectedtype <= 1 && vm.deleteEnabled"
+                   class="md-icon-button" ng-click="vm.delete()">
+            <md-icon md-font-icon="icon-delete"></md-icon>
+            <md-tooltip><md-resource-text name="Labels.Delete"/></md-tooltip>
+        </md-button>
+        <md-button ng-click="vm.validateEdit()"
+                   class="md-icon-button">
+            <md-icon md-font-icon="icon-table-edit"></md-icon>
+            <md-tooltip><md-resource-text name="Labels.Edit"/></md-tooltip>
+        </md-button>      
+    </div>
+
+    <div>
+        <div class="title text-truncate">{{(vm.getSelectedType() == 1 ? vm.selected.Name : vm.selected.Title)}}</div>
+        <div><span md-resource-text class="subtitle secondary-text" ng-show="vm.getSelectedType() == 2" name="Labels.Edited"></span> {{vm.selected.DateCreated | datetime}}</div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+
+<!-- SIDENAV CONTENT -->
+<md-content class="content" flex ms-scroll>
+
+    <div class="file-details">
+        <div class="preview file-icon" layout="row" layout-align="center center">
+            <i class="{{(vm.selected.ContentType == null) ? 'icon-file' : 'icon-' + vm.selected.ContentType.Icon}} s48" ng-show="vm.getSelectedType() == 2"></i>
+            <i class="icon-folder s48" ng-show="vm.getSelectedType() == 1"></i>
+        </div>
+
+        <div class="title" md-resource-text name="Labels.Info"></div>
+
+        <table>
+            <tr class="id">
+                <th md-resource-text name="Labels.Id"></th>
+                <td>{{vm.selected.Id}}</td>
+            </tr>
+
+            <tr class="type">
+                <th md-resource-text name="Labels.Type"></th>
+                <td>{{(vm.getSelectedType() == 1 ? $root.globals.resources.Labels.Folder : (vm.selected.ContentType != null ? vm.selected.ContentType.Name : $root.globals.resources.Labels.HtmlContent))}}</td>
+            </tr>
+
+            <tr class="location">
+                <th md-resource-text name="Labels.Location"></th>
+                <td>{{(vm.getSelectedType() == 1 ? (vm.folder.Parent == null ? vm.folder.FolderPath : vm.folder.Parent.FolderPath) : vm.folder.FolderPath)}}</td>
+            </tr>
+
+            <tr class="owner" ng-show="vm.getSelectedType() == 2">
+                <th md-resource-text name="Labels.Author"></th>
+                <td>{{vm.selected.Author.Username}}</td>
+            </tr>
+
+            <tr class="modified" ng-show="vm.getSelectedType() == 2">
+                <th md-resource-text name="Labels.Modified"></th>
+                <td>{{vm.selected.DateCreated | datetime: 'ago'}}</td>
+            </tr>
+        </table>
+    </div>
+
+</md-content>
+<!-- / SIDENAV CONTENT -->

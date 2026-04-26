@@ -1,0 +1,15 @@
+<div id="toolbar{{uniqueId}}" class="toolbar content-header-toolbar" layout="row" layout-align="space-between" ng-class="{large: isLarge}">
+    <div class="transclude-container" ng-class="{'open' : isSearchVisible}" layout="row" layout-align="space-between" ng-transclude></div>
+    <div class="search-box" ng-if="hasSearchBox" ng-class="{'open' : isSearchVisible}" layout="row">
+        <div class="search" layout="row" layout-align="start center" ng-class="{'open' : isSearchVisible}" flex>
+            <input id="contentSearch" ng-keyup="$event.keyCode == 13 ? search() : null;$event.keyCode == 27 ? cancelSearch() : null" ng-model="data.searchTerm" ng-model-options="{debounce:1000}" ng-change="search()" type="text" placeholder="{{$root.globals.resources.Labels.SearchPlaceholder}}" flex>
+        </div>
+        <div class="right-side" layout="row">
+            <md-button ng-click="toggleSearch();" class="md-icon-button">
+                <md-icon md-font-icon="{{ isSearchVisible ? 'icon-close' : 'icon-magnify' }}"></md-icon>
+                <md-tooltip ng-if="!isSearchVisible"><md-resource-text name="Labels.Search" /></md-tooltip>
+                <md-tooltip ng-if="isSearchVisible"><md-resource-text name="Labels.Close" /></md-tooltip>
+            </md-button>
+        </div>
+    </div>
+</div>

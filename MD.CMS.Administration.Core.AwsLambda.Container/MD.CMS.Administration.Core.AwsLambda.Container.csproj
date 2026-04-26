@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <AssemblyName>MD.CMS.Admin.Core.AwsLambda.Cont</AssemblyName>
+    <RootNamespace>MD.CMS.Admin.Core.AwsLambda.Cont</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MD.CMS.AwsLambda.Container.Core\MD.CMS.AwsLambda.Container.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\3rdParty\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>..\3rdParty\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,77 @@
+<md-cms-placeholder md-promise="promise" md-template="s">
+    <div layout="row" layout-align="left center" layout-wrap>
+        <md-button class="md-fab md-mini md-primary" ng-disabled="entity == null" ng-click="openMoreinfoDialog($event)" flex="none">
+            <md-icon md-font-icon="icon-information" />
+            <md-tooltip ng-if="entity != null && typeString == 'ProfileType'">{{entity.Name}}</md-tooltip>
+            <md-tooltip ng-if="entity != null && typeString == 'User'">{{entity.Username}}</md-tooltip>
+            <md-tooltip ng-if="entity != null && typeString == 'Content'">{{entity.Path}}/{{entity.Title}}</md-tooltip>
+            <md-tooltip ng-if="entity != null && typeString == 'Taxonomy'">{{entity.TaxonomyPath}}</md-tooltip>
+            <md-tooltip ng-if="entity != null && typeString == 'MediaContent'">{{entity.Path}}/{{entity.Name}}</md-tooltip>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary" ng-if="entity == null && typeString == 'Content'" ng-click="openNewElementDialog($event)" flex="none">
+            <md-icon md-font-icon="icon-plus">
+                <md-tooltip>Add new</md-tooltip>
+            </md-icon>
+        </md-button>
+        <div flex>
+            <md-autocomplete id="{{uniqueId}}"
+                             class="md-cms-autocomplete {{type}}"
+                             placeholder="{{placeholder}}"
+                             md-search-text="searchText"
+                             md-selected-item-change="selectedItemChange(entity)"
+                             md-selected-item="entity"
+                             md-item-text="entity._displayText"
+                             md-items="entity in querySearch(searchText)"
+                             md-min-length="0"
+                             md-no-cache="true"
+                             md-floating-label="{{mdFloatingLabel}}"
+                             ng-disabled="ngDisabled"
+                             ng-pattern="ngPattern"
+                             md-clear-button="true"
+                             flex="100"
+                             md-delay="1000">
+                <md-item-template>
+                    <span ng-switch="typeString">
+                        <span md-highlight-text="searchText" md-highlight-flags="^i" ng-switch-when="ProfileType">{{entity.Name}}</span>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i" ng-switch-when="User">{{entity.Username}}</span>
+                        <span ng-switch-when="Content" layout="row">
+                            <span md-highlight-text="searchText" md-highlight-flags="^i" flex>{{entity.Title}}</span>
+                            <md-icon md-font-icon="icon-information" class="icon s20">
+                                <md-tooltip md-direction="right">
+                                    {{entity.Path}}/{{entity.Title}}
+                                </md-tooltip>
+                            </md-icon>
+                        </span>
+                        <span ng-switch-when="Taxonomy">
+                            <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity.TaxonomyPath}}</span>
+                        </span>
+                        <span ng-switch-when="MediaContent">
+                            <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity.Name}}</span>
+                            <span style='width: 150px; height: 50px; display: inline-block; margin-left: 25px;'>
+                                <img alt="{{entity.Name}}" ng-if='entity.FileType == 1' style='max-width:100%;max-height:100%' ng-src="{{'uploads/' + entity.PreviewUrl}}" />
+                                <md-tooltip md-direction="right">
+                                    {{entity.Path}}/{{entity.Name}}
+                                </md-tooltip>
+                            </span>
+                        </span>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i" ng-switch-when="ContentTypeDefinition">{{entity.Name}}</span>
+                        <span ng-switch-default>
+                            <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity}}</span>
+                        </span>
+                    </span>
+                </md-item-template>
+                {{getInnerHtml()}}
+                <md-not-found>
+                    No results matching "{{searchText}}" were found.
+                </md-not-found>
+            </md-autocomplete>
+        </div>
+    </div>
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="{{mdInputName}}_moreInfoDialog">
+            <md-dialog layout-padding>
+                <md-cms-elementsummary md-type="mdType" md-selected-item="entity" />
+            </md-dialog>
+        </div>
+    </div>
+</md-cms-placeholder>

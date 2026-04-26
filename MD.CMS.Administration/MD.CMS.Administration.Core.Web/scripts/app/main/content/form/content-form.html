@@ -1,0 +1,192 @@
+<div id="forms" class="page-layout simple fullwidth doc-page content-form" layout="column">
+
+    <!-- HEADER-->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div class="header-content" layout="column" layout-align="space-between">
+
+            <div class="breadcrumb text-truncate" layout="row" layout-align="start center">
+                <span data-ng-repeat="path in vm.folder.ParentArray"
+                      class="ng-binding ng-scope"
+                      ui-sref="app.content_list({folderPath:path.FolderPath})">
+                    {{path.Name}}
+                    <md-icon ng-if="(vm.folder.ParentArray.length-1) != $index" md-font-icon="icon-chevron-right" class="icon separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <!--<div class="loader" ng-if="!vm.formLoaded">
+            <md-progress-circular md-diameter="96"></md-progress-circular>
+        </div>-->
+        <!-- STEPPER -->
+        <div class="md-title">{{ vm.formTitle | uppercase }}</div>
+        <div layout="row">
+            <div class="form-wrapper md-whiteframe-1dp" flex="100">
+                <form autocomplete="off" name="contentForm" id="contentForm" class="md-inline-form" novalidate>
+                    <div class="ng-scope" layout="row" layout-md="column" layout-xs="column">
+                        <h1>{{vm.content.Title}}</h1>
+                        <!--<md-input-container flex flex-xs="100" flex-md="100">
+                            <label md-resource-text name="Labels.ContentTitle"></label>
+                            <input type="text" name="title" ng-model="vm.content.Title" ng-disabled="vm.content.IsDataBound" required>
+                            <div ng-messages="contentForm.title.$error"
+                                 role="alert">
+                                <div ng-message="required">
+                                    <md-resource-text name="Labels.ContentTitleRequired" />
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <div flex="10" hide-xs hide-sm></div>
+                        <div flex flex-xs="100" flex-md="100" ng-if="!vm.isNew && !vm.content.IsDataBound">
+                            <md-input-container>
+                                <label>Version of content</label>
+                                <md-select placeholder="Version of content" ng-model="vm.currentContentVersion" style="min-width: 200px;">
+                                    <md-option ng-value="content.DateCreated" ng-repeat="content in vm.contentVersions track by content.DateCreated"
+                                               ng-click="vm.ContentVersion(content)"><md-resource-text name="Labels.ContentVersions" replacevalue0="{{content.Title}}" replacevalue1="{{$index +1}}" /></md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex="10" hide-xs hide-sm></div>
+                        <div flex flex-xs="100" flex-md="100" ng-if="!vm.isNew && !vm.content.IsDataBound">
+                            <md-input-container>
+                                <label>Language</label>
+                                <md-select placeholder="{{$root.globals.resources.Labels.AddContentInPlaceholder}}" ng-model="vm.selectedCulture" style="min-width: 200px;">
+                                    <md-option ng-value="culture.LCID" ng-repeat="culture in vm.cultures" ng-click="vm.translateContent(culture.LCID)">{{culture.Name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>-->
+                    </div>
+
+                    <md-tabs md-dynamic-height>
+                        <md-tab label="{{$root.globals.resources.Labels.MainContent}}" ng-click="vm.changeTab(1)">
+                            <md-cms-content-form md-content-form-name="contentForm"
+                                                 md-content-type-definition="vm.contentTypeDefinition"
+                                                 md-folder="vm.folder"
+                                                 md-content="vm.content"
+                                                 md-on-pre-save="vm.onContentPreSave()"
+                                                 md-on-post-save="vm.onContentPostSave(data)"
+                                                 md-on-error="vm.onError(error)"
+                                                 md-save-event="vm.registerContentSaveEvent(event)"
+                                                 md-show-versions="true"
+                                                 md-show-languages="true"
+                                                 />
+
+                            <!--<md-cms-fields ng-if="!vm.isHtml"
+                                           md-fields="vm.content.ContentType.Fields"
+                                           md-folder-path="vm.folder.FolderPath"
+                                           md-form-name="contentForm"
+                                           register-upload-events="vm.registerContentUploadEvents"
+                                           on-save="vm.onSave(event)" 
+                                           reinit-event-name="content-tabs-change" />
+                            <md-cms-textarea ng-if="vm.isHtml" flex
+                                             md-input-name="Html Content"
+                                             md-floating-label="{{$root.globals.resources.Labels.HtmlContent}}"
+                                             md-model="vm.htmlField">
+                                <md-inner-html>
+                                    <md-cms-fieldValidation md-field="vm.htmlField" md-form-name="contentForm" />
+                                </md-inner-html>
+                            </md-cms-textarea>-->
+                        </md-tab>
+                        <md-tab ng-if="!vm.content.IsDataBound && vm.content.MetaDataFieldValues.length > 0" label="{{$root.globals.resources.Labels.MetaData}}" ng-click="vm.changeTab(2)">
+                            <md-cms-fields md-fields="vm.content.MetaDataFieldValues"
+                                           md-folder-path="vm.folder.FolderPath"
+                                           md-form-name="metaDataForm"
+                                           register-upload-events="vm.resigerContentMetaDataUploadEvents"
+                                           on-save="vm.onSave(event)"
+                                           reinit-event-name="content-tabs-change"/>
+                        </md-tab>
+                        <md-tab ng-if="!vm.content.IsDataBound" label="{{$root.globals.resources.Labels.Taxonomies}}">
+                            <div>
+                                <md-card>
+                                    <md-card-title>
+                                        <md-card-title-text id="taxonomyChip">
+                                            <md-cms-multiple-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Taxonomy"
+                                                                          md-input-name="ContentTaxonomies"
+                                                                          md-floating-label="Taxonomies"
+                                                                          md-selected-item="vm.contentTaxonomies"
+                                                                          placeholder="{{$root.globals.resources.Labels.SearchForTaxonomyPlaceholder}}" />
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                </md-card>
+                            </div>
+                        </md-tab>
+                        <md-tab ng-if="!vm.content.IsDataBound" label="{{$root.globals.resources.Labels.UrlAlias}}">
+                            <div>
+                                <md-card>
+                                    <md-card-title>
+                                        <md-card-title-text id="aliasChip">
+                                            <md-cms-aliases md-content="vm.content"
+                                                            md-input-name="contentAlias"
+                                                            md-floating-label="Content Aliases"
+                                                            md-form="vm.contentForm"
+                                                            placeholder="Type to add an alias"
+                                                            on-save="vm.registerContentAliasSaveEvent" />
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                </md-card>
+                            </div>
+                        </md-tab>
+                        <md-tab ng-if="!vm.content.IsDataBound && vm.folder.Templates.length > 0" label="{{$root.globals.resources.Labels.Template}}">
+                            <md-input-container flex="50">
+                                <label md-resource-text name="Labels.Template"></label>
+                                <md-select ng-model="vm.content.Template" ng-change="vm.getScreenshot()" placeholder="{{$root.globals.resources.Labels.Template}}">
+                                    <md-option ng-repeat="template in vm.folder.Templates" ng-value="template" ng-selected="vm.content.Template && template.Id == vm.content.Template.Id">
+                                        {{template.Name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label md-resource-text name="Labels.UrlAlias"></label>
+                                <md-select ng-model="vm.selectedAlias" ng-change="vm.getScreenshot()" placeholder="{{$root.globals.resources.Labels.UrlAlias}}">
+                                    <md-option ng-repeat="alias in vm.content.ContentAliases" ng-value="alias.Alias">
+                                        {{alias.Alias}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <div>
+                                <img ng-src="{{vm.templateScreenshot}}" />
+                            </div>
+                        </md-tab>
+                        <md-tab label="{{$root.globals.resources.Labels.Permissions}}">
+                            <md-tabs>
+                                <md-tab label="{{$root.globals.resources.Labels.ProfilePermissions}}">
+                                    <md-object-permissions display-property="Name"
+                                                    display-property-header="$root.globals.resources.Labels.ProfileType"
+                                                    type="mdBusinessLogic.dataAccess.entities.entitiesEnum.ProfileType"
+                                                    object="mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                                    object-id="vm.content.UniqueId"
+                                                    save="vm.registerPermissionSaveEvents" />
+                                </md-tab>
+                                <md-tab label="{{$root.globals.resources.Labels.UserPermissions}}">
+                                    <md-object-permissions display-property="Username"
+                                                    display-property-header="$root.globals.resources.Labels.User"
+                                                    type="mdBusinessLogic.dataAccess.entities.entitiesEnum.User"
+                                                    object="mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                                    object-id="vm.content.UniqueId"
+                                                    save="vm.registerPermissionSaveEvents" />
+                                </md-tab>
+                            </md-tabs>
+                        </md-tab>
+                    </md-tabs>
+                    <div>
+                        <md-button id="myButton" type="submit" class="md-raised md-accent" aria-label="Submit"
+                                   ng-disabled="contentForm.$invalid" ng-click="vm.save($event);">
+                            <span class="ng-scope" md-resource-text name="Labels.Submit"></span>
+                        </md-button>
+
+                        <md-button class="md-raised"
+                                   type="button"
+                                   aria-label="Back to previous page"
+                                   ng-click="vm.goBack()">
+                            <span class="ng-scope" md-resource-text name="Labels.Back"></span><div class="md-ripple-container"></div>
+                        </md-button>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- / CONTENT -->
+</div>

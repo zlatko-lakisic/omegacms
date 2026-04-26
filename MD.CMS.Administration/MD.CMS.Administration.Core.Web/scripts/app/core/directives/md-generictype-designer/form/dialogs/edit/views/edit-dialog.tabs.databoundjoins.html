@@ -1,0 +1,50 @@
+<ul>
+    <li ng-if="!vm.isJoinAddMode" layout="column" layout-padding>
+        <div ng-repeat="dataSource in vm.allDataSources.slice(1, vm.allDataSources.length)" flex>
+            <md-button ng-click="vm.toggleAddJoin(dataSource, vm.datasourceJoinExists(dataSource))" ng-class="{'md-raised' : true, 'md-primary': vm.datasourceJoinExists(dataSource)}">
+                {{dataSource.DbType}} - {{dataSource.ConnectionString}}
+            </md-button>
+        </div>
+    </li>
+    <li ng-if="vm.isJoinAddMode" layout-padding>
+        <div id="oval-container">
+            <svg class="oval">
+                <ellipse cx="35%" cy="50%" rx="35%" ry="50%" class="oval-left"></ellipse>
+                <ellipse cx="65%" cy="50%" rx="35%" ry="50%" class="oval-right"></ellipse>
+            </svg>
+            <div class="left-field">
+                <md-input-container>
+                    <label>Left Join</label>
+                    <md-select ng-model="vm.selectedJoin.LeftFieldId">
+                        <md-option ng-repeat="objField in vm.fields" ng-value="objField.Id" ng-disabled="vm.selectedJoin.RightFieldId == objField.Id">
+                            {{objField.Name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div class="center-field">
+                <md-input-container>
+                    ==
+                </md-input-container>
+            </div>
+            <div class="right-field">
+                <md-input-container>
+                    <label>Right Join</label>
+                    <md-select ng-model="vm.selectedJoin.RightFieldId">
+                        <md-option ng-value="vm.field.Id" selected>
+                            {{vm.field.Name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+    </li>
+    <li ng-if="vm.isJoinAddMode" layout="row" layout-padding>
+        <md-button ng-click="vm.saveDataSourceJoin()">
+            Save Join
+        </md-button>
+        <md-button ng-click="vm.isJoinAddMode = false">
+            Cancel
+        </md-button>
+    </li>
+</ul>

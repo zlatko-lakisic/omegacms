@@ -1,0 +1,3 @@
+﻿dispatch:
+  - url: "*/ws/*"
+    service: web-api

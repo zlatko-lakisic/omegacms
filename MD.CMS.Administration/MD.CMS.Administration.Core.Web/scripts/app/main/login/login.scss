@@ -1,0 +1,263 @@
+#login {
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(#02c3ff, #02a2ff);
+
+    #omega-background-video-top-gradient {
+        background: linear-gradient(to right, #01d7ff, #01c7ff, #03bfff, #02bcff);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 33vh;
+    }
+
+    #omega-background-video {
+        position: fixed;
+        top: -80px;
+        left: -208px;
+        width: 100%;
+    }
+
+    #login-intro {
+        padding: 128px;
+
+        .logo {
+            width: 128px;
+            height: 128px;
+            line-height: 128px;
+            font-size: 86px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            color: #FFFFFF;
+            border-radius: 2px;
+            text-align: center;
+            padding: 13px 0 0 0;
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 300;
+        }
+
+        .description {
+            padding-top: 8px;
+            font-size: 14px;
+            max-width: 600px;
+        }
+    }
+
+    #login-form-wrapper {
+        width: 416px;
+        min-width: 416px;
+        max-width: 416px;
+        height: 100%;
+        background: #FFFFFF;
+
+        #login-form {
+            padding: 128px 48px 48px 48px;
+
+            .logo {
+                width: 128px;
+                height: 128px;
+                line-height: 128px;
+                font-size: 86px;
+                font-weight: 500;
+                margin: 32px auto;
+                color: #FFFFFF;
+                border-radius: 2px;
+            }
+
+            .title {
+                font-size: 21px;
+                display: inline-block;
+            }
+
+            .circle-progress {
+                height: 21px !important;
+                display: inline-block;
+            }
+
+            .description {
+                padding-top: 8px;
+            }
+
+            form {
+                width: 100%;
+                text-align: left;
+                padding-top: 32px;
+
+                md-checkbox {
+                    margin: 0;
+                }
+
+                .remember-forgot-password {
+                    font-size: 13px;
+                    margin-top: 8px;
+
+                    .remember-me {
+                        margin-bottom: 16px
+                    }
+
+                    .forgot-password {
+                        font-size: 13px;
+                        font-weight: 500;
+                        margin-bottom: 16px
+                    }
+                }
+
+                .submit-button {
+                    width: 100%;
+                    margin: 16px auto;
+                    display: block;
+                }
+            }
+
+            .separator {
+                font-size: 15px;
+                font-weight: 600;
+                margin: 24px auto 16px auto;
+                position: relative;
+                overflow: hidden;
+                width: 100px;
+                text-align: center;
+                color: rgba(0, 0, 0, 0.54);
+
+                .text {
+                    display: inline-block;
+                    vertical-align: baseline;
+                    position: relative;
+                    padding: 0 8px;
+                    z-index: 9999;
+
+                    &:before, &:after {
+                        content: '';
+                        display: block;
+                        width: 30px;
+                        position: absolute;
+                        top: 10px;
+                        border-top: 1px solid rgba(0, 0, 0, 0.12);
+                    }
+
+                    &:before {
+                        right: 100%;
+                    }
+
+                    &:after {
+                        left: 100%;
+                    }
+                }
+            }
+
+            .md-button {
+
+                &.google,
+                &.facebook {
+                    width: 70%;
+                    text-transform: none;
+                    color: #FFFFFF;
+                    font-size: 13px;
+
+                    md-icon {
+                        color: #FFFFFF;
+                        margin: 0 8px 0 0;
+                    }
+                }
+
+                &.google {
+                    background-color: #D73D32;
+                }
+
+                &.facebook {
+                    background-color: rgb(63, 92, 154);
+                }
+            }
+
+            .register {
+                margin: 32px auto 24px auto;
+                width: 250px;
+                font-weight: 500;
+
+                .text {
+                    margin-right: 8px;
+                }
+
+                .link {
+                }
+            }
+        }
+    }
+
+    .hide-tab-labels {
+        md-tabs-wrapper {
+            display:none;
+        }
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-sm) {
+
+    #login {
+
+        #login-form-wrapper {
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+
+            #login-form {
+                text-align: center;
+                padding: 24px;
+
+                .md-button {
+
+                    &.google,
+                    &.facebook {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-lg) and (min-width: $layout-breakpoint-sm) {
+
+    #login {
+
+        #omega-background-video {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-sm) {
+
+    #login {
+
+        #login-form-wrapper {
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+
+            #login-form {
+                text-align: center;
+                padding: 24px;
+
+                .md-button {
+
+                    &.google,
+                    &.facebook {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+}

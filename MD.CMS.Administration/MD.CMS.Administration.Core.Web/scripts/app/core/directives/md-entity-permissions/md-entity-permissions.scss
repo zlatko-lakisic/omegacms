@@ -1,0 +1,11 @@
+.md-entity-permissions {
+    .permission-button {
+        background-color: #fff !important;
+        color: #ccc !important;
+
+        &.active {
+            background-color: rgb(244,67,54) !important;
+            color: #fff !important;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+﻿namespace MD.Tools.BaseDataAccess.Plugins.Core.Mapping.Content
+{
+    public enum Methods : int
+    {
+        GetById = 1,
+        SelectAllCount = 2,
+        GetAll = 3,
+        GetAllOnlyPublished = 4,
+        GetByAliasOnlyPublished = 5,
+        GetByFolderId = 6,      
+        GetByContentId = 7,
+        GetBySearchTerm = 8,
+        Insert = 9,
+        Update = 10,
+        Delete = 11,
+        GetByTaxonomyId = 12,
+        SelectByContentTypeDefinitionCount = 13,
+        GetByMenuId = 14,
+        GetByFolderIdCount = 15,
+        GetByFolderIdWithPagination = 16,
+     //   MenuContentGetContentByMenu = 17,
+     //   TaxonomyContentGetContentByTaxonomy = 18,
+        GetByAlias = 19,
+        DeleteByAll = 20,
+        SelectByAll = 21,
+        SelectAllVersion = 22,
+        Search = 23,
+
+        GetByContentIdOnlyPublished = 24,
+        GetByFolderIdOnlyPublished = 25,
+        GetByFolderIdCountOnlyPublished = 26,
+        GetByFolderIdWithPaginationOnlyPublished = 27,
+        GetByIdOnlyPublished = 28,
+        SelectAllVersionOnlyPublished = 29,
+        SelectByAllOnlyPublished = 30,
+        GetByMenuIdOnlyPublished = 31,
+        GetByTaxonomyIdOnlyPublished = 32,
+        SelectByContentTypeDefinitionCountOnlyPublished = 33,
+        GetByMenuIdAndLcid = 34,
+        GetByMenuIdAndLcidOnlyPublished = 35,
+        GetBySearchTermOnlyPublished = 36,
+        ApproveReject = 37,
+        GetByIdsOnlyPublished = 38,
+        GetByIds = 39
+    }
+}

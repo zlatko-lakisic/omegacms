@@ -1,0 +1,21 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost:5051/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "MD.CMS.WebApi.Core": {
+      "commandName": "IIS",
+      "launchUrl": "api/values",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "ancmHostingModel": "OutOfProcess",
+      "applicationUrl": ""
+    }
+  }
+}

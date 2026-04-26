@@ -1,0 +1,14 @@
+﻿<div class="grid-view" layout="column">
+    <div class="folders" layout="row" layout-wrap>
+        <div class="md-background-bg md-hue-1 md-whiteframe-1dp item folder"
+             ng-repeat="obj in value" ng-click="vm.select(obj)" layout="row" layout-align="space-between center"
+             ng-class="{'selected' : vm.selected === folder}">
+            <div layout="row" class="title" layout-align="start center" style="width:100%" ng-click="vm.redirect(key, obj)">
+                <span class="file-icon">
+                    <i class="icon {{vm.icon}} s35"></i>
+                </span>              
+                <span flex-offset="10" class="name">{{obj.Name}}</span>
+            </div>           
+        </div>      
+    </div>  
+</div>

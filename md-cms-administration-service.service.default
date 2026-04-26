@@ -1,0 +1,20 @@
+[Unit]
+Description=OmegaCMS Administration ASP.NET Core on Linux
+
+[Service]
+# Path to site, default /var/www/site_name
+WorkingDirectory=#Path_To_Site#/administration
+ExecStart=/usr/bin/dotnet #Path_To_Site#/administration/MD.CMS.Administration.Core.Hosted.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=md-cms-administration
+# User to run the app, default www-data
+User=#User#
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=ASPNETCORE_URLS=http://localhost:5000
+
+[Install]
+WantedBy=multi-user.target

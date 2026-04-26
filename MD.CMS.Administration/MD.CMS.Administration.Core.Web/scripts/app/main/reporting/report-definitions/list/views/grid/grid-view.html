@@ -1,0 +1,17 @@
+<!-- GRID VIEW -->
+<div class="grid-view" layout="column">
+    <div class="files" layout="row" layout-wrap>
+        <div ng-repeat="file in vm.reportDefinitions | filter:global.search" layout="column"
+             ng-click="vm.loadReportDefinition(file.Id)" class="md-whiteframe-1dp item file">
+            <div class="bottom md-background-bg md-hue-1" layout="row" layout-align="space-between center">
+                <div layout="row" class="title" layout-align="start center" flex>
+                    <span class="file-icon">
+                        <md-icon md-font-icon="icon-document"></md-icon>
+                    </span>
+                    <span class="name">{{file.Name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / GRID VIEW -->

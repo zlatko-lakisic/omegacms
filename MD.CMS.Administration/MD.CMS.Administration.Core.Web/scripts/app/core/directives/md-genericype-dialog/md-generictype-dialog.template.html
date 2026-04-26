@@ -1,0 +1,110 @@
+﻿<md-card>
+    <md-card-header>
+        <md-toolbar>
+            <md-toolbar class="md-theme-indigo">
+                <div class="md-toolbar-tools">
+                    <h1 flex md-truncate>Controls</h1>
+                    <md-button class="md-icon-button" aria-label="Close" ng-click="toggleSideNav()">
+                        <i class="icon-close-circle-outline"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+        </md-toolbar>
+    </md-card-header>
+    <md-card-content>
+        <md-sidenav class="md-sidenav-right" md-component-id="controlToolBar" md-disable-backdrop md-whiteframe="4">
+            <md-content layout-margin flex>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Form Fields">
+                        <md-content class="md-padding" ms-scroll style="position:relative">
+                            <div class="toolbox">
+                                <div class="control">
+                                    <div type="text-box" class="container textbox" data-id="1">
+                                        <h3>Text Box</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="text-area" name="Text Area" class="container textarea" data-id="5">
+                                        <h3>Text Area</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="number" name="Number" class="container number" data-id="3">
+                                        <h3>Number</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="checkbox" name="Check Box" class="container checkbox" data-id="4">
+                                        <h3>Check Box</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="checkbox-group" name="Check Box Group" class="container selectlist" data-id="6">
+                                        <h3>Check Box Group</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="radio-group" name="Radio Group" class="container selectlist" data-id="7">
+                                        <h3>Radio Group</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="calculated" name="Calculated" class="container calculated" data-id="18">
+                                        <h3>Calculated</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="CMS Content">
+                        <md-content class="md-padding">
+                            <div class="toolbox">
+                                <div class="control">
+                                    <div type="content-picker" name="Content Picker" class="container contentpicker" data-id="13">
+                                        <h3>Content Picker</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="media-content-picker" name="Media Content Picker" class="container contentmediapicker" data-id="16">
+                                        <h3>Media Content Picker</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="taxonomy-picker" name="Taxonomy Picker" class="container taxonomypicker" data-id="8">
+                                        <h3>Taxonomy Picker</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="user-picker" name="User Picker" class="container userpicker" data-id="17">
+                                        <h3>User Picker</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Other">
+                        <md-content class="md-padding">
+                            <div class="toolbox">
+                                <div class="control">
+                                    <div type="youtube" name="Youtube" class="container youtube" data-id="14">
+                                        <h3>Youtube</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="date-field" name="Calendar" class="container calendarfield" data-id="11">
+                                        <h3>Calendar</h3>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div type="map" name="Map Coordinates" class="container googlemap" data-id="12">
+                                        <h3>Map Coordinates</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </md-sidenav>
+    </md-card-content>
+</md-card>

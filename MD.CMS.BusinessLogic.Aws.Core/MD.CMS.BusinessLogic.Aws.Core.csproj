@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\0.png" Link="0.png">
+      <PackagePath></PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.1.26" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MD.Tools.Helpers.Core\MD.Tools.Helpers.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

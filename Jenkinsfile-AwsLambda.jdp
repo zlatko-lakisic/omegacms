@@ -1,0 +1,1175 @@
+import java.time.*
+import java.time.format.DateTimeFormatter
+import groovy.json.*
+
+def uniqueId = ''
+def stackName = ''
+def setupDbUser = ''
+def setupDbPassword = ''
+def dbUser = ''
+def dbPassword = ''
+def dbName = ''
+def dbServerAddress = ''
+def dbServerPort = ''
+def omegaAdminS3BucketName = ''
+def omegaWsS3BucketName = ''
+def omegaWsSocketS3BucketName = ''
+def omegaAdminUrl = ''
+def omegaWsUrl = ''
+def omegaWsSocketUrl = ''
+def omegaAdminStackName = ''
+def omegaWsStackName = ''
+def omegaWsSocketStackName = ''
+def omegaAdminApiGatewayUrl = ''
+def omegaWsApiGatewayUrl = ''
+def omegaWsSocketApiGatewayUrl = ''
+def omegaAdminAssetsS3BucketName = ''
+def omegaUploadsS3BucketName = ''
+def omegaPluginsS3BucketName = ''
+def omegaRdsSecurityGroupName = ''
+def omegaRdsSubnetGroupName = ''
+def omegaRdsParameterGroupName = ''
+def projectDirectory = 'E:'
+def subnet1Id = ''
+def subnet2Id = ''
+def subnetAclId = ''
+def subnetRouteTableId = ''
+def securityGroupId = ''
+def rollbackRequired = false
+def rollbackException = null
+def rdsDbInstance = null
+def subnet1Exists = false
+def subnet2Exists = false
+def awsReturnedEndpoint = false
+def forceRollback = false
+def createNewRds = false
+def stackRegion = ""
+def cloudFrontDistributionName = ""
+def cloudFrontAdminPath = ""
+def cloudFrontWsPath = ""
+def cloudFrontWsSocketPath = ""
+def cloudFrontDistributionUrl = ""
+def createSingleS3LambdaBucket = false
+def singleS3LambdaBucketName = ""
+def singleS3PublicBucketName = ""
+def cms_googleApiKey = ""
+def cms_lcid = 0
+def cms_emailEnabled = false
+def cms_emailHost = ""
+def cms_emailPort = 0
+def cms_emailUseSsl = false
+def cms_emailUsername = ""
+def cms_emailPassword = ""
+def cms_rootAccountEnabled = false
+def cms_rootAccountUsername = ""
+def cms_rootAccountPassword = ""
+def clientName = ""
+def clientId = 0
+def cloudFrontSslArn = ""
+def customDomain = ""
+
+def getUniqueId(removeHyphens = true){
+    def id = UUID.randomUUID().toString()
+    if(removeHyphens){
+        id = id.replace("-", "")
+    }
+    return id
+}
+
+def getEnvString(String key, String defaultValue = null) {
+    def v = System.getenv(key)
+    if (v != null && v != "")
+        return v
+    return defaultValue
+}
+def getCommandOutput(cmd, fullResult = false) {
+    try {
+        if (isUnix()) {
+            return sh(returnStdout: true, script: "#!/bin/sh -e\n" + cmd).trim()
+        } else {
+            if (fullResult) {
+                return bat(returnStdout: true, script: cmd).trim().readLines().drop(1)
+            }
+            return bat(returnStdout: true, script: cmd).trim().readLines().drop(1).join(" ")
+        }
+    } catch (Exception e) {
+        println "Error occured while executing the script (${cmd}) ${e.toString()}"
+        throw e;
+    }
+    return null
+}
+def getCommandOutputLastLine(cmd, ignoreWhiteSpace) {
+    try {
+        if (isUnix()) {
+            return sh(returnStdout: true, script: "#!/bin/sh -e\n" + cmd).trim()
+        } else {
+            def res = bat(returnStdout: true, script: cmd).trim().readLines()
+            def len = res.size()
+
+            if(!ignoreWhiteSpace) {
+                return res.get(len-1).toString()
+            }
+
+            while(len > 0) {
+                if(res.get(len-1).toString().trim() != "") {
+                    return res.get(len-1).toString()
+                }
+                len = len - 1
+            }
+
+            return null
+        }
+    } catch (Exception e) {
+        println "Error occured while executing the script (${cmd}) ${e.toString()}"
+        throw e;
+    }
+    return null
+}
+def robocopy(cmd) {
+    // robocopy uses non-zero exit code even on success, status below 3 is fine
+    def status = bat returnStatus: true, script: "ROBOCOPY ${cmd}"
+    println "ROBOCOPY returned ${status}"
+    if (status < 0 || status > 3) {
+        error("ROBOCOPY failed")
+    }
+}
+def mkdir(path, delete = false) {
+    if (delete) {
+        bat "if exist \"${path}\" (rmdir /Q/S \"${path}\")"
+    }
+    bat "if not exist \"${path}\" (mkdir \"${path}\")"
+}
+def trim(str, maxLength, offset = 0){
+    return str.substring(offset, (str.length() > maxLength ? maxLength : str.length()))
+}
+def appendObjectVariable(arrayObject, key, value, includeQuotes = false, encodeValue = false) {
+    if(includeQuotes) {
+        key = key.replace('\\', '\\\\').replace('"', '\\"')
+        value = value.replace('\\', '\\\\').replace('"', '\\"')
+        if(encodeValue){
+            arrayObject.add("\"${key}\"=\"${java.net.URLEncoder.encode(value, 'UTF-8')}\"")
+        } else {
+            arrayObject.add("\"${key}\"=\"${value}\"")
+        }
+    } else {
+        if(encodeValue){
+            arrayObject.add("${key}=${java.net.URLEncoder.encode(value, 'UTF-8')}")
+        } else {
+            arrayObject.add("${key}=${value}")
+        }
+    }
+    return arrayObject
+}
+def createIamRole(roleName, rolePolicyFilePath) {
+    bat "aws iam create-role --role-name ${roleName} --assume-role-policy-document file://${rolePolicyFilePath}"
+}
+def deleteIamRole(roleName) {
+    try {
+        bat "aws iam delete-role --role-name ${roleName}"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def assignPolicyToIamRole(roleName, polictyArn) {
+    bat "aws iam attach-role-policy --role-name ${roleName} --policy-arn ${polictyArn}"
+}
+def createS3Bucket(uniqueId, bucketName, region, isPublic = false) {
+    def execString = "aws s3api create-bucket --bucket ${bucketName} --region ${region}"
+    if (isPublic) {
+        execString = "${execString} --acl public-read"
+    }
+    bat execString
+    bat "aws s3api put-bucket-tagging --bucket ${bucketName} --tagging TagSet=[{Key=BillingGroup,Value=${uniqueId}}]"
+}
+def deleteS3Bucket(bucketName) {
+    try {
+        bat "aws s3api delete-bucket --bucket ${bucketName} --force"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def makeS3BucketPublic(bucketName, projectDirectory) {
+    bat "powershell -File \"${projectDirectory}\\Jenkinsfile-AwsLambda-MakeS3Public.ps1\" --s3bucketname ${bucketName}"
+}
+def publishDotnetLambda(opt, type) {
+    def command = "dotnet lambda deploy-serverless ${opt.lambdaFunctionName} --function-name ${opt.lambdaFunctionName}"
+
+    if(opt.region != null && opt.region != ""){
+        command = "${command} --region ${opt.region}"
+    }
+    if(opt.lambdaFunctionHandler != null && opt.lambdaFunctionHandler != ""){
+        command = "${command} --function-handler ${opt.lambdaFunctionHandler}"
+    }
+    if(opt.configuration != null && opt.configuration != ""){
+        command = "${command} --configuration ${opt.configuration}"
+    }
+    if(opt.s3bucketname != null && opt.s3bucketname != ""){
+        command = "${command} --s3-bucket ${opt.s3bucketname}"
+    }
+    if(opt.iamRole != null && opt.iamRole != ""){
+        command = "${command} --function-role ${opt.iamRole}"
+    }
+    if(opt.lambdaFunctionMemorySize != null && opt.lambdaFunctionMemorySize != ""){
+        command = "${command} --function-memory-size ${opt.lambdaFunctionMemorySize}"
+    }
+    if(opt.lambdaFunctionTimeout != null && opt.lambdaFunctionTimeout != ""){
+        command = "${command} --function-timeout ${opt.lambdaFunctionTimeout}"
+    }
+    if(opt.eventVariables != null){
+        command = "${command} --ev '${opt.eventVariables.join(';')}'"
+    }
+    if(opt.configFile != null && opt.configFile != ""){
+        command = "${command} --config-file ${opt.configFile}"
+    }
+    if(opt.templateFile != null && opt.templateFile != ""){
+        command = "${command} -t ${opt.templateFile}"
+    }
+    if(opt.templateParameters != null){
+        command = "${command} -tp ${opt.templateParameters.join(';')}"
+    }
+
+    println command
+
+    def res = getCommandOutputLastLine(command, true)
+
+    return res.split("${type}://")[1].split("/")[0]
+}
+def getLambdaGatewayApiId(lambdaFunctionName, projectDirectory) {
+    def apiIdReturned = false
+    def apiId = null
+    while (!apiIdReturned) {
+        try {
+            apiId = getCommandOutput("powershell -File \"${projectDirectory}\\Jenkinsfile-AwsLambda-GetApiGateway.ps1\" ${lambdaFunctionName}")
+        } catch (Exception e) {
+            apiId = null
+        }
+
+        apiIdReturned = apiId != null
+        if (!apiIdReturned) {
+            sleep 10
+        }
+    }
+    return apiId
+}
+def getLambdaGatewayApiUrl(lambdaFunctionName, region, projectDirectory) {
+    def apiId = getLambdaGatewayApiId(lambdaFunctionName, projectDirectory)
+    return "${apiId}.execute-api.${region}.amazonaws.com"
+}
+def createSecurityGroup(vpcid, name, desription) {
+    def response = getCommandOutput("aws ec2 create-security-group --vpc-id ${vpcid} --group-name ${name} --description \"${desription}\"", true).join('').trim().replace("  ", "")
+    def jsonResponse = readJSON text: response
+    return jsonResponse.GroupId
+}
+def deleteSecurityGroup(securityGroupId) {
+    try {
+        bat "aws ec2 delete-security-group --group-id ${securityGroupId}"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def addSecurityGroupIngress(groupId, protocol, port, cidr) {
+    bat "aws ec2 authorize-security-group-ingress --group-id ${groupId} --protocol ${protocol} --port ${port} --cidr ${cidr}"
+}
+def createSubnet(name, vpcId, cidrBlock, availabilityZone) {
+    try {
+        def response = getCommandOutput("aws ec2 create-subnet --vpc-id ${vpcId} --cidr-block ${cidrBlock} --availability-zone ${availabilityZone} --tag-specifications ResourceType=subnet,Tags=[{Key=Name,Value=\"${name}\"}]", true).join('').trim().replace("  ", "")
+        def jsonResponse = readJSON text: response
+        return jsonResponse.Subnet.SubnetId
+    } catch (Exception e) {
+        return false
+    }
+}
+def findSubnet(cidrBlock) {
+    def response = getCommandOutput("aws ec2 describe-subnets --filters Name=cidr-block,Values=\"${cidrBlock}\" --output json", true).join('').trim().replace("  ", "")
+    def jsonResponse = readJSON text: response
+    return jsonResponse.Subnets[0].SubnetId
+}
+def deleteSubnet(subnetId) {
+    try {
+        bat "aws ec2 delete-subnet --subnet-id ${subnetId}"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def createRdsSubnetGroup(name, description, subnet1Id, subnet2Id) {
+    bat "aws rds create-db-subnet-group --db-subnet-group-name ${name} --db-subnet-group-description \"${description}\" --subnet-ids \"${subnet1Id}\" \"${subnet2Id}\""
+}
+def deleteRdsSubnetGroup(name) {
+    try {
+        bat "aws rds delete-db-subnet-group --db-subnet-group-name ${name}"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def createRdsParameterGroup(name, family, description) {
+    bat "aws rds create-db-parameter-group --db-parameter-group-name ${name} --db-parameter-group-family ${family} --description \"${description}\""
+}
+def modifyRdsParameterGroup(name, parameters) {
+    bat "aws rds modify-db-parameter-group --db-parameter-group-name ${name} --parameters ${parameters.join(',')}"
+}
+def deleteRdsParameterGroup(name) {
+    bat "aws rds delete-db-parameter-group --db-parameter-group-name ${name}"
+}
+def createRdsDbInstance(uniqueId, accountId, region, name, dbClass, engine, username, password, allocatedStorage, securityGroupIds, availabilityZone, subnetGroupName, parameterGroupName, port) {
+    def command = "aws rds create-db-instance --db-name ${name} --db-instance-identifier ${name.toLowerCase()} --db-instance-class ${dbClass} --engine ${engine} --allocated-storage ${allocatedStorage} --vpc-security-group-ids \"${securityGroupIds}\" --availability-zone ${availabilityZone} --db-subnet-group-name ${subnetGroupName} --db-parameter-group-name ${parameterGroupName} --port ${port} --publicly-accessible"
+    if (password != "") {
+        command = "${command} --master-username \"${username}\""
+    }
+    if (username != "") {
+        command = "${command} --master-user-password \"${password}\""
+    }
+    def response = getCommandOutput(command, true).join('').trim().replace("  ", "")
+    def jsonResponse = readJSON text: response
+    bat "aws rds add-tags-to-resource --resource-name arn:aws:rds:${region}:${accountId}:db:${jsonResponse.DBInstance.DBInstanceIdentifier} --tags \"[{\\\"Key\\\": \\\"BillingGroup\\\",\\\"Value\\\": \\\"${uniqueId}\\\"}]\""
+    return jsonResponse.DBInstance
+}
+def deleteRdsDbInstance(dbInstanceId) {
+    try {
+        bat "aws rds delete-db-instance --db-instance-identifier ${dbInstanceId} --skip-final-snapshot --delete-automated-backups"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+
+    def rdsInstanceDeleted = false
+    def rdsInstance = null
+    while (!rdsInstanceDeleted) {
+        rdsInstance = getRdsDbInstanceInfo(dbInstanceId)
+        rdsInstanceDeleted = rdsInstance == null
+        if (!rdsInstanceDeleted) {
+            sleep 10
+        }
+    }
+}
+def getRdsDbInstanceInfo(instanceId) {
+    try {
+        def response = getCommandOutput("aws rds describe-db-instances --db-instance-identifier ${instanceId}", true).join('').trim().replace("  ", "")
+        def jsonResponse = readJSON text: response
+        return jsonResponse.DBInstances[0]
+    } catch (Exception e) {
+        return null
+    }
+}
+def deleteLambdaInstance(name) {
+    try {
+        bat "aws lambda delete-function --function-name ${name}"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def deleteStack(name) {
+    try {
+        bat "aws cloudformation delete-stack --stack-name ${name}"
+    } catch (Exception e) {
+        //Silent Fail
+    }
+}
+def createCloudFrontInstance(opt, projectDirectory) {
+    def command = "powershell -File \"${projectDirectory}\\Jenkinsfile-AwsLambda-CreateCloudFrontDistribution.ps1\""
+
+    if(opt.billingGroup != null && opt.billingGroup != ""){
+        command = "${command} -billingGroup ${opt.billingGroup}"
+    } else {
+        error("Parameter billingGroup required!")
+    }
+
+    if(opt.distributionname != null && opt.distributionname != ""){
+        command = "${command} -distributionname ${opt.distributionname}"
+    } else {
+        error("Parameter distributionname required!")
+    }
+
+    if(opt.adminlambdaurl != null && opt.adminlambdaurl != ""){
+        command = "${command} -adminlambdaurl ${opt.adminlambdaurl}"
+    } else {
+        error("Parameter adminlambdaurl required!")
+    }
+    
+    if(opt.wslambdaurl != null && opt.wslambdaurl != ""){
+        command = "${command} -wslambdaurl ${opt.wslambdaurl}"
+    } else {
+        error("Parameter wslambdaurl required!")
+    }
+    
+    if(opt.wssocketlambdaurl != null && opt.wssocketlambdaurl != ""){
+        command = "${command} -wssocketlambdaurl ${opt.wssocketlambdaurl}"
+    } else {
+        error("Parameter wssocketlambdaurl required!")
+    }
+    
+    if(opt.s3adminassetsurl != null && opt.s3adminassetsurl != ""){
+        command = "${command} -s3adminassetsurl ${opt.s3adminassetsurl}"
+    } else {
+        error("Parameter s3adminassetsurl required!")
+    }
+    
+    if(opt.s3uploadsurl != null && opt.s3uploadsurl != ""){
+        command = "${command} -s3uploadsurl ${opt.s3uploadsurl}"
+    } else {
+        error("Parameter s3uploadsurl required!")
+    }
+    
+    if(opt.adminpath != null && opt.adminpath != ""){
+        command = "${command} -adminpath ${opt.adminpath}"
+    }
+    
+    if(opt.wspath != null && opt.wspath != ""){
+        command = "${command} -wspath ${opt.wspath}"
+    } else {
+        error("Parameter wspath required!")
+    }
+    
+    if(opt.wssocketpath != null && opt.wssocketpath != ""){
+        command = "${command} -wssocketpath ${opt.wssocketpath}"
+    } else {
+        error("Parameter wssocketpath required!")
+    }
+    
+    if(opt.adminoriginpath != null && opt.adminoriginpath != ""){
+        command = "${command} -adminoriginpath ${opt.adminoriginpath}"
+    }
+
+    if(opt.wsoriginpath != null && opt.wsoriginpath != ""){
+        command = "${command} -wsoriginpath ${opt.wsoriginpath}"
+    }
+
+    if(opt.wssocketoriginpath != null && opt.wssocketoriginpath != ""){
+        command = "${command} -wssocketoriginpath ${opt.wssocketoriginpath}"
+    }
+
+    if(opt.distributionalias != null && opt.distributionalias != ""){
+        command = "${command} -distributionalias ${opt.distributionalias}"
+    }
+
+    if(opt.distributionsslarn != null && opt.distributionsslarn != ""){
+        command = "${command} -distributionsslarn ${opt.distributionsslarn}"
+    }
+
+    bat command
+}
+def getCloudFrontDistributionUrl(cloudFrontName, projectDirectory) {
+    return getCommandOutput("powershell -File \"${projectDirectory}\\Jenkinsfile-AwsLambda-GetCloudFrontDistributionUrl.ps1\" ${cloudFrontName}")
+}
+def associateSubnetWithRouteTable(subnetId, routeTableId) {
+    bat "aws ec2 associate-route-table --route-table-id ${routeTableId} --subnet-id ${subnetId}"
+}
+def associateSubnetWithAcl(associationId, networkAclId) {
+    bat "aws ec2 replace-network-acl-association --association-id ${associationId} --network-acl-id ${networkAclId}"
+}
+def executeSql(host, port, user, password, database, command, isFile = false) {
+    def cmd = "\"E:\\mysql\\bin\\mysqlsh.exe\" --user=${user} --password=${password} --host ${host} --port=${port}"
+    if(database != ""){
+        cmd = "${cmd} --database ${database}"
+    }
+
+    if(isFile) {
+        cmd = "${cmd} -f \"E:\\lambda-sql-setup\\${command}\""
+    } else {
+        cmd = "${cmd} -e \"${command}\""
+    }
+
+    bat cmd
+}
+def cms_login(cms_httpBase, username, password) {
+    def data = [
+        "Id":0,
+        "IsDeleted":false,
+        "Username":username,
+        "Password":password,
+        "ProfileTypes":[],
+        "ProfileTypeId":0,
+        "OldPassword":"",
+        "Token": getUniqueId(false),
+        "DateRefreshToken": new Date().format( "yyyy-MM-dd'T'HH:mm:ss" ),
+        "RWDPermissions":[],
+        "AdministrationAllowed":false,
+        "IsRoot":false
+    ]
+    def json = JsonOutput.toJson(data)
+    def response = httpRequest contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: json, url: "${cms_httpBase}/User/Login", validResponseCodes: '200'
+    def responseObj = readJSON text: response.content
+    def authHeader = "${username}:${responseObj.SessionId}"
+    return authHeader.bytes.encodeBase64().toString()
+}
+def cms_getContentType(cms_httpBase, cms_authToken, id) {
+    def response = httpRequest contentType: 'APPLICATION_JSON', customHeaders: [[name: "authorization", value: cms_authToken]], httpMode: 'GET', url: "${cms_httpBase}/ContentTypeDefinition/GetById/${id}", validResponseCodes: '200'
+    def responseObj = readJSON text: response.content
+    def authHeader = "${username}:${responseObj.SessionId}"
+    return responseObj
+}
+def cms_constructContent(contentType = null) {
+    def data = [
+        "Id":0,
+        "IsDeleted":false,
+        "LCID":0,
+        "DateCreated":new Date().format( "yyyy-MM-dd'T'HH:mm:ss" ),
+        "AuthorId":0,
+        "FolderId":"",
+        "Title":"",
+        "Path":"",
+        "Html":null,
+        "Author":null,
+        "ContentType":contentType,
+        "ContentTypeDefinitionId": 0,
+        "IsNew":true,
+        "IsPublished":true,
+        "Taxonomy":null,
+        "Menu":null,
+        "MetaDataFieldValues":null,
+        "Template":null,
+        "IsPublished":false,
+        "ApprovalPending":false
+    ]
+    if(contentType != null){
+        data.ContentTypeDefinitionId = contentType.Id
+    }
+    return data
+}
+def cms_contentSetFieldValue(content, fieldName, fieldValue) {
+    for (field in content.ContentType.Fields) {
+        if(field.Name == fieldName){
+            field.Value = fieldValue
+        }
+    }
+    return content
+}
+def cms_saveContent(cms_httpBase, cms_authToken, contentObj) {
+    def fileName = "request-${getUniqueId()}.json"
+    writeJSON file: fileName, json: contentObj
+    def json = readFile "${env.WORKSPACE}/${fileName}"
+    println json
+    def response = httpRequest contentType: 'APPLICATION_JSON', customHeaders: [[name: "authorization", value: cms_authToken]], httpMode: 'POST', requestBody: json, url: "${cms_httpBase}/Content/Save/", validResponseCodes: '200'
+    def responseObj = readJSON text: response.content
+    return responseObj
+}
+
+pipeline {
+    agent any
+    parameters {
+        string(name: "clientName", description: "Client Name", defaultValue: "Omega Test Client")
+        string(name: "clientId", description: "Client Id", defaultValue: "0")
+        string(name: "awsAccessKey", description: "AWS Access Key", defaultValue: "")
+        string(name: "awsSecret", description: "AWS Secret", defaultValue: "")
+        string(name: "version", description: "Omega Version", defaultValue: "0.81.36")
+        string(name: "vpcId", description: "AWS VPC Id", defaultValue: "vpc-00c8ef7a66ae66c01")
+        string(name: "stackName", description: "AWS Lambda Omega Stack Name", defaultValue: "Omega-CMS")
+        string(name: "googleApiKey", description: "Google Api Key", defaultValue: "")
+        string(name: "lcid", description: "Default Omega LCID", defaultValue: "2057")
+        booleanParam(name: "emailEnabled", description: "Omega Email Enabled", defaultValue: true)
+        string(name: "emailHost", description: "Omega Email Host (or set in environment — see .env.example)", defaultValue: "")
+        string(name: "emailPort", description: "Omega Email Port", defaultValue: "587")
+        booleanParam(name: "emailSslEnabled", description: "Omega Email SSL Enabled", defaultValue: true)
+        string(name: "emailUsername", description: "Omega Email Username", defaultValue: "")
+        string(name: "emailPassword", description: "Omega Email Password", defaultValue: "")
+        booleanParam(name: "rootAccountEnabled", description: "Omega RootAccount Enabled", defaultValue: true)
+        string(name: "rootAccountUsername", description: "Omega Email Username", defaultValue: "root")
+        string(name: "rootAccountPassword", description: "Omega Email Password", defaultValue: "")
+        string(name: "dbName", description: "CMS Database Name", defaultValue: "")
+        string(name: "setupDbUser", description: "CMS Database User", defaultValue: "")
+        string(name: "setupDbPassword", description: "CMS Database Password", defaultValue: "")
+        string(name: "dbServerAddress", description: "Database Server Address", defaultValue: "")
+        string(name: "dbServerPort", description: "Database Server Port", defaultValue: "3306")
+        booleanParam(name: "createSingleS3LambdaBucket", description: "Create single S3 lambda deploy bucket", defaultValue: true)
+        booleanParam(name: "createNewRds", description: "Create New Rds", defaultValue: true)
+        string(name: "rdsSubnet1CidrBlock", description: "AWS Lambda Omega RDS Subnet 1 CIDR Block", defaultValue: "10.90.150.0/24")
+        string(name: "rdsSubnet2CidrBlock", description: "AWS Lambda Omega RDS Subnet 1 CIDR Block", defaultValue: "10.90.151.0/24")
+        string(name: "rdsSubnetRouteId", description: "AWS Lambda Omega RDS Route Table Id", defaultValue: "rtb-0cbb736237b76a3a6")
+        string(name: "rdsSubnetAclId", description: "AWS Lambda Omega RDS Subnet ACL Id", defaultValue: "acl-0a3e874e5a67c787f")
+        string(name: "rdsSubnet1CidrBlockAvailabilityZone", description: "AWS Lambda Omega RDS Subnet 1 CIDR Block Availability Zone", defaultValue: "us-east-1a")
+        string(name: "rdsSubnet2CidrBlockAvailabilityZone", description: "AWS Lambda Omega RDS Subnet 1 CIDR Block Availability Zone", defaultValue: "us-east-1b")
+        string(name: "region", description: "AWS region name", defaultValue: "us-east-1")
+        string(name: "rdsDatabaseType", description: "AWS RDS Database Type", defaultValue: "MariaDB")
+        string(name: "rdsDatabaseFamily", description: "AWS RDS Database Family", defaultValue: "mariadb10.4")
+        string(name: "rdsDatabaseEngine", description: "AWS RDS Database Engine", defaultValue: "mariadb")
+        string(name: "rdsDatabaseInstanceClass", description: "AWS RDS Database Instance Class", defaultValue: "db.t2.micro")
+        string(name: "cloudFrontDistributionName", description: "CloudFront OmegaCMS Distribution Name", defaultValue: "")
+        string(name: "cloudFrontAdminPath", description: "CloudFront OmegaCMS Admin Path", defaultValue: "")
+        string(name: "cloudFrontWsPath", description: "CloudFront OmegaCMS Web Services Path", defaultValue: "/ws")
+        string(name: "cloudFrontWsSocketPath", description: "CloudFront OmegaCMS Web Services Socket Path", defaultValue: "/ws-web-sockets")
+        string(name: "cloudFrontSslArn", description: "CloudFront OmegaCMS Subdomain SslId", defaultValue: "arn:aws:acm:us-east-1:518606024901:certificate/847f077a-b3b5-4ab0-90ae-27c705f9812d")
+        booleanParam(name: "forceRollback", description: "Force the rollback", defaultValue: false)
+    }
+    stages {
+        stage("Variable Setup"){
+            steps{
+                script {
+                    
+                    clientName = params.clientName
+                    clientId = params.clientId
+
+                    if (params.version == null || params.version == "") {
+                        error("CMS Version Required!")
+                    }
+                    if (params.vpcId == null || params.vpcId == "") {
+                        error("AWS VPC ID Required!")
+                    }
+                    if (params.rdsSubnet1CidrBlock == null || params.rdsSubnet1CidrBlock == "") {
+                        error("AWS RDS Subnet 1 CIDR Required")
+                    }
+                    if (params.rdsSubnet2CidrBlock == null || params.rdsSubnet2CidrBlock == "") {
+                        error("AWS RDS Subnet 2 CIDR Required")
+                    }
+
+                    forceRollback = params.forceRollback
+
+                    uniqueId = getUniqueId()
+                    stackName = "${params.stackName}-${uniqueId}"
+                    dbUser = trim("${params.stackName}${getUniqueId()}".replace(".", "").replace("-", "").toLowerCase(), 15)
+                    dbPassword = getUniqueId()
+                    projectDirectory = "${projectDirectory}\\cms-${uniqueId}"
+
+                    setupDbUser = params.setupDbUser
+                    setupDbPassword = params.setupDbPassword
+
+                    cms_googleApiKey = params.googleApiKey
+                    cms_lcid = params.lcid
+                    cms_emailEnabled = params.cms_emailEnabled
+                    cms_emailHost = params.emailHost
+                    cms_emailPort = params.emailPort
+                    cms_emailUseSsl = params.emailUseSsl
+                    cms_emailUsername = params.emailUsername
+                    cms_emailPassword = params.emailPassword
+                    cms_rootAccountEnabled = params.rootAccountEnabled
+                    cms_rootAccountUsername = params.rootAccountUsername
+                    cms_rootAccountPassword = params.rootAccountPassword
+
+                    createSingleS3LambdaBucket = params.createSingleS3LambdaBucket
+
+                    cloudFrontDistributionName = stackName
+                    if(params.cloudFrontDistributionName != null && params.cloudFrontDistributionName != ""){
+                        cloudFrontDistributionName = params.cloudFrontDistributionName
+                    }
+                    cloudFrontAdminPath = params.cloudFrontAdminPath
+                    cloudFrontWsPath = params.cloudFrontWsPath
+                    cloudFrontWsSocketPath = params.cloudFrontWsSocketPath
+
+                    omegaAdminStackName = trim("lambda-${params.stackName}Admin-${uniqueId}".replace(".", "-").toLowerCase(), 35)
+                    omegaWsStackName = trim("lambda-${params.stackName}Ws-${uniqueId}".replace(".", "-").toLowerCase(), 35)
+                    omegaWsSocketStackName = trim("lambda-${params.stackName}WsSockets-${uniqueId}".replace(".", "-").toLowerCase(), 35)
+
+                    if(createSingleS3LambdaBucket){
+                        singleS3LambdaBucketName = trim("lambda-${params.stackName}-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                        singleS3PublicBucketName = trim("public-${params.stackName}-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                        omegaAdminS3BucketName = singleS3LambdaBucketName
+                        omegaWsS3BucketName = omegaWsS3BucketName
+                        omegaWsSocketS3BucketName = omegaWsSocketS3BucketName
+                        omegaAdminAssetsS3BucketName = singleS3PublicBucketName
+                        omegaUploadsS3BucketName = singleS3PublicBucketName
+                    } else {
+                        omegaAdminS3BucketName = trim("lambda-${params.stackName}Admin-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                        omegaWsS3BucketName = trim("lambda-${params.stackName}Ws-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                        omegaWsSocketS3BucketName = trim("lambda-${params.stackName}WsSockets-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                        omegaAdminAssetsS3BucketName = trim("${params.stackName}AdminAssets-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                        omegaUploadsS3BucketName = trim("${params.stackName}Uploads-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                    }
+                    omegaPluginsS3BucketName = trim("${params.stackName}Plugins-v${params.version}-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+
+                    omegaRdsSecurityGroupName = trim("${params.stackName}-securitygroup-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                    omegaRdsSubnetGroupName = trim("${params.stackName}-subnetgroup-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                    omegaRdsParameterGroupName = trim("${params.stackName}-parametergroup-${uniqueId}".replace(".", "-").toLowerCase(), 62)
+                    
+                    createNewRds = params.createNewRds
+                    if(params.dbName != null && params.dbName != ""){
+                        dbName = trim(params.dbName, 62)
+                    } else {
+                        dbName = trim("${params.stackName}database${uniqueId}".replace(".", "").replace("-", "").toLowerCase(), 62)
+                    }
+
+                    if (params.dbServerAddress != null && params.dbServerAddress.trim() != '') {
+                        dbServerAddress = params.dbServerAddress
+                    }
+
+                    if (params.dbServerPort != null && params.dbServerPort.trim() != '') {
+                        dbServerPort = params.dbServerPort
+                    }
+
+                    subnetAclId = params.rdsSubnetAclId
+                    subnetRouteTableId = params.rdsSubnetRouteId
+
+                    stackRegion = params.region
+
+                    cloudFrontSslArn = params.cloudFrontSslArn
+
+                    bat "aws configure set aws_access_key_id ${params.awsAccessKey}"
+                    bat "aws configure set aws_secret_access_key ${params.awsSecret}"
+                    bat "aws configure set default.region ${params.region}"
+                }
+            }
+        }
+        stage("Project Setup"){
+            steps{
+                script {
+                    println "Creating project directory..."
+                    mkdir(projectDirectory)
+                    println "Project directory created!"
+                    dir(projectDirectory) {
+                        def gitUrl = getEnvString("OMEGA_GIT_URL", "")
+                        if (gitUrl == null || gitUrl.trim() == "")
+                            error "OMEGA_GIT_URL is not set. Add it in Jenkins (see Jenkins/omega-pipeline.env.example) or copy from .env.example."
+                        bat "git clone --branch production ${gitUrl} ."
+                        bat "git checkout tags/release-${params.version}"
+                        bat "msbuild -t:restore"
+
+                        dir("MD.CMS.Administration"){
+                            bat "yarn install"
+                            bat "yarn run build-jsdoc"
+                            bat "yarn run build-typedoc"
+                            dir("MD.CMS.Administration.Core") {
+                                bat "build-project.bat Release"
+                            }
+                            dir("MD.CMS.Administration.Core.Web\\scripts\\businessLogic") {
+                                bat "tsc"
+                            }
+                        }
+
+                        dir("MD.CMS.BusinessLogic.Administration.Core"){
+                            bat "build-project.bat Release"
+                        }
+
+                        dir("MD.CMS.Administration.Core.Hosted") {
+                            try {
+                                bat "create-links.bat"
+                                bat "build-project.bat Release"
+                                bat "build-scripts.Release.bat"
+                            } catch (Exception e) {
+                                println "Error occured while creating links"
+                                println e.toString()
+                            }
+                        }
+
+                        dir("MD.CMS.Administration.Core.AwsLambda") {
+                            try {
+                                //bat "create-links.bat"
+                                //bat "build-project.bat Release"
+                                //bat "build-scripts.Release.bat"
+                                bat "rmdir \"wwwroot\\scripts\" /Q/S"
+                                bat "mkdir \"wwwroot\\scripts\""
+                                bat "xcopy /E /S /I /Q /Y /F \"..\\MD.CMS.Administration\\MD.CMS.Administration.Core.Web\\scripts\" \"wwwroot\\scripts\""
+                                //robocopy("\"..\\MD.CMS.Administration\\MD.CMS.Administration.Core.Web\\scripts\" \"wwwroot\\scripts\" /MIR")
+                            } catch (Exception e) {
+                                println "Error while creating AWS lambda scripts file"
+                                println e.toString()
+                            }
+                        }
+                    } 
+                }
+            }
+        }
+        stage("Creating AWS Infrastructure"){
+            steps{
+                dir(projectDirectory) {
+                    script {
+                        try {
+                            println "Creating S3 buckets..."
+                            if(createSingleS3LambdaBucket){
+                                createS3Bucket(uniqueId, singleS3LambdaBucketName, stackRegion)
+                                createS3Bucket(uniqueId, singleS3PublicBucketName, stackRegion)
+                                makeS3BucketPublic(singleS3PublicBucketName, projectDirectory)
+                            } else {
+                                createS3Bucket(uniqueId, omegaAdminS3BucketName, stackRegion)
+                                createS3Bucket(uniqueId, omegaWsS3BucketName, stackRegion)
+                                createS3Bucket(uniqueId, omegaWsSocketS3BucketName, stackRegion)
+                                createS3Bucket(uniqueId, omegaAdminAssetsS3BucketName, stackRegion, true)
+                                makeS3BucketPublic(omegaAdminAssetsS3BucketName, projectDirectory)
+                                createS3Bucket(uniqueId, omegaUploadsS3BucketName, stackRegion, true)
+                                makeS3BucketPublic(omegaUploadsS3BucketName, projectDirectory)
+                            }
+                            createS3Bucket(uniqueId, omegaPluginsS3BucketName, stackRegion)
+                            println "S3 buckets created!"
+
+                            if (createNewRds) {
+                                println "Creating subnets and subnet group..."
+                                subnet1Id = createSubnet("${params.stackName} (${uniqueId}) RDS Subnet", params.vpcId, params.rdsSubnet1CidrBlock, params.rdsSubnet1CidrBlockAvailabilityZone)
+                                if (!subnet1Id) {
+                                    subnet1Id = findSubnet(params.rdsSubnet1CidrBlock)
+                                }
+                                subnet2Id = createSubnet("${params.stackName} (${uniqueId}) RDS Subnet", params.vpcId, params.rdsSubnet2CidrBlock, params.rdsSubnet2CidrBlockAvailabilityZone)
+                                if (!subnet2Id) {
+                                    subnet2Id = findSubnet(params.rdsSubnet2CidrBlock)
+                                }
+                                createRdsSubnetGroup(omegaRdsSubnetGroupName, "${omegaRdsSubnetGroupName} Subnet Group", subnet1Id, subnet2Id)
+
+                                //associateSubnetWithAcl(subnet1Id, subnetAclId)
+                                //associateSubnetWithAcl(subnet2Id, subnetAclId)
+
+                                associateSubnetWithRouteTable(subnet1Id, subnetRouteTableId)
+                                associateSubnetWithRouteTable(subnet2Id, subnetRouteTableId)
+
+                                println "Subnets and subnet group created!"
+
+                                println "Creating security groups..."
+                                securityGroupId = createSecurityGroup(params.vpcId, omegaRdsSecurityGroupName, "${params.stackName} (${uniqueId}) Security Group")
+                                addSecurityGroupIngress(securityGroupId, "tcp", dbServerPort, "0.0.0.0/0")
+                                println "Security groups created!"
+
+                                println "Creating RDS parameter group..."
+                                createRdsParameterGroup(omegaRdsParameterGroupName, params.rdsDatabaseFamily, "${params.stackName} (${uniqueId}) Parameter Group")
+                                def rdsParamGroupParameters = []
+                                rdsParamGroupParameters = appendObjectVariable(rdsParamGroupParameters, "ParameterName", "'log_bin_trust_function_creators'")
+                                rdsParamGroupParameters = appendObjectVariable(rdsParamGroupParameters, "ParameterValue", "1")
+                                rdsParamGroupParameters = appendObjectVariable(rdsParamGroupParameters, "ApplyMethod", "immediate")
+                                modifyRdsParameterGroup(omegaRdsParameterGroupName, rdsParamGroupParameters)
+                                println "RDS parameter group created!"
+
+                                println "Creating RDS Db..."
+                                rdsDbInstance = createRdsDbInstance(uniqueId, "518606024901", region, dbName, params.rdsDatabaseInstanceClass, params.rdsDatabaseEngine, dbUser, dbPassword, 20, securityGroupId, params.rdsSubnet1CidrBlockAvailabilityZone, omegaRdsSubnetGroupName, omegaRdsParameterGroupName, dbServerPort)
+                                println "RDS Db created!"
+
+                                awsReturnedEndpoint = rdsDbInstance.Endpoint != null
+
+                                while (!awsReturnedEndpoint) {
+                                    rdsDbInstance = getRdsDbInstanceInfo(rdsDbInstance.DBInstanceIdentifier)
+                                    awsReturnedEndpoint = rdsDbInstance.Endpoint != null
+                                    if (!awsReturnedEndpoint) {
+                                        sleep 10
+                                    }
+                                }
+
+                                dbName = rdsDbInstance.DBName
+                                dbServerAddress = rdsDbInstance.Endpoint.Address
+                                dbServerPort = rdsDbInstance.Endpoint.Port
+                            } else {
+                                executeSql(dbServerAddress, dbServerPort, setupDbUser, setupDbPassword, "", "CREATE DATABASE ${dbName};")
+                                executeSql(dbServerAddress, dbServerPort, setupDbUser, setupDbPassword, "", "CREATE USER '${dbUser}'@'%' IDENTIFIED BY '${dbPassword}';")
+                                executeSql(dbServerAddress, dbServerPort, setupDbUser, setupDbPassword, "", "GRANT ALL PRIVILEGES ON ${dbName}.* TO '${dbUser}'@'%';")
+                                executeSql(dbServerAddress, dbServerPort, setupDbUser, setupDbPassword, "", "FLUSH PRIVILEGES;")
+                            }
+
+                            println "Creating database data..."
+                            executeSql(dbServerAddress, dbServerPort, dbUser, dbPassword, dbName, "md_cms.sql", true)
+                            executeSql(dbServerAddress, dbServerPort, dbUser, dbPassword, dbName, "md_cms_functions.sql", true)
+                            executeSql(dbServerAddress, dbServerPort, dbUser, dbPassword, dbName, "md_cms_views.sql", true)
+                            executeSql(dbServerAddress, dbServerPort, dbUser, dbPassword, dbName, "md_cms_procedures.sql", true)
+                            executeSql(dbServerAddress, dbServerPort, dbUser, dbPassword, dbName, "md_cms_data.sql", true)
+                            println "Database data created!"
+
+                        } catch (Exception e) {
+                            rollbackRequired = true
+                            rollbackException = e
+                            println e.toString()
+                        }
+                    }
+                }
+            }
+        }
+        stage("Deploying Lambda Instances") {
+            steps {
+                script {
+                    if (rollbackException == null) {
+                        try {
+                            dir(projectDirectory) {
+                                
+                                dir("..\\plugins-directory"){
+                                    try {
+                                        bat "aws s3 sync . s3://${omegaPluginsS3BucketName}"
+                                    } catch (Exception e) {
+                                        println "Error AWS S3 Plugin Sync"
+                                        println e.toString()
+                                    }
+                                }
+                                
+                                dir("MD.CMS.Administration\\MD.CMS.Administration.Core.Web"){
+                                    try {
+                                        bat "aws s3 sync . s3://${omegaAdminAssetsS3BucketName}"
+                                    } catch (Exception e) {
+                                        println "Error AWS S3 Admin Asset Sync"
+                                        println e.toString()
+                                    }
+                                }
+
+                                dir("MD.CMS.Administration.Core.AwsLambda") {
+
+                                    println "Creating IAM Role..."
+                                    createIamRole(omegaAdminStackName, "..\\Assets\\aws\\rolepolicy.json")
+                                    assignPolicyToIamRole(omegaAdminStackName, "arn:aws:iam::aws:policy/AWSLambda_FullAccess")
+                                    assignPolicyToIamRole(omegaAdminStackName, "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+                                    println "IAM Role created!"
+
+                                    println "Creating Environment Variables..."
+                                    def templateParameters = []
+                                    templateParameters = appendObjectVariable(templateParameters, "BillingGroup", uniqueId, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "GatewayName", omegaAdminStackName, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreDefaultLcid", cms_lcid, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreGoogleMapsJsKey", "${cms_googleApiKey}", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsHelpersCoreProviderOptions", "{ \"AWSS3FileProvider\": \"{ \\\"BucketName\\\": \\\"${omegaPluginsS3BucketName}\\\", \\\"AccessKey\\\": \\\"${params.awsAccessKey}\\\", \\\"SecretKey\\\": \\\"${params.awsSecret}\\\", \\\"RegionDisplayName\\\": \\\"${stackRegion}\\\"}\" }", true)
+                                    println "Environment Variables created!"
+                                    
+                                    println "Creating Lambda Options..."
+                                    def opts = [
+                                        "lambdaFunctionName": omegaAdminStackName,
+                                        "region": stackRegion,
+                                        "configuration": "Release",
+                                        "s3bucketname": omegaAdminS3BucketName,
+                                        "iamRole": omegaAdminStackName,
+                                        "lambdaFunctionHandler": "MD.CMS.Administration.Core.AwsLambda::MD.CMS.Administration.Core.AwsLambda.LambdaEntryPoint::FunctionHandlerAsync",
+                                        "lambdaFunctionMemorySize": 512,
+                                        "lambdaFunctionTimeout": 30,
+                                        "templateParameters": templateParameters,
+                                        "configFile": "aws-lambda-tools-defaults.json",
+                                        "templateFile": "serverless.template"
+                                    ]
+                                    println "Lambda Options created!"
+
+                                    println "Creating Lambda Function and API Gateway..."
+                                    omegaAdminApiGatewayUrl = publishDotnetLambda(opts, "https")
+                                    println "Lambda Function and API Gateway created!"
+                                }
+
+                                dir("MD.CMS.WebApi.Core.AwsLambda") {
+                                    
+                                    createIamRole(omegaWsStackName, "..\\Assets\\aws\\rolepolicy.json")
+                                    assignPolicyToIamRole(omegaWsStackName, "arn:aws:iam::aws:policy/AWSLambda_FullAccess")
+                                    assignPolicyToIamRole(omegaWsStackName, "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+
+                                    def templateParameters = []
+                                    templateParameters = appendObjectVariable(templateParameters, "BillingGroup", uniqueId, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "GatewayName", omegaWsStackName, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreDefaultLcid", cms_lcid, true)
+                                    if(cms_emailEnabled){
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreEmailHost", cms_emailHost, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreEmailPort", cms_emailPort, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreEmailEnableSsl", cms_emailUseSsl, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreUsername", cms_emailUsername, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCorePassword", cms_emailPassword, true)
+                                    }
+                                    if(cms_rootAccountEnabled){
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreRootAdminAccount", "{ \"Username\": \"${cms_rootAccountUsername}\", \"Password\": \"${cms_rootAccountPassword}\" }", true)
+                                    }
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreSessionDomain", "temp", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreSessionTimeout", "01:00:00", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSWebApiCoreCorsOrigins", "[]", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins", "[ \"MD.Tools.BaseDataAccess.Plugins.WebService.Core\", \"MD.Tools.BaseDataAccess.Plugins.MySql.Core\" ]", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings", "{\"MD.Tools.BaseDataAccess.Plugins.MySql.Core\": \"DataSource=${dbServerAddress}%%3BDatabase=${dbName}%%3BUser=${dbUser}%%3BPassword=${dbPassword}%%3BCharSet=utf8%%3Bconvert zero datetime=True%%3BDefault Command Timeout=60\",\"MD.Tools.BaseDataAccess.Plugins.WebService.Core\": \"\"}", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsHelpersCoreProviderOptions", "{ \"AWSS3FileProvider\": \"{ \\\"BucketName\\\": \\\"${omegaPluginsS3BucketName}\\\", \\\"AccessKey\\\": \\\"${params.awsAccessKey}\\\", \\\"SecretKey\\\": \\\"${params.awsSecret}\\\", \\\"RegionDisplayName\\\": \\\"${stackRegion}\\\"}\" }", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSWebApiCoreBaseApiPath", cloudFrontWsPath, true)
+                                    
+                                    def opts = [
+                                        "lambdaFunctionName": omegaWsStackName,
+                                        "region": stackRegion,
+                                        "configuration": "Release",
+                                        "s3bucketname": omegaWsS3BucketName,
+                                        "iamRole": omegaWsStackName,
+                                        "lambdaFunctionHandler": "MD.CMS.WebApi.Core.AwsLambda::MD.CMS.WebApi.Core.AwsLambda.LambdaEntryPoint::FunctionHandlerAsync",
+                                        "lambdaFunctionMemorySize": 512,
+                                        "lambdaFunctionTimeout": 30,
+                                        "templateParameters": templateParameters,
+                                        "configFile": "aws-lambda-tools-defaults.json",
+                                        "templateFile": "serverless.template"
+                                    ]
+
+                                    omegaWsApiGatewayUrl = publishDotnetLambda(opts, "wss")
+                                }
+
+                                dir("MD.CMS.WebApi.Sockets.Core.AwsLambda") {
+                                    
+                                    createIamRole(omegaWsSocketStackName, "..\\Assets\\aws\\rolepolicy.json")
+                                    assignPolicyToIamRole(omegaWsSocketStackName, "arn:aws:iam::aws:policy/AWSLambda_FullAccess")
+                                    assignPolicyToIamRole(omegaWsSocketStackName, "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole")
+
+                                    def templateParameters = []
+                                    templateParameters = appendObjectVariable(templateParameters, "BillingGroup", uniqueId, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "GatewayName", omegaWsSocketStackName, true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreDefaultLcid", cms_lcid, true)
+                                    if(cms_emailEnabled){
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreEmailHost", cms_emailHost, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreEmailPort", cms_emailPort, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreEmailEnableSsl", cms_emailUseSsl, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreUsername", cms_emailUsername, true)
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCorePassword", cms_emailPassword, true)
+                                    }
+                                    if(cms_rootAccountEnabled){
+                                        templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreRootAdminAccount", "{ \"Username\": \"${cms_rootAccountUsername}\", \"Password\": \"${cms_rootAccountPassword}\" }", true)
+                                    }
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreSessionDomain", "temp", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSBusinessLogicCoreSessionTimeout", "01:00:00", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDCMSWebApiCoreCorsOrigins", "[]", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins", "[ \"MD.Tools.BaseDataAccess.Plugins.WebService.Core\", \"MD.Tools.BaseDataAccess.Plugins.MySql.Core\" ]", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings", "{\"MD.Tools.BaseDataAccess.Plugins.MySql.Core\": \"DataSource=${dbServerAddress}%%3BDatabase=${dbName}%%3BUser=${dbUser}%%3BPassword=${dbPassword}%%3BCharSet=utf8%%3Bconvert zero datetime=True%%3BDefault Command Timeout=60\",\"MD.Tools.BaseDataAccess.Plugins.WebService.Core\": \"\"}", true)
+                                    templateParameters = appendObjectVariable(templateParameters, "MDToolsHelpersCoreProviderOptions", "{ \"AWSS3FileProvider\": \"{ \\\"BucketName\\\": \\\"${omegaPluginsS3BucketName}\\\", \\\"AccessKey\\\": \\\"${params.awsAccessKey}\\\", \\\"SecretKey\\\": \\\"${params.awsSecret}\\\", \\\"RegionDisplayName\\\": \\\"${stackRegion}\\\"}\" }", true)
+
+                                    def opts = [
+                                        "lambdaFunctionName": omegaWsSocketStackName,
+                                        "region": stackRegion,
+                                        "configuration": "Release",
+                                        "s3bucketname": omegaWsSocketS3BucketName,
+                                        "iamRole": omegaWsSocketStackName,
+                                        "lambdaFunctionMemorySize": 512,
+                                        "lambdaFunctionTimeout": 30,
+                                        "configFile": "aws-lambda-tools-defaults.json",
+                                        "templateParameters": templateParameters,
+                                        "templateFile": "serverless.template"
+                                    ]
+
+                                    omegaWsSocketApiGatewayUrl = publishDotnetLambda(opts, "wss")
+                                }
+                            }
+                        } catch (Exception e) {
+                            rollbackRequired = true
+                            rollbackException = e
+                            println e.toString()
+                        }
+                    }
+                }
+            }
+        }
+        stage("Deploying Lambda to CloudFront") {
+            steps {
+                script {
+                    if (rollbackException == null) {
+                        try {
+                            dir(projectDirectory) {
+
+                                def opts = [
+                                    "distributionname": cloudFrontDistributionName,
+                                    "adminlambdaurl": omegaAdminApiGatewayUrl,
+                                    "wslambdaurl": omegaWsApiGatewayUrl,
+                                    "wssocketlambdaurl": omegaWsSocketApiGatewayUrl,
+                                    "s3adminassetsurl": "${omegaAdminAssetsS3BucketName}.s3.amazonaws.com", 
+                                    "s3uploadsurl": "${omegaUploadsS3BucketName}.s3.amazonaws.com", 
+                                    "adminpath": cloudFrontAdminPath,
+                                    "wspath": cloudFrontWsPath,
+                                    "wssocketpath": cloudFrontWsSocketPath,
+                                    "distributionalias": "${cloudFrontDistributionName.toLowerCase()}.${getEnvString("OMEGA_DEPLOY_FQDN_SUFFIX", "client.example.com")}",
+                                    "distributionsslarn": cloudFrontSslArn,
+                                    "billingGroup": uniqueId
+                                ]
+                                
+                                createCloudFrontInstance(opts, projectDirectory)
+
+                                cloudFrontDistributionUrl = getCloudFrontDistributionUrl(cloudFrontDistributionName, projectDirectory)
+
+                                if(cloudFrontDistributionUrl.trim() == ""){
+                                    error("An error occured while creating the cloudfront distribution")
+                                }
+
+                                def postFields = []
+                                postFields = appendObjectVariable(postFields, "auth-id", getEnvString("CLOUDNS_AUTH_ID", "5159"), false, true)
+                                postFields = appendObjectVariable(postFields, "auth-password", getEnvString("CLOUDNS_AUTH_PASSWORD", ""), false, true)
+                                postFields = appendObjectVariable(postFields, "domain-name", getEnvString("OMEGA_DNS_ZONE", "example.com"), false, true)
+                                postFields = appendObjectVariable(postFields, "record-type", "CNAME", false, true)
+                                postFields = appendObjectVariable(postFields, "host", "${cloudFrontDistributionName.toLowerCase()}.client", false, true)
+                                postFields = appendObjectVariable(postFields, "record", cloudFrontDistributionUrl, false, true)
+                                postFields = appendObjectVariable(postFields, "ttl", "3600", false, true)
+
+                                httpRequest "https://api.cloudns.net/dns/add-record.json?${postFields.join('&')}"
+                            }
+                        } catch (Exception e) {
+                            rollbackRequired = true
+                            rollbackException = e
+                            println e.toString()
+                        }
+                    }
+                }
+            }
+        }
+        stage("Commit to Registry"){
+            steps {
+                script {
+                    if (rollbackException == null) {
+                        try {
+                            def cms_httpBase = getEnvString("OMEGA_CMS_INTERNAL_WS_BASE", "")
+                            if (cms_httpBase == null || cms_httpBase == "") {
+                                println "Skipping Commit to Registry: set OMEGA_CMS_INTERNAL_WS_BASE (see Jenkins/omega-pipeline.env.example)"
+                            } else {
+                            def regPwd = params.rootAccountPassword
+                            def cms_authToken = cms_login(cms_httpBase, "Admin", regPwd)
+
+                            def content = cms_constructContent(cms_getContentType(cms_httpBase, cms_authToken, 4))
+                            content.Title = "Lambda Deploy Content ${clientName}"
+                            content.FolderId = 12
+                            def fqdnSuffix = getEnvString("OMEGA_DEPLOY_FQDN_SUFFIX", "client.example.com")
+                            def websiteUrl = "${cloudFrontDistributionName.toLowerCase()}.${fqdnSuffix}".inspect()
+                            cms_contentSetFieldValue(content, "Omega Customer", "${clientId}".inspect())
+                            cms_contentSetFieldValue(content, "Unique Id", "${uniqueId}".inspect())
+                            cms_contentSetFieldValue(content, "Stack Name", "${stackName}".inspect())
+                            cms_contentSetFieldValue(content, "Database Host Address", "${dbServerAddress}".inspect())
+                            cms_contentSetFieldValue(content, "Database Host Port", "${dbServerPort}".inspect())
+                            cms_contentSetFieldValue(content, "Database Name", "${dbName}".inspect())
+                            cms_contentSetFieldValue(content, "Database User ", "${dbUser}".inspect())
+                            cms_contentSetFieldValue(content, "Database Password", "${dbPassword}".inspect())
+                            cms_contentSetFieldValue(content, "Admin Lambda Gateway Api Url", "${omegaAdminApiGatewayUrl}".inspect())
+                            cms_contentSetFieldValue(content, "Web Service Lambda Gateway Api Url", "${omegaWsApiGatewayUrl}".inspect())
+                            cms_contentSetFieldValue(content, "Web Service Socket Lambda Gateway Api Url", "${omegaWsSocketApiGatewayUrl}".inspect())
+                            cms_contentSetFieldValue(content, "Plugins S3 Bucket", "${omegaPluginsS3BucketName}".inspect())
+                            cms_contentSetFieldValue(content, "Public S3 Bucket", "${singleS3PublicBucketName}".inspect())
+                            cms_contentSetFieldValue(content, "CloudFront Distribution Name", "${cloudFrontDistributionName}".inspect())
+                            cms_contentSetFieldValue(content, "CloudFront Distribution Url", "${cloudFrontDistributionUrl}".inspect())
+                            cms_contentSetFieldValue(content, "Omega web url", "${websiteUrl}".inspect())
+                            cms_saveContent(cms_httpBase, cms_authToken, content)
+                            }
+                        } catch (Exception e) {
+                            rollbackRequired = true
+                            rollbackException = e
+                            println e.toString()
+                        }
+                    }
+                }
+            }
+        }
+        stage("Cleanup"){
+            steps{
+                script {
+                    println "skipping..."
+                    //println "Deleting project directory..."
+                    //bat "if exist \"${projectDirectory}\" (rmdir /Q/S \"${projectDirectory}\")"
+                    //bat "if exist \"${projectDirectory}@tmp\" (rmdir /Q/S \"${projectDirectory}@tmp\")"
+                    //println "Project directory deleted!"
+                }
+            }
+        }
+        stage("Rollback"){
+            steps{
+                script {
+                    if (rollbackRequired || forceRollback) {
+                        println "Deleting stacks..."
+                        deleteStack(omegaAdminStackName)
+                        deleteStack(omegaWsStackName)
+                        deleteStack(omegaWsSocketStackName)
+                        println "Stacks deleted!"
+
+                        println "Deleting S3 buckets..."
+                        if(createSingleS3LambdaBucket){
+                            deleteS3Bucket(singleS3LambdaBucketName)
+                            deleteS3Bucket(singleS3PublicBucketName)
+                        } else {
+                            deleteS3Bucket(omegaAdminS3BucketName)
+                            deleteS3Bucket(omegaWsS3BucketName)
+                            deleteS3Bucket(omegaWsSocketS3BucketName)
+                            deleteS3Bucket(omegaAdminAssetsS3BucketName)
+                            deleteS3Bucket(omegaUploadsS3BucketName)
+                        }
+                        deleteS3Bucket(omegaPluginsS3BucketName)
+                        println "S3 buckets deleted!"
+
+                        println "Deleting RDS instance..."
+                        deleteRdsDbInstance(rdsDbInstance.DBInstanceIdentifier)
+                        println "RDS instance deleted!"
+
+                        println "Deleting subnets and subnet group..."
+                        deleteRdsSubnetGroup(omegaRdsSubnetGroupName)
+                        deleteSubnet(subnet1Id)
+                        deleteSubnet(subnet2Id)
+                        println "Subnets and subnet group deleted!"
+
+                        println "Deleting RDS parameter group..."
+                        deleteRdsParameterGroup(omegaRdsParameterGroupName)
+                        println "RDS parameter group deleted!"
+
+                        println "Deleting security group..."
+                        deleteSecurityGroup(securityGroupId)
+                        println "Security group deleted!"
+
+                        println "Deleting IAM roles..."
+                        deleteIamRole(omegaAdminStackName)
+                        deleteIamRole(omegaWsStackName)
+                        deleteIamRole(omegaWsSocketStackName)
+                        println "IAM roles deleted!"
+
+                        if (rollbackException != null) {
+                            error(rollbackException.toString())
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

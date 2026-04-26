@@ -1,0 +1,10 @@
+﻿<?xml version='1.0'?>
+<Obfuscator>
+  <AssemblySearchPath path="C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.1.10\ref\netcoreapp3.1" />
+  <Var name="InPath" value=".\" />
+  <Var name="OutPath" value=".\Obfuscated" />
+
+  <Module file="$(InPath)\MD.Tools.Helpers.Core.dll">
+    <SkipType name="Microsoft.AspNetCore.Mvc.Core" skipMethods="true" skipFields="true" />
+  </Module>
+</Obfuscator>

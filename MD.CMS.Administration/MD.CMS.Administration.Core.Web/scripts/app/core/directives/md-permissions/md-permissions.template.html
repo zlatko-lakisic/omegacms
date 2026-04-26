@@ -1,0 +1,22 @@
+<div id="{{uniqueId}}" class="md-entity-permissions" layout="column">
+    <md-tab label="{{$root.globals.resources.Labels.Permissions}}">
+        <md-tabs>
+            <md-tab label="{{$root.globals.resources.Labels.ProfilePermissions}}">
+                <md-entity-permissions display-property="Name"
+                                       display-property-header="$root.globals.resources.Labels.ProfileType"
+                                       type="mdBusinessLogic.dataAccess.entities.entitiesEnum.ProfileType"
+                                       object="mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                       object-id="vm.content.UniqueId"
+                                       save="vm.registerPermissionSaveEvents" />
+            </md-tab>
+            <md-tab label="{{$root.globals.resources.Labels.UserPermissions}}">
+                <md-entity-permissions display-property="Username"
+                                       display-property-header="$root.globals.resources.Labels.User"
+                                       type="mdBusinessLogic.dataAccess.entities.entitiesEnum.User"
+                                       object="mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                       object-id="vm.content.UniqueId"
+                                       save="vm.registerPermissionSaveEvents" />
+            </md-tab>
+        </md-tabs>
+    </md-tab>
+</div>

@@ -1,0 +1,7 @@
+md-cms-button {
+    & > .md-cms-button-inner-button {
+        & > md-progress-circular {
+            margin: 0 auto;
+        }
+    }
+}

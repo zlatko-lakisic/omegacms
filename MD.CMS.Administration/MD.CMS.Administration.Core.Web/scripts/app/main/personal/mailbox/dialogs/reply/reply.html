@@ -1,0 +1,38 @@
+﻿<md-dialog class="compose-dialog" aria-label="New Message">   
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                <span class="title" md-resource-text name="Titles.ReplyX" replacevalue0="{{vm.message.Subject}}"></span>
+                <md-button class="md-icon-button" ng-click="vm.closeDialog()" aria-label="Close dialog">
+                    <md-icon md-font-icon="icon-close"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div class="mail-list-item bottom-space" ng-repeat="message in vm.threadMessages" ng-class="{rpl: vm.threadMessages[0].FromUserId == message.FromUserId}">
+                <div class="info" layout="row" layout-align="space-between start">
+                    <div layout="column" layout-align="start start">
+                        <div layout="row" layout-align="start start">
+                            <div layout="column" layout-align="start start">
+                                <div class="name">
+                                    {{message.FromUser.Username}} :
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div layout="column" layout-align="end center">
+                        {{message.DateAdded | date : 'short'}}
+                    </div>
+                </div>
+                <div ng-bind-html="message.MessageContent"></div>
+            </div>
+            <md-cms-textarea md-input-name="replytext" md-floating-label="Reply" md-model="vm.text" />
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button ng-click="vm.sendMessage()" class="send-button md-accent md-raised" aria-label="Send">
+                    <md-resource-text name="Labels.Send"></md-resource-text>
+                </md-button>
+            </div>
+        </md-dialog-actions>
+   
+</md-dialog>

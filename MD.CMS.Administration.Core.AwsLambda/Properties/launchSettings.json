@@ -1,0 +1,38 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:22834/",
+      "sslPort": 44329
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "MD_CMS_BusinessLogic_Core_GoogleApiTranslationKey": "",
+        "MD_CMS_BusinessLogic_Core_GoogleMapsJsKey": "",
+        "MD_CMS_BusinessLogic_Core_SessionTimeout": "01:00:00",
+        "MD_CMS_BusinessLogic_Core_SessionDomain": "lambda.omegacms.run",
+        "MD_Tools_Helpers_Core_ProviderOptions_AWSS3FileProvider": "{ \"BucketName\": \"aws-omega-plugins-test\", \"AccessKey\": \"\", \"SecretKey\": \"\", \"RegionDisplayName\": \"us-east-1\"}",
+        "MD_CMS_BusinessLogic_Core_DefaultLcid": "2057"
+      }
+    },
+    "MD.CMS.Administration.Core.AwsLambda": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "Mock Lambda Test Tool": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\%USERNAME%\\.dotnet\\tools\\dotnet-lambda-test-tool-3.1.exe",
+      "commandLineArgs": "--port 5050",
+      "workingDirectory": ".\\bin\\$(Configuration)\\netcoreapp3.1"
+    }
+  }
+}

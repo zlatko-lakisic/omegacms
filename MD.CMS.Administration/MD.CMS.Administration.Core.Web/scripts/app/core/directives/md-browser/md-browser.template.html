@@ -1,0 +1,107 @@
+﻿<div id="browser" class="page-layout simple right-sidenav" layout="row">
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+        <!-- HEADER -->
+        <div class="header md-accent-bg">
+
+            <div class="header-content" layout="column" layout-align="space-between">
+                <!-- TOOLBAR -->
+                <div class="toolbar" layout="row" layout-align="space-between">
+                    <div>
+                        <span md-resource-text name="{{config.groupsLabel}}" ng-if="currentTab === 0" class="md-display-1 font-weight-300"></span>
+                        <span md-resource-text name="{{config.itemsLabel}}" ng-if="currentTab === 1" class="md-display-1 font-weight-300"></span>
+                    </div>
+
+                    <div class="search" layout="row" ng-show="showSearch" layout-align="start center" flex>
+                        <input id="contentSearch" ng-keyup="$event.keyCode == 13 ? search() : null" ng-disabled="!searchGotResponse" ng-model="searchTerm" ng-model-options="{debounce:1000}" ng-change="search()" placeholder="{{$root.globals.resources.Labels.SearchPlaceholder}}" flex>
+                    </div>
+
+                    <div class="right-side" layout="row">
+                        <md-button id="searchbtn" ng-click="toggleSearchBar();" class="md-icon-button">
+                            <md-icon md-font-icon="icon-magnify"></md-icon>
+                            <md-tooltip><md-resource-text name="Labels.Search" /></md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button"
+                                   ng-click="toggleView()">
+                            <md-icon md-font-icon="{{currentView.Icon}}"></md-icon>
+                            <md-tooltip><md-resource-text name="{{currentView.Label}}" /></md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <!-- / TOOLBAR -->
+                <!-- BREADCRUMB -->
+                <div ms-scroll class="breadcrumb text-truncate layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <span data-ng-repeat="path in ParentGroupPaths" ng-href="{{getGroupPath(path)}}">
+                        {{path.Name}}
+                        <md-icon ng-if="(ParentGroupPaths.length-1) != $index" md-font-icon="icon-chevron-right" class="icon separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    </span>
+                </div>
+                <!-- / BREADCRUMB -->
+            </div>
+            <!-- ADD FILE BUTTON -->
+            <md-fab-speed-dial md-open="vm.menuOpened" md-direction="right" class="add-file-button md-scale" ng-click="initFab()">
+                <md-fab-trigger>
+                    <md-button class="md-fab md-warn" ng-disabled="disableAddButton">
+                        <md-icon md-font-icon="icon-plus"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button class="md-fab md-raised md-mini"
+                               ui-sref="app.folder_forms({ path: vm.folder.FolderPath, id:vm.folder.Id, action:'add', currentView:vm.currentView})">
+                        <md-tooltip md-direction="bottom"><md-resource-text name="Labels.Add" replacevalue0="Labels.Folder" /></md-tooltip>
+                        <md-icon md-font-icon="icon-folder"></md-icon>
+                    </md-button>
+                    <md-button class="md-fab md-raised md-mini"
+                               ui-sref="app.content_form({ path: vm.folder.FolderPath,folderId:vm.folder.Id, action:'add', currentView:vm.currentView})">
+                        <md-tooltip md-direction=" bottom"><md-resource-text name="Labels.Add" replacevalue0="Labels.HtmlContent" /></md-tooltip>
+                        <md-icon md-font-icon="icon-document"></md-icon>
+                    </md-button>
+                    <md-button ng-repeat="type in itemTypes" class="md-fab md-raised md-mini"
+                               ui-sref="app.content_form({ path: vm.folder.FolderPath,folderId:vm.folder.Id, action:'add', id: type.Id, currentView:vm.currentView})">
+                        <md-tooltip md-direction=" bottom"><md-resource-text name="Labels.Add" replacevalue0="{{type.Name}}" /></md-tooltip>
+                        <md-icon md-font-icon="icon-{{type.Icon}}"></md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+            <!-- / ADD FILE BUTTON -->
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <md-content class="content" flex ms-scroll>
+            <!-- PAGINATION -->
+            <md-pager page="currentPage" total="totalItems" on-pager-change="updatePager(currentPage, pageSize)"></md-pager>
+            <!-- / PAGINATION -->
+            <md-tabs md-dynamic-height md-selected="currentTab">
+                <md-tab md-on-select="changeTab()" ng-click="vm.disableDeleteBtn()" ng-disabled="disableGroupsTab">
+                    <md-tab-label>
+                        <md-icon md-font-icon="{{config.groupsTabIcon}}"></md-icon>
+                        <md-resource-text name="{{config.groupsTabLabel}}" />
+                    </md-tab-label>
+                    <md-tab-body>
+
+                    </md-tab-body>
+                </md-tab>
+                <md-tab md-on-select="changeTab()" ng-click="vm.disableDeleteBtn()" ng-disabled="disableItemsTab">
+                    <md-tab-label>
+                        <md-icon md-font-icon="{{config.itemsTabIcon}}"></md-icon>
+                        <md-resource-text name="{{config.itemsTabLabel}}" />
+                    </md-tab-label>
+                    <md-tab-body>
+
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+
+
+        <!-- / CONTENT -->
+    </div>
+    <!-- / CENTER -->
+    <!-- SIDENAV -->
+    <md-sidenav class="sidenav details-sidenav md-sidenav-right" md-is-locked-open="$mdMedia('gt-md')"
+                md-component-id="details-sidenav"
+                ng-include="'scripts/app/main/content/list/sidenavs/details/details-sidenav.html'" ms-scroll
+                ms-sidenav-helper>
+    </md-sidenav>
+    <!-- / SIDENAV -->
+</div>

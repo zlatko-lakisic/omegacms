@@ -1,0 +1,156 @@
+<div layout="column">
+    <h2>Layout</h2>
+    <div layout="row" layout-align="space-between center">
+        <div layout="column" flex>
+            <div layout>
+                <div flex="10" layout layout-align="center center">
+                    <span class="md-body-1">Layout Whiteframe</span>
+                </div>
+                <md-slider ng-readonly="false" flex md-discrete ng-model="vm.field.JsonField.gridTileData.whiteframe" step="1" min="0" max="24">
+                </md-slider>
+            </div>
+            <md-input-container ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section">
+                <md-switch ng-model="vm.field.JsonField.gridTileData.layoutMargin" aria-label="Layout Padding" class="md-default">
+                    Layout Margin
+                </md-switch>
+            </md-input-container>
+            <md-input-container ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section">
+                <md-switch ng-model="vm.field.JsonField.gridTileData.layoutPadding" aria-label="Layout Padding" class="md-default">
+                    Layout Padding
+                </md-switch>
+            </md-input-container>
+            <md-input-container ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section">
+                <md-switch ng-model="vm.field.JsonField.gridTileData.layoutWrap" aria-label="Layout Wrap" class="md-default">
+                    Layout Wrap
+                </md-switch>
+            </md-input-container>
+            <!-- Section Options -->
+            <md-input-container ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section">
+                <label>Layout Configuration</label>
+                <md-select ng-model="vm.field.JsonField.gridTileData.layout">
+                    <md-option ng-value="1">Row</md-option>
+                    <md-option ng-value="2">Column</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex="50" layout-padding="">
+            <md-whiteframe ng-repeat="x in [].constructor(24) track by $index" ng-class="vm.getStyleWhiteframeClass($index + 1)" ng-if="($index + 1) == vm.field.JsonField.gridTileData.whiteframe">
+                <md-whiteframe class="md-whiteframe-4dp" ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section" flex>
+                    First Cell
+                </md-whiteframe>
+                <md-whiteframe class="md-whiteframe-4dp" ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.section" flex>
+                    Second Cell
+                </md-whiteframe>
+                <span ng-if="vm.field.AttributeTypeDefinition.InputType != vm.attributeTypeEnum.section">Container Cell</span>
+            </md-whiteframe>
+        </div>
+    </div>
+</div>
+
+<!-- Input Options -->
+<div ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.input || vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.calculated">
+    <div layout="column" class="content" layout-padding>
+        <md-switch ng-model="vm.field.JsonField.linkToTitle" aria-label="Link to title">
+            <span md-resource-text name="Labels.LinkToTitle"></span>
+        </md-switch>
+    </div>
+</div>
+<div ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.input">
+    <div layout="column" class="content" ng-if="vm.hasMinLength" layout-padding>
+        <md-switch ng-model="vm.field.JsonField.validation.MinLength.Edit" aria-label="Minimum Length" flex="30">
+            <span md-resource-text name="Labels.MinimumLength"></span>
+        </md-switch>
+        <md-input-container ng-if="vm.field.JsonField.validation.MinLength.Edit" flex>
+            <label><span md-resource-text name="Labels.Value"></span></label>
+            <input type="number" min="0" ng-model="vm.field.JsonField.validation.MinLength.Length" />
+        </md-input-container>
+    </div>
+    <div layout="column" ng-if="vm.hasMaxLength" layout-padding>
+        <md-switch ng-model="vm.field.JsonField.validation.MaxLength.Edit" aria-label="Maximum Length" flex="30">
+            <span md-resource-text name="Labels.MaximumLength"></span>
+        </md-switch>
+        <md-input-container ng-if="vm.field.JsonField.validation.MaxLength.Edit" flex>
+            <label><span md-resource-text name="Labels.Value"></span></label>
+            <input type="number" min="{{vm.field.JsonField.validation.MinLength.Length}}" ng-model="vm.field.JsonField.validation.MaxLength.Length" />
+        </md-input-container>
+    </div>
+    <div layout="column" ng-if="vm.hasCharacterTypes" layout-padding>
+        <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.Edit" aria-label="Character Types">
+            <span md-resource-text name="Labels.CharTypes"></span>
+        </md-switch>
+        <ul ng-if="vm.field.JsonField.validation.CharacterTypes.Edit" layout="column" layout-padding>
+            <li layout="row" layout-padding>
+                <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.Letters" aria-label="Letters (A to Z)">
+                    <span md-resource-text name="Labels.LettersAZ"></span>
+                </md-switch>
+            </li>
+            <li layout="column" layout-padding>
+                <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.Casing.Edit" aria-label="Casing">
+                    <span md-resource-text name="Labels.Casing"></span>
+                </md-switch>
+                <ul ng-if="vm.field.JsonField.validation.CharacterTypes.Casing.Edit" layout="row" layout-padding>
+                    <li layout="row">
+                        <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.Casing.UpperCase" aria-label="Upper Case">
+                            <span md-resource-text name="Labels.UpperCase"></span>
+                        </md-switch>
+                    </li>
+                    <li layout="row">
+                        <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.Casing.LowerCase" aria-label="Lower Case">
+                            <span md-resource-text name="Labels.LowerCase"></span>
+                        </md-switch>
+                    </li>
+                </ul>
+            </li>
+            <li layout="column" layout-padding>
+                <div layout="column">
+                    <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.SpecialCharacters.Edit" aria-label="Special Characters" flex>
+                        <span md-resource-text name="Labels.SpecialCharacters"></span>
+                    </md-switch>
+                    <md-chips ng-if="vm.field.JsonField.validation.CharacterTypes.SpecialCharacters.Edit" ng-model="vm.field.JsonField.validation.CharacterTypes.SpecialCharacters.Included" flex></md-chips>
+                </div>
+            </li>
+            <li layout="column" layout-padding>
+                <md-switch ng-model="vm.field.JsonField.validation.CharacterTypes.Numbers.Edit" aria-label="Numbers">
+                    <span md-resource-text name="Labels.Numbers"></span>
+                </md-switch>
+                <ul ng-if="vm.field.JsonField.validation.CharacterTypes.Numbers.Edit" layout="row" layout-padding>
+                    <li layout="row">
+                        <md-input-container flex>
+                            <label><span md-resource-text name="Labels.From"></span></label>
+                            <input type="text" ng-model="vm.field.JsonField.validation.CharacterTypes.Numbers.From" />
+                        </md-input-container>
+                    </li>
+                    <li layout="row">
+                        <md-input-container flex>
+                            <label><span md-resource-text name="Labels.To"></span></label>
+                            <input type="text" min="{{vm.field.JsonField.validation.CharacterTypes.Numbers.From + 1}}" ng-model="vm.field.JsonField.validation.CharacterTypes.Numbers.To" />
+                        </md-input-container>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Multiple Select Options -->
+<div class="content" ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.selectMultiple">
+    <md-switch ng-model="vm.field.JsonField.style[vm.attributeTypeEnum[vm.field.AttributeTypeDefinition.InputType]].forceAutoComplete" aria-label="Force Autocomplete Style">
+        Force Autocomplete Style
+    </md-switch>
+    <md-switch ng-if="vm.field.JsonField.style[vm.attributeTypeEnum[vm.field.AttributeTypeDefinition.InputType]].forceAutoComplete"
+               ng-model="vm.field.JsonField.style[vm.attributeTypeEnum[vm.field.AttributeTypeDefinition.InputType]].requireMatch" aria-label="Require Match">
+        Require Match
+    </md-switch>
+</div>
+
+<!-- Multiple Select Options -->
+<div class="content" ng-if="vm.field.AttributeTypeDefinition.InputType == vm.attributeTypeEnum.selectSingle">
+    <md-switch ng-model="vm.field.JsonField.style[vm.attributeTypeEnum[vm.field.AttributeTypeDefinition.InputType]].forceAutoComplete" aria-label="Force Autocomplete Style">
+        Force Autocomplete Style
+    </md-switch>
+    <md-switch ng-if="vm.field.JsonField.style[vm.attributeTypeEnum[vm.field.AttributeTypeDefinition.InputType]].forceAutoComplete"
+               ng-model="vm.field.JsonField.style[vm.attributeTypeEnum[vm.field.AttributeTypeDefinition.InputType]].requireMatch" aria-label="Require Match">
+        Require Match
+    </md-switch>
+</div>

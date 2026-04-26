@@ -1,0 +1,170 @@
+/*----------------------------------------------------------------*/
+/*  md-generictype-designer-form
+/*----------------------------------------------------------------*/
+.md-generictype-designer-form {
+
+    md-backdrop {
+        display: none !important;
+    }
+
+    div[fb-element] {
+        cursor: move;
+    }
+
+    .controls-card {
+        position: absolute;
+        display: none;
+        top: 0;
+        right: 0;
+        width: 350px;
+        height: 350px;
+        overflow: hidden;
+
+        &.visible {
+            display: block;
+        }
+    }
+
+    .control {
+
+        > md-whiteframe {
+            > md-generictype-designer-element {
+                position: relative;
+                overflow: hidden;
+
+                > .options {
+                    position: absolute;
+                    right: -120px;
+                    top: 20px;
+                    z-index: 10;
+                    -webkit-transition: right 0.3s ease;
+                    transition: right 0.3s ease;
+                    -webkit-transition-delay: 0.2s;
+                    transition-delay: 0.2s;
+
+                    .md-fab-action-item {
+                        opacity: 1;
+                    }
+
+                    .md-fab {
+                        padding-top: 7px;
+                    }
+                }
+            }
+        }
+
+
+        &:hover {
+            > md-whiteframe {
+                > md-generictype-designer-element {
+                    > .options {
+                        right: 50px;
+                    }
+                }
+            }
+        }
+
+
+        .container {
+            background-repeat: no-repeat;
+            background-size: 265px 95px;
+            height: 95px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+
+            h3 {
+                background: white;
+                display: block;
+                line-height: 30px;
+                font-size: 20px;
+                margin: 16px;
+            }
+        }
+    }
+
+    .control {
+        @import 'md-generictype-designer-form-icons.scss';
+    }
+}
+
+.md-generictype-designer-form-toolbox {
+    > md-sidenav {
+        width: 30% !important;
+
+        .grid,
+        md-tabs {
+            margin: 0px !important;
+        }
+
+        .toolbox-control {
+            .container {
+                height: 95px;
+                width: 100%;
+                background-repeat: no-repeat;
+                background-size: 265px 95px;
+                margin-bottom: 15px;
+
+                h3 {
+                    margin: 0;
+                    padding: 16px 0px 4px 16px;
+                    line-height: 30px;
+                    font-size: 20px;
+                    background: white;
+                }
+            }
+
+            @import 'md-generictype-designer-form-icons.scss';
+        }
+
+        #blocks {
+            .container {
+                height: 95px;
+                width: 100%;
+                background-repeat: no-repeat;
+                background-size: 265px 95px;
+                margin-bottom: 15px;
+
+                h3 {
+                    margin: 0;
+                    padding: 16px 0px 4px 16px;
+                    line-height: 30px;
+                    font-size: 20px;
+                    background: white;
+                }
+
+                @import 'md-generictype-designer-form-icons.scss';
+            }
+        }
+    }
+}
+
+.md-generictype-designer-form-field-dialog {
+    min-width: 800px;
+}
+
+.md-generictype-designer-form-preview-dialog {
+    background-color: rgb(255,255,255);
+}
+
+body > md-cms-grid-tile.md-cms-grid-tile-new.toolbox-control.ui-draggable.ui-draggable-handle.ui-draggable-dragging {
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    opacity: 0.7;
+
+    .container {
+        height: 95px;
+        width: 350px;
+        background-repeat: no-repeat;
+        background-size: 265px 95px;
+
+        h3 {
+            margin: 0;
+            padding: 16px;
+            line-height: 30px;
+            font-size: 20px;
+            background: white;
+        }
+
+        @import 'md-generictype-designer-form-icons.scss';
+    }
+}

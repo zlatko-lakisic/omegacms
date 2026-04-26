@@ -1,0 +1,40 @@
+<!-- SIDENAV HEADER -->
+<div class="header" layout="column" layout-align="space-between start">
+    <div class="logo" layout="row" layout-align="start center">
+        <span class="logo-icon">
+            <md-icon md-font-icon="icon-email" class="icon"></md-icon>
+        </span>
+        <span class="logo-text" md-resource-text name="Titles.Mailbox"></span>
+    </div>
+    <div class="account">
+        <div class="title" md-truncate>{{vm.loggedOnUser.Username}}</div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+<!-- SIDENAV CONTENT -->
+<md-content ms-scroll class="content" flex>
+    <div class="compose-button">
+        <md-button class="md-accent md-raised" aria-label="compose"
+                   ng-click="vm.composeDialog($event)">
+            <md-resource-text name="Labels.Compose"></md-resource-text>
+        </md-button>
+    </div>
+    <div class="navigation-simple" layout="column">
+        <md-button class="message-folder item" ng-repeat="messageFolder in vm.allFolders" ng-click="vm.selectFolder(messageFolder, $index)"
+                   ng-class="{'selected-button' : vm.selectedFolder === messageFolder}" id="mf{{messageFolder.Id}}">
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-{{messageFolder.Icon}}" class="s16"></md-icon>
+                <span class="title">{{messageFolder.Name}}</span>
+                <span flex></span>
+                <span>{{messageFolder.MessagesCount}}</span>
+            </div>
+        </md-button>
+        <md-divider></md-divider>
+        <md-button class="md-raised" aria-label="add_new"
+                   ng-click="vm.addNewMessageFolderDialog($event)">
+            <md-resource-text name="Labels.Add1"></md-resource-text>
+        </md-button>
+        <md-divider></md-divider>
+    </div>
+</md-content>
+<!-- / SIDENAV CONTENT -->

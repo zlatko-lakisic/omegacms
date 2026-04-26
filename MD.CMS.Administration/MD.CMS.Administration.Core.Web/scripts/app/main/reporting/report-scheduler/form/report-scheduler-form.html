@@ -1,0 +1,175 @@
+﻿<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="space-between">
+            <!-- BREADCRUMB -->
+            <div>
+                <span class="md-display-1 font-weight-300" md-resource-text name="Titles.ReportSchedulerEditor"></span>
+            </div>
+            <div class="breadcrumb text-truncate" layout="row" layout-align="start center">
+
+            </div>
+            <!-- / BREADCRUMB -->
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <!-- BASIC FORM -->
+        <div class="form-wrapper md-whiteframe-1dp" flex="60">
+            <div class="form-title">{{vm.formTitle | uppercase}}</div>
+            <form autocomplete="off" name="basicForm" class="md-inline-form" novalidate>
+                <md-tabs md-dynamic-height>
+                    <md-tab label="Form" ng-click="vm.changeTab(1)">
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <label md-resource-text name="Labels.Name"></label>
+                                <input type="text" name="name" ng-model="vm.reportScheduler.Name"
+                                       required>
+                                <div ng-messages="basicForm.name.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container flex="50">
+                                <label md-resource-text name="Labels.ChooseReportDefinition"></label>
+                                <md-select name="reportDefinition" ng-model="vm.reportScheduler.ReportId" required>
+                                    <md-option ng-repeat="definition in vm.reportDefinitions " ng-value="definition.Id">
+                                        {{definition.Name}}
+                                    </md-option>
+                                </md-select>
+                                <div class="errors" ng-messages="basicForm.reportDefinition.$error">
+                                    <div ng-message="required"><md-resource-text name="Labels.Required"></md-resource-text></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label>From</label>
+                                <md-datepicker name="start"
+                                               ng-model="vm.Start"
+                                               md-placeholder="{{$root.globals.resources.Labels.StartDate}}"
+                                               required
+                                               ng-change="vm.checkMinDate();"
+                                               md-max-date="vm.maxDate"
+                                               md-current-view="year">
+                                </md-datepicker>
+                                <div style="color:red;" class="errors" ng-messages="basicForm.start.$error">
+                                    <div ng-message="valid"><md-resource-text name="Labels.Invalid"></md-resource-text></div>
+                                    <div ng-message="required"><md-resource-text name="Labels.Name"></md-resource-text></div>
+                                    <div ng-show="vm.isSmallerThanCurrent"><md-resource-text name="Labels.StartDateBefore"></md-resource-text></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label>To</label>
+                                <md-datepicker name="end"
+                                               ng-model="vm.End"
+                                               md-placeholder="{{$root.globals.resources.Labels.EndDate}}"
+                                               md-min-date="vm.Start"
+                                               md-max-date="vm.maxDate">
+                                </md-datepicker>
+                                <div style="color:red;" class="errors" ng-messages="basicForm.end.$error">
+                                    <div ng-show="vm.End != null && vm.End <= vm.Start"><md-resource-text name="Labels.EndDateSameBeforeStart"></md-resource-text></div>
+                                    <div ng-message="valid"><md-resource-text name="Labels.Invalid"></md-resource-text></div>
+                                    <div ng-message="mindate"><md-resource-text name="Labels.EndDateAfter"></md-resource-text></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label md-resource-text name="Labels.IsRecurring"></label>
+                                <md-switch aria-label="Is Reccuring" ng-model="vm.reportScheduler.IsRecurring"></md-switch>
+                            </md-input-container>
+                        </div>                       
+                        <div layout="column" layout-gt-sm="row" ng-show="vm.reportScheduler.IsRecurring">
+                            <div layout="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label md-resource-text name="Labels.Interval"></label>
+                                    <input name="days" type="number" ng-model="vm.reportScheduler.Interval.days" placeholder="{{$root.globals.resources.Labels.Days}}" ng-pattern="/^[0-9]*$/" min="0" max="10000" />
+                                    <div ng-messages="basicForm.days.$error" ng-if="!showHints">
+                                        <div ng-message="pattern"><md-resource-text name="Labels.PositiveNumberError"></md-resource-text></div>
+                                        <div ng-message="error"><md-resource-text name="Labels.PositiveNumberError"></md-resource-text></div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input name="hours" type="number" ng-model="vm.reportScheduler.Interval.hours" placeholder="{{$root.globals.resources.Labels.Hours}}" ng-pattern="/^[0-9]*$/" min="0" max="23" />
+                                    <div ng-messages="basicForm.hours.$error" ng-if="!showHints">
+                                        <div ng-message="pattern"><md-resource-text name="Labels.HoursError"></md-resource-text></div>
+                                        <div ng-message="error"><md-resource-text name="Labels.HoursError"></md-resource-text></div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input name="minutes" type="number" ng-model="vm.reportScheduler.Interval.minutes" placeholder="{{$root.globals.resources.Labels.Minutes}}" ng-pattern="/^[0-9]*$/" min="0" max="59" />
+                                    <div ng-messages="basicForm.minutes.$error" ng-if="!showHints">
+                                        <div ng-message="pattern"><md-resource-text name="Labels.MinutesError"></md-resource-text></div>
+                                        <div ng-message="error"><md-resource-text name="Labels.MinutesError"></md-resource-text></div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>                      
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label md-resource-text name="Labels.IsActive"></label>
+                                <md-switch aria-label="Is Reccuring" ng-model="vm.reportScheduler.IsActive"></md-switch>
+                            </md-input-container>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Actions" ng-click="vm.changeTab(2)">
+                        <div>
+                            <div layout="column" layout-gt-sm="row">
+                                <md-input-container class="md-block" flex="100">
+                                    <md-button ng-click="vm.openCreateActionModal($event);" class="md-raised md-primary"><md-resource-text name="Labels.AddNewAction"></md-resource-text></md-button>
+                                    <table class="simple list-view">
+                                        <thead>
+                                            <tr>
+                                                <th md-resource-text name="Labels.ActionType"></th>
+                                                <th md-resource-text name="Labels.Name"></th>
+                                                <th md-resource-text name="Labels.Value"></th>
+                                                <th md-resource-text name="Labels.IsActive"></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="file in vm.reportScheduler.Actions">
+                                                <td class="name">{{(file.ActionType == 2 ? 'Email' : 'Save to disk')}}</td>
+                                                <td class="name">{{file.Name}}</td>
+                                                <td class="name">{{file.Options}}</td>
+                                                <td>
+                                                    <md-switch aria-label="Is Active" ng-model="file.IsActive"></md-switch>
+                                                </td>
+                                                <td class="name">
+                                                    <md-button ng-click="vm.deleteAction(file);" class="md-icon-button">
+                                                        <md-icon md-font-icon="icon-delete"></md-icon>
+                                                        <md-tooltip><span md-resource-text name="Labels.Delete" replacevalue0="action"></span></md-tooltip>
+                                                    </md-button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </md-tab>
+                </md-tabs>
+                <md-button type="submit" class="md-raised md-accent"
+                           ng-disabled="(vm.End != null && vm.End <= vm.Start) || basicForm.$invalid || vm.isSmallerThanCurrent"
+                           ng-click="vm.sendForm($event);">
+                    <span md-resource-text name="Labels.Submit"></span>
+                </md-button>
+                <a ui-sref="app.report_scheduler_list">
+                    <md-button type="button" class="md-accent" aria-label="Submit">
+                        <span md-resource-text name="Labels.Back"></span>
+                    </md-button>
+                </a>
+            </form>
+        </div>
+        <!-- / BASIC FORM -->
+    </div>
+</div>
+<!-- / CONTENT -->

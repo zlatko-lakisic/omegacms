@@ -1,0 +1,368 @@
+<div id="forms" class="page-layout simple fullwidth doc-page flex-content" layout="column">
+    <!-- HEADER -->
+    <div class="header md-accent-bg">
+        <div class="header-content" layout="column" layout-align="space-between">
+            <!-- BREADCRUMB -->
+
+            <div class="breadcrumb text-truncate" layout="row" layout-align="start center">
+                <span data-ng-repeat="path in vm.folder.ParentArray"
+                      class="ng-binding ng-scope"
+                      ui-sref="app.content_list({folderPath:path.FolderPath})">
+                    {{path.Name}}
+                    <md-icon ng-if="(vm.folder.ParentArray.length-1) != $index" md-font-icon="icon-chevron-right" class="icon separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon>
+                </span>
+            </div>
+            <!-- / BREADCRUMB -->
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <!-- BASIC FORM -->
+
+        <div class="form-wrapper md-whiteframe-1dp" flex="60">
+            <div class="form-title">{{vm.formTitle | uppercase}}</div>
+            <form autocomplete="off" name="basicForm" class="md-inline-form" novalidate>
+                <md-tabs md-dynamic-height>
+                    <md-tab label="{{$root.globals.resources.Labels.MainContent}}" ng-click="vm.changeTab(1)">
+                        <md-checkbox ng-model="vm.folder.Inherit" def aria-label="Inherit?">
+                            <md-resource-text name="Labels.FolderInheritParentSettings"></md-resource-text>
+                        </md-checkbox>
+                        <div layout="column" layout-gt-sm="row">
+                            <md-input-container flex>
+                                <label md-resource-text name="Labels.FolderName"></label>
+                                <input type="text" name="name" ng-model="vm.folder.Name" required>
+                                <div ng-messages="basicForm.firstname.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <md-input-container class="md-block">
+                            <label md-resource-text name="Labels.Description"></label>
+                            <textarea ng-model="vm.folder.Description" columns="1" md-maxlength="150" rows="5"></textarea>
+                        </md-input-container>
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.MetaData}}" ng-click="vm.changeTab(3)">
+                        <!-- Table -->
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title">
+                                <span md-resource-text name="Labels.AssignFieldToFolder"></span>
+                            </div>
+                            <table class="simple" ms-responsive-table>
+                                <thead>
+                                    <tr>
+                                        <th md-resource-text name="Labels.Assigned"></th>
+                                        <th md-resource-text name="Labels.Name"></th>
+                                        <th md-resource-text name="Labels.IsRequired"></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr ng-repeat="field in vm.folderMetaDataFields track by $index">
+                                        <td class="name">
+                                            <md-checkbox ng-model="field.Checked" ng-disabled="vm.folder.Inherit" aria-label="checked?"></md-checkbox>
+                                        </td>
+                                        <td class="position">{{field.Name}}</td>
+                                        <td class="office">
+                                            <md-checkbox ng-model="field.IsRequired" ng-disabled="vm.folder.Inherit" aria-label="required?"></md-checkbox>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- end table-->
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.MediaContentMetaData}}" ng-click="vm.changeTab(4)">
+                        <!-- Table -->
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title">
+                                <span md-resource-text name="Labels.AssignFieldToFolder"></span>
+                            </div>
+                            <table class="simple" ms-responsive-table>
+                                <thead>
+                                    <tr>
+                                        <th md-resource-text name="Labels.Assigned"></th>
+                                        <th md-resource-text name="Labels.Name"></th>
+                                        <th md-resource-text name="Labels.IsRequired"></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr ng-repeat="field in vm.folderMediaContentMetaDataFields track by $index">
+                                        <td class="name">
+                                            <md-checkbox ng-model="field.Checked" ng-disabled="vm.folder.Inherit" aria-label="checked?"></md-checkbox>
+                                        </td>
+                                        <td class="position">{{field.Name}}</td>
+                                        <td class="office">
+                                            <md-checkbox ng-model="field.IsRequired" ng-disabled="vm.folder.Inherit" aria-label="required?"></md-checkbox>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- end table-->
+
+
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.ContentTypes}}" ng-click="vm.changeTab(5)">
+                        <md-card>
+                            <md-card-content id="contentTypeChip">
+                                <md-chips id="chip" class="custom-chips"
+                                          ng-disabled="vm.folder.Inherit"
+                                          ng-model="vm.contentType"
+                                          md-on-add="vm.addContentType($chip)"
+                                          md-on-remove="vm.removeContentType($chip)"
+                                          md-require-match="true">
+                                    <md-autocomplete id="auto" md-selected-item="selectedContentType"
+                                                     ng-disabled="vm.contentTypeReadOnly"
+                                                     md-search-text="contentTypeSearchText"
+                                                     md-items="contentType in vm.queryAllContentTypes(contentTypeSearchText)"
+                                                     md-item-text="contentType.Name"
+                                                     placeholder="{{$root.globals.resources.Labels.SearchPlaceholder}}">
+
+                                        <span md-highlight-text="contentTypeSearchText">{{contentType.Name}}</span>
+                                    </md-autocomplete>
+                                    <md-chip-template id="temp" ng-disabled="vm.folder.Inherit">
+                                        <span>
+                                            <strong>{{$chip.Name}}</strong>
+                                        </span>
+                                    </md-chip-template>
+                                    <button ng-disabled="false" md-chip-remove class="md-primary">
+                                        <md-icon style="margin: 4px" class="s24" md-font-icon="icon-close"></md-icon>
+                                    </button>
+                                </md-chips>
+                                <span class="hint-text" ng-show="vm.folder.Inherit" md-resource-text name="Labels.DisableFolderInheritance"></span>
+                            </md-card-content>
+                        </md-card>
+                        <md-card ng-if="vm.contentTypeReadOnly">
+                            <md-card-content id="contentTypeChip" layout="column">
+                                <div layout="row" flex>
+                                    <h3 flex><i class="icon icon-filter s20"></i> Conditions</h3>
+                                    <md-button ng-click="vm.addNewCondition()" aria-label="menu" class="md-fab md-mini">
+                                        <md-tooltip md-direction="left">Add Condition</md-tooltip>
+                                        <md-icon md-font-icon="icon-plus"></md-icon>
+                                    </md-button>
+                                </div>
+                                <div layout="row" ng-repeat="condition in vm.dataBoundConditions track by $index" flex>
+                                    <md-input-container flex>
+                                        <label>Field</label>
+                                        <md-select ng-model="condition.ContentTypeDefinitionFieldId" ng-required="true">
+                                            <md-option ng-repeat="field in vm.getOnlyDataBoundFields()" ng-value="field.Id">
+                                                {{field.Name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container flex>
+                                        <label>Comparer</label>
+                                        <md-select ng-model="condition.Comparer" ng-required="true">
+                                            <md-option ng-repeat="(key, value) in vm.comparerTypes" ng-value="value">
+                                                {{key}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container flex>
+                                        <label>Value</label>
+                                        <input ng-model="condition.Value">
+                                    </md-input-container>
+                                    <md-button aria-label="menu" class="md-fab md-mini md-warn" ng-click="vm.deleteCondition($index)">
+                                        <md-tooltip md-direction="left">Delete Condition</md-tooltip>
+                                        <md-icon md-font-icon="icon-delete"></md-icon>
+                                    </md-button>
+                                </div>
+                            </md-card-content>
+                        </md-card>
+                        <md-card ng-if="vm.contentTypeReadOnly">
+                            <md-card-content layout="column">
+                                <div class="row" flex>
+                                    <h3><i class="icon icon-file-multiple s20"></i> Synchronisation</h3>
+                                    <md-input-container flex>
+                                        <label>Sync Type</label>
+                                        <md-select ng-model="vm.dataBoundSync.SyncType">
+                                            <md-option ng-repeat="(key, value) in vm.contentTypeDefinitionSyncTypes" ng-value="value" ng-switch="value">
+                                                <span ng-switch-when="0">No synchronisation required</span>
+                                                <span ng-switch-when="1">Sync from Remote to your {{$root.systemName}} <i class="icon icon-data s20"></i> <i class="icon icon-arrow-right s20"></i> <span class="logo-image icon-omega-logo s20"></span></span>
+                                                <span ng-switch-when="2">Sync from your {{$root.systemName}} to Remote <i class="icon icon-data s20"></i> <i class="icon icon-arrow-left s20"></i> <span class="logo-image icon-omega-logo s20"></span></span>
+                                                <span ng-switch-when="3">Sync Remote and your {{$root.systemName}} bidirectionally <i class="icon icon-data s20"></i> <i class="icon icon-swap-horizontal s30"></i> <span class="logo-image icon-omega-logo s20"></span></span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <div ng-if="vm.dataBoundSync.SyncType != 0" layout="column" flex-gt-md="30" class="range layout-column flex-gt-md-30">
+                                        <md-input-container class="md-input-has-placeholder">
+                                            <label>Start Date/Time</label>
+                                            <input mdc-datetime-picker="" date="true" time="true" type="text"
+                                                   placeholder="Date" max-date="vm.dataBoundSync.EndTime" ng-model="vm.dataBoundSync.StartTime" class=" md-input"
+                                                   readonly="readonly" id="input_0">
+                                            <div class="md-errors-spacer"></div>
+                                        </md-input-container>
+                                        <md-input-container class="md-input-has-placeholder">
+                                            <label>End Date/Time</label>
+                                            <input mdc-datetime-picker="" date="true" time="true" type="text"
+                                                   placeholder="Date" min-date="vm.dataBoundSync.StartTime" ="vm.dataBoundSync.EndTime" ng-model="vm.dataBoundSync.EndTime" class=" md-input" readonly="readonly"
+                                                   id="input_1">
+                                            <div class="md-errors-spacer"></div>
+                                        </md-input-container>
+                                    </div>
+                                    <md-time-picker ng-if="vm.dataBoundSync.SyncType != 0" ng-model="vm.contentTypeDefinitionSyncFrequency" message="message" no-meridiem no-auto-switch></md-time-picker>
+                                    <div ng-if="vm.dataBoundSync.SyncType != 0" layout="row">
+                                        <md-input-container>
+                                            <label>Delta Field</label>
+                                            <md-select ng-model="vm.dataBoundSync.DeltaFieldId" ng-init="vm.filterDataSyncDeltaFields([9])">
+                                                <md-option ng-repeat="field in vm.dataBoundSyncDeltaFields" ng-value="field.Id">
+                                                    {{field.Name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-button ng-click="vm.filterDataSyncDeltaInfoDialog($event)"><i class="icon icon-information s20"></i></md-button>
+                                    </div>
+                                </div>
+                            </md-card-content>
+                        </md-card>
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.FolderTemplates}}" ng-click="vm.changeTab(6)">
+                        <md-card>
+                            <md-card-content id="folderTemplateChip">
+                                <md-chips class="custom-chips"
+                                          ng-disabled="vm.folder.Inherit"
+                                          ng-model="vm.assignedTemplates"
+                                          md-on-add="vm.addTemplate($chip)"
+                                          md-on-remove="vm.removeTemplate($chip)"
+                                          md-require-match="true">
+
+                                    <md-autocomplete md-selected-time="selectedTemplate"
+                                                     ng-disabled="vm.folder.Inherit"
+                                                     md-search-text="templateSearchText"
+                                                     md-items="template in vm.queryAllTemplates(templateSearchText)"
+                                                     md-item-text="template.Name"
+                                                     placeholder="{{$root.globals.resources.Labels.SearchPlaceholder}}">
+                                        <span md-highlight-text="templateSearchText">{{template.Name}}</span>
+                                    </md-autocomplete>
+                                    <md-chip-template ng-disabled="vm.folder.Inherit">
+                                        <span>
+                                            <string>{{$chip.Name}}</string>
+                                        </span>
+                                    </md-chip-template>
+                                    <button ng-disabled="false" md-chip-remove class="md-primary">
+                                        <md-icon style="margin: 4px" class="s24" md-font-icon="icon-close"></md-icon>
+                                    </button>
+                                </md-chips>
+                                <span class="hint-text" ng-show="vm.folder.Inherit" md-resource-text name="Labels.DisableFolderInheritance"></span>
+                            </md-card-content>
+                        </md-card>
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.Permissions}}" ng-click="vm.changeTab(5)">
+
+                        <md-tabs>
+                            <md-tab label="{{$root.globals.resources.Labels.ProfilePermissions}}" ng-click="vm.changeTab(5)">
+
+                                <!-- Table -->
+                                <div class="simple-table-container md-whiteframe-4dp">
+                                    <md-object-permissions display-property="Name"
+                                                    display-property-header="$root.globals.resources.Labels.ProfileType"
+                                                    type="mdBusinessLogic.dataAccess.entities.entitiesEnum.ProfileType"
+                                                    object="mdBusinessLogic.dataAccess.entities.entitiesEnum.Folder"
+                                                    object-id="vm.folder.Id"
+                                                    save="vm.registerPermissionSaveEvents"/>
+                                </div>
+
+                                <!-- end table-->
+                            </md-tab>
+                            <md-tab label="{{$root.globals.resources.Labels.UserPermissions}}" ng-click="vm.changeTab(5)">
+                                <!-- Table -->
+                                <div class="simple-table-container md-whiteframe-4dp">
+                                    <md-object-permissions display-property="Username"
+                                                    display-property-header="$root.globals.resources.Labels.User"
+                                                    type="mdBusinessLogic.dataAccess.entities.entitiesEnum.User"
+                                                    object="mdBusinessLogic.dataAccess.entities.entitiesEnum.Folder"
+                                                    object-id="vm.folder.Id"
+                                                    save="vm.registerPermissionSaveEvents" />
+                                </div>
+
+                                <!-- end table-->
+                            </md-tab>
+                        </md-tabs>
+                    </md-tab>
+                    <md-tab label="{{$root.globals.resources.Labels.ApprovalChain}}" ng-click="vm.changeTab(7)">
+                        <md-tab-body flex="100">
+                            <div layout="row">
+                                <div flex="20" style="padding:0 15px;">
+                                    <h3 md-resource-text name="Labels.Add"></h3>
+                                    <div class="toolbox">
+                                        <md-chips>
+                                            <md-chip ng-click="vm.addStep()" style="cursor: pointer;">
+                                                <span md-resource-text name="Labels.Step"></span>
+                                            </md-chip>
+                                        </md-chips>
+                                    </div>
+                                </div>
+                                <div flex>
+                                    <md-card>
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline" md-resource-text name="Labels.ApprovalChainDesigner"></span>
+                                                <span class="md-subhead"></span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+                                        <md-card-content layout="row" layout-align="space-between" style="position:relative">
+                                            <div id="chainCanvas" chain-canvas style="border:1px dashed #ccc; position:relative; padding-bottom:20px;" flex>
+                                                <div ng-repeat="canvasEntity in vm.approvalChain.Steps track by $index"
+                                                     id="entity{{$index}}" chain-entity="{{canvasEntity}}" class="chain-entity"
+                                                     style="width: 240px; margin-left: auto; margin-right: auto; border: 1px solid #ccc; margin-top:55px;">
+                                                    <div class=" padded" layout layout-align="center center" ng-class="$index == 0 ? 'md-primary-bg' : 'md-hue-1'">
+                                                        <h3 style="padding:0 20px;" flex>Step {{canvasEntity.Order}}</h3>
+                                                        <span ng-if="$index > 0" ng-class="'ms-form-wizard-step-label '" ng-click="vm.toggleUserDialog($event, canvasEntity)" style="padding:0">
+                                                            <span ng-class="'ms-form-wizard-step-number md-accent-bg '" style="padding-left:5px; line-height:25px;display: inline-block;vertical-align: middle;width: 24px;height: 24px;line-height: 24px;font-size: 14px;margin-right: 12px;border-radius: 50%; color: #FFFFFF !important;">
+                                                                <span class="icon-link-variant"></span>
+                                                            </span>
+                                                            <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+                                                        </span>
+                                                        <span ng-if="$index > 0 && $index === vm.approvalChain.Steps.length - 1" role="button" ng-class="'ms-form-wizard-step-label '" style="padding:0" ng-click="vm.removeStep($index)">
+                                                            <span ng-class="'ms-form-wizard-step-number md-accent-bg ' + (($index == 0 && vm.approvalChain.Steps.length > 1) ? 'md-primary-bg' : '')" style="padding-left:5px; line-height:25px;display: inline-block;vertical-align: middle;width: 24px;height: 24px;line-height: 24px;font-size: 14px;margin-right: 12px;border-radius: 50%; color: #FFFFFF !important;">
+                                                                <span class="icon-trash"></span>
+                                                            </span>
+                                                            <md-tooltip>{{ $root.globals.resources.Labels.Remove + ($index == 0 && vm.approvalChain.Steps.length > 1 ? ' (Removing this entity will clear the board!)' : '')}}</md-tooltip>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+                </md-tabs>
+                <div>
+                    <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                               ng-disabled="basicForm.$invalid || !vm.createFolderEnded"
+                               ng-click="vm.sendForm($event);">
+                        <span md-resource-text name="Labels.Submit"></span>
+                    </md-button>
+                    <!--ui-sref="app.content_list({folderPath:vm.folder.FolderPath})"-->
+                    <md-button class="md-accent md-raised"
+                               type="button"
+                               ng-disabled="!vm.createFolderEnded"
+                               aria-label="Back to previous page"
+                               ng-click="vm.Back()">
+                        <span md-resource-text name="Labels.Back"></span>
+                    </md-button>
+                </div>
+            </form>
+        </div>
+
+        <!-- / BASIC FORM -->
+    </div>
+    <!-- / CONTENT -->
+</div>

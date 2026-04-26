@@ -1,0 +1,9 @@
+<div class="md-block form-container md-cms-file" layout="column">
+    <input type="hidden" ng-model="vm.mdModel.value" id="{{vm.inputName}}" name="{{vm.inputName}}" ng-required="vm.required" />
+    <md-input-container flex>
+        <label class="md-cms-file-label">{{vm.floatingLabel}}</label>
+        <omega-cms-lf-ng-md-file-input lf-input-name="{{vm.inputName}}_upload" lf-files="vm.files" ng-file-event="vm.onFileEvent(event, files)" lf-api="vm.addRemoteFilesApi" lf-on-file-click="onFileAdd" accept="{{vm.mimeType}}" lf-mimetype="{{vm.mimeType}}" drag preview progress />
+    </md-input-container>
+    <span ng-if="!vm.fileAllowed && !vm.firstLoaded" flex>The file you selected is not allowed!</span>
+    {{vm.getInnerHtml()}}
+</div>

@@ -1,0 +1,87 @@
+﻿@model MD.CMS.Administration.Core.Models.Layout
+<!DOCTYPE html>
+
+<html ng-app="omega">
+<head>
+    <base href="@Html.DisplayFor(model => model.BaseFolder)">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="apple-touch-icon" sizes="180x180" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.AppleTouchIcon)">
+    <link rel="icon" type="image/png" sizes="32x32" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.Icon32x32)">
+    <link rel="icon" type="image/png" sizes="16x16" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.Icon16x16)">
+    <link rel="manifest" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.Manifest)">
+    <link rel="mask-icon" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.MaskIcon)" color="#5bbad5">
+    <link rel="shortcut icon" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.ShortcutIcon)">
+    <meta name="msapplication-config" content="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.MsApplicationConfig)">
+    <meta name="theme-color" content="@Html.DisplayTextFor(model => model.CMSIconSettings.ThemeColor)">
+    <title>@Html.DisplayTextFor(model => model.CMSTitleString) @(!string.IsNullOrEmpty(ViewBag.Title) ? string.Format("| {0}", ViewBag.Title) : "")</title>
+    <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)css/min/all.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+    <script src="//maps.googleapis.com/maps/api/js?key=@Html.DisplayTextFor(model => model.GoogleMapsApiKey)"></script>
+    <link href="//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic"
+          rel="stylesheet" type="text/css">
+    <style>
+        #googleMap {
+            clear: both;
+        }
+    </style>
+    @foreach (string scriptUrl in Model.AddonCssUrls)
+    {
+        <link href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayTextFor(model => scriptUrl)" rel="stylesheet" type="text/css">
+    }
+    @foreach (string scriptUrl in Model.AddonJavascriptHeadUrls)
+    {
+        <script src="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayTextFor(model => scriptUrl)"></script>
+    }
+</head>
+<body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
+      class="{{state.current.bodyClass || ''}}">
+    <ms-splash-screen id="splash-screen">
+        <div class="center">
+            <div class="logo">
+                <span class="icon-omega-logo"></span>
+            </div>
+            <div class="spinner-wrapper">
+                <div class="spinner">
+                    <div class="inner">
+                        <div class="gap"></div>
+                        <div class="left">
+                            <div class="half-circle"></div>
+                        </div>
+                        <div class="right">
+                            <div class="half-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ms-splash-screen>
+    @RenderBody()
+    <script src="@Html.DisplayFor(model => model.BaseFolder)js/min/all.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+    <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/addons.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+    @foreach (string scriptUrl in Model.AddonJavascriptBodyUrls)
+    {
+        <script src="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayTextFor(model => scriptUrl)"></script>
+    }
+<script>
+        mdBusinessLogic.settings.apiBase = '@Html.DisplayTextFor(model => model.ApiBase)';
+        mdBusinessLogic.settings.secureApi.enabled = false;
+        mdBusinessLogic.settings.isAdministration = true;
+        mdBusinessLogic.settings.lcid = @Html.DisplayTextFor(model => model.CurrentLcid);
+        mdBusinessLogic.settings.uploadsBase = '@Html.DisplayTextFor(model => model.UploadsBase)';
+        mdBusinessLogic.settings.appBase = '@Html.DisplayTextFor(model => model.BaseFolder)';
+        mdBusinessLogic.settings.authorizationHeader = '@Html.DisplayTextFor(model => model.AuthenticateHeaderName)';
+        mdBusinessLogic.globals.selectedLanguage = '@Html.DisplayTextFor(model => model.UILanguage)';
+        mdBusinessLogic.globals.resources = @Html.Raw(Model.GetResources);
+        mdBusinessLogic.globals.systemVersion = '@Html.DisplayTextFor(model => model.CMSVersionString)';
+        mdBusinessLogic.globals.systemName = '@Html.DisplayTextFor(model => model.CMSNameString)';
+        mdBusinessLogic.globals.uiDebugMode = @Html.DisplayTextFor(model => model.UiDebugMode);
+        mdBusinessLogic.globals.responseCode = @Html.DisplayTextFor(model => model.ResponseCode);
+        mdBusinessLogic.globals.sessionTimeout = @Html.DisplayTextFor(model => model.SessionTimeout);
+        mdBusinessLogic.globals.enabledAuthenticationProviders = @Html.Raw(Json.Serialize(Model.EnabledAuthenticatonProviders));
+</script>
+</body>
+</html>
+
+

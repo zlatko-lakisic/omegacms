@@ -1,0 +1,25 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [ "jsdoc", "closure" ]
+  },
+  "plugins": [ "./jsdoc/index.js" ],
+  "templates": {
+    "name":  "Omega CMS AngularJs Documentation",
+    "theme": "cosmo",
+    "default": {
+      "outputSourceFiles": false
+    }
+  },
+  "source": {
+    "include": [ "./MD.CMS.Administration.Core.Web/scripts/app", "./MD.CMS.Administration.Core.Web/scripts/businessLogic" ],
+    "includePattern": "(.js$)",
+    "excludePattern": "(node_modules/|docs|jsWrappers)"
+  },
+  "opts": {
+    "template": "docdash-omega-theme", // same as -t templates/default
+    "encoding": "utf8", // same as -e utf8
+    "destination": "./MD.CMS.Administration.Core.Web/scripts/documentation/javascript", // same as -d ./out/
+    "recurse": true // same as -r
+  }
+}

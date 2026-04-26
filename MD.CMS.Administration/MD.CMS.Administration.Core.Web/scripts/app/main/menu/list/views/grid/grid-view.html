@@ -1,0 +1,20 @@
+<!-- GRID VIEW -->
+<div class="grid-view" layout="column">
+    <div class="folders" layout="row" layout-wrap>
+        <div class="md-background-bg md-hue-1 md-whiteframe-1dp item folder" ng-click="vm.selectMenu(menu)" md-double-click="vm.openMenuFolder(menu)"
+             ng-repeat="menu in vm.menu.Children | filter:global.search" layout="row" layout-align="space-between center">
+            <div layout="row" class="title" layout-align="start center">
+                <span class="file-icon">
+                    <md-icon md-font-icon="icon-menu"></md-icon>
+                </span>
+                <span class="name">{{menu.Name}}</span>
+            </div>
+            <div class="show-details" ng-click="vm.toggleMenuDetails(menu, $event);" hide-gt-md>
+                <md-button class="md-icon-button sidenav-toggle">
+                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / GRID VIEW -->

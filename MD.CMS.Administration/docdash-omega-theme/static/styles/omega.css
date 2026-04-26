@@ -1,0 +1,49 @@
+#omega-header {
+    background-image: url('../../../../assets/images/backgrounds/header-bg.png');
+    background-color: rgb(3,155,229);
+    color: rgba(255,255,255,1);
+    background-size: cover;
+    padding: 24px;
+}
+
+    #omega-header h2 {
+        font-weight: 300;
+        font-size: 28px;
+        line-height: 40px;
+        color: rgba(255,255,255,1);
+    }
+
+    #omega-header h1 {
+        font-weight: 300;
+        font-size: 34px;
+        line-height: 40px;
+        color: rgba(255,255,255,1);
+        padding: 70px 0 20px 0;
+    }
+
+    #omega-header .navbar {
+        background-color:none;
+        position:inherit;
+    }
+
+    #omega-header .navbar,
+    #omega-header .navbar-default,
+    #omega-header .navbar-collapse {
+        background-color: inherit !important;
+        border: 0 !important;
+    }
+
+#toc {
+    top: 310px;
+}
+
+.container {
+    width: 100%;
+}
+
+.omega-panel {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}

@@ -1,0 +1,86 @@
+<div id="file-manager" class="page-layout simple right-sidenav" layout="row">
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+        <!-- HEADER -->
+        <div class="header md-accent-bg">
+            <div class="header-content" layout="column" layout-align="space-between">
+                <!-- TOOLBAR -->
+                <md-content-header on-search="vm.search(searchTerm)" is-large="true">
+                    <span class="md-display-1 font-weight-300">Users list</span>
+                </md-content-header>
+                <!-- / TOOLBAR -->
+            </div>
+            <!-- ADD FILE BUTTON -->
+            <md-fab-speed-dial md-open="vm.menuOpened" md-direction="right" class="add-file-button md-scale">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-primary">
+                        <md-icon md-font-icon="icon-account-plus"></md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions style="display:block;">
+                    <md-button ng-repeat="profileType in vm.profileTypes" class="md-fab md-raised md-mini"
+                               ng-click="vm.addFile($event)"
+                               ui-sref="app.user_form({action:'add', id: profileType.Id, currentView: vm.currentView.Name})">
+
+                        <md-tooltip md-direction="bottom"><span md-resource-text name="Labels.Add" replacevalue0="{{profileType.Name}}"></span></md-tooltip>
+                        <md-icon md-font-icon="icon-{{profileType.Icon != '' ? profileType.Icon : 'account-plus'}}"></md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+            <!-- / ADD FILE BUTTON -->
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <md-content class="content" flex ms-scroll>
+            <!-- PAGINATION -->
+            <md-pager page="vm.currentPage" total="vm.totalItems" no-tabs="true" on-pager-change="vm.updatePager(currentPage, pageSize, pagesBorder)"></md-pager>
+            <!-- / PAGINATION -->
+            <div class="table-container">
+                <table class="simple list-view">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div ng-show="vm.searchMode">{{vm.numberOfSearchResults}} Results</div>
+                            </th>
+                            <th md-sort="Username" on-sort="vm.sort(sortingString)" name="{{$root.globals.resources.Labels.Name}}" class="col-active">
+                            </th>
+                            <th md-resource-text name="Labels.Roles"></th>
+                            <th hide-gt-md></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in vm.users track by $index"
+                            ng-class="{'selected' : vm.selected === user}" 
+                            ng-click="vm.select(user, $index);"
+                            md-double-click="vm.openUser(user)">
+                            <td class="file-icon" ui-sref="app.user_form({id: user.Id, action: 'edit',currentView:vm.currentView.Name})">
+                                <md-icon md-font-icon="icon-account-box-outline"></md-icon>
+                            </td>
+                            <td class="name">
+                                {{user.Username }}
+                            </td>
+                            <td>
+                                <span ng-repeat="profileType in user.ProfileTypes">{{profileType.Name}} <span ng-hide="$index == user.ProfileTypes.length-1"> , </span></span>
+                            </td>
+                            <td class="show-details" hide-gt-md>
+                                <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleContentDetails(folder, $event)">
+                                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div flex="100" style="text-align:center;" ng-if="vm.noData"><h1 md-resource-text name="Labels.NoResults"></h1></div>
+        </md-content>
+        <!-- / CONTENT -->
+    </div>
+    <!-- / CENTER -->  
+    <!-- SIDENAV -->
+    <md-sidenav class="sidenav details-sidenav md-sidenav-right" md-is-open="vm.selected !== undefined" md-is-locked-open="$mdMedia('gt-md') && vm.selected !== undefined"
+                md-component-id="details-sidenav"
+                ng-include="'scripts/app/main/settings/configuration/user/list/sidenavs/details/details-sidenav.html'" ms-scroll
+                ms-sidenav-helper>
+    </md-sidenav>  
+    <!-- / SIDENAV -->
+</div>

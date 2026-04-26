@@ -1,0 +1,24 @@
+<div id="content-types-preview" class="page-layout simple fullwidth doc-page" layout="column">
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="space-between">
+            <div>
+                <span class="md-display-1 font-weight-300" md-resource-text name="Titles.ContentTypePreview"></span>
+            </div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column" ms-scroll flex>
+        <form autocomplete="off" name="contentTypeForm" layout="column" flex novalidate>
+            <div class="form-wrapper md-whiteframe-1dp" layout="column" flex>
+                <md-generictype-designer-form edit-mode="vm.isEditMode" ng-model="vm.contentTypeDefinition" register-edit-event="vm.registerEditEvent" form-name="contentTypeForm" layout="column" flex />
+                <md-button class="md-raised md-accent" ng-click="vm.openEditor()" ng-if="!vm.isEditMode"><span md-resource-text name="Labels.Edit1"></span></md-button>
+                <md-button class="md-raised" ui-sref="app.content-types-list" ng-if="!vm.isEditMode"><span md-resource-text name="Labels.Back"></span></md-button>
+                <md-button ng-disabled="contentTypeForm.$invalid" class="md-raised md-accent" ng-click="vm.save()" ng-if="vm.isEditMode"><span md-resource-text name="Labels.Save"></span></md-button>
+                <md-button class="md-raised" ng-click="vm.closeEditor()" ng-if="vm.isEditMode"><span md-resource-text name="Labels.Cancel"></span></md-button>
+            </div>
+        </form>
+    </div>
+    <!-- / CONTENT -->
+</div>

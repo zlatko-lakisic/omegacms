@@ -1,0 +1,1 @@
+//# sourceMappingURL=iBaseEntity.js.map

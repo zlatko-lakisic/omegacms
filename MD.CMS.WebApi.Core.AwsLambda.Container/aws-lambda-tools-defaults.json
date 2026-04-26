@@ -1,0 +1,20 @@
+
+{
+    "Information" : [
+        "This file provides default values for the deployment wizard inside Visual Studio and the AWS Lambda commands added to the .NET Core CLI.",
+        "To learn more about the Lambda commands with the .NET Core CLI execute the following command at the command line in the project root directory.",
+        "dotnet lambda help",
+        "All the command line options for the Lambda command can be specified in this file."
+    ],
+    "profile"     : "default",
+    "region"      : "us-east-1",
+    "configuration" : "Release",
+    "framework"     : "netcoreapp3.1",
+    "function-runtime" : "dotnetcore3.1",
+    "s3-prefix"        : "MD.CMS.WebApi.Core.AwsLambda/",
+    "template"         : "serverless.template",
+    "template-parameters" : "\"BasePluginsLayer\"=\"arn:aws:lambda:us-east-1:518606024901:layer:AwsLambdaPlugins:2\";\"ProductLayer\"=\"arn:aws:lambda:us-east-1:518606024901:layer:MD-CMS-WebApi-Core-AwsLambda-v0-82-50:1\";\"StageName\"=\"ws\";\"WebAppPath\"=\"/opt/MD.CMS.WebApi.Core.AwsLambda/\";\"AppReferencePath\"=\"MD.CMS.WebApi.Core.AwsLambda.dll.MD.CMS.WebApi.Core.AwsLambda.AwsStartup\";\"GatewayName\"=\"OmegaCmsWebApi\";\"MDCMSBusinessLogicCoreDefaultLcid\"=\"2057\";\"MDCMSBusinessLogicCoreEmailEnableSsl\"=\"true\";\"MDCMSBusinessLogicCoreEmailHost\"=\"\";\"MDCMSBusinessLogicCoreEmailPort\"=\"587\";\"MDCMSBusinessLogicCorePassword\"=\"\";\"MDCMSBusinessLogicCoreRootAdminAccount\"=\"{ \"Username\": \"root\", \\\"Password\\\": \\\"\\\" }\";\"MDCMSBusinessLogicCoreSessionDomain\"=\"lambda.omegacms.run\";\"MDCMSBusinessLogicCoreSessionTimeout\"=\"01:00:00\";\"MDCMSBusinessLogicCoreUsername\"=\"\";\"MDCMSWebApiCoreCorsOrigins\"=\"[ \"https://lambda.omegacms.run\" ]\";\"MDCMSWebApiCorePluginsDirectory\"=\"/opt/AwsLambdaPlugins/\";\"MDCMSWebApiCorePluginsFileProviderType\"=\"1\";\"MDToolsBaseDataAccessPluginsCoreDataAccessPlugins\"=\"[ \"MD.Tools.BaseDataAccess.Plugins.WebService.Core\", \"MD.Tools.BaseDataAccess.Plugins.MySql.Core\" ]\";\"MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings\"=\"{\"MD.Tools.BaseDataAccess.Plugins.MySql.Core\": \"DataSource=10.90.20.10;Database=omegacms_thetalkhub;User=omegacms_thetalkhub;Password=;CharSet=utf8;convert zero datetime=True;Default Command Timeout=60\",\"MD.Tools.BaseDataAccess.Plugins.WebService.Core\": \"\"}\";\"MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory\"=\"/opt/AwsLambdaPlugins/\";\"MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType\"=\"1\";\"MDToolsHelpersCoreProviderOptions\"=\"\";\"MDToolsHelpersCoreDefaultFileProvider\"=\"1\";\"MDCMSWebApiCoreBaseApiPath\"=\"\";\"MDCMSWebApiCoreBaseFolder\"=\"/ws/\";\"BillingGroup\"=\"lambda.omegacms.io\";\"VpcSecurityGroupId\"=\"sg-0303e1eb251e28112\";\"VpcSubnet1Id\"=\"subnet-0a8a9bea74e94485f\";\"VpcSubnet2Id\"=\"subnet-0fb117c385eebce93\";\"ApiTimeout\"=\"30\";\"TraceLevel\"=\"3\";\"MDToolsHelpersCoreVerboseLoggingReflectionEnabled\"=\"true\"",
+    "s3-bucket"           : "mdcmswebapicoreawslambdacontainer",
+    "stack-name"          : "MD-CMS-WebApi-Core-AwsLambda-Container",
+    "environment-variables" : "\"ConfigFileKey\"=\"config-files\""
+}

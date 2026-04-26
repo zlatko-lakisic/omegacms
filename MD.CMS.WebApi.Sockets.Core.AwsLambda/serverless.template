@@ -1,0 +1,608 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application.",
+  "Parameters": {
+      "GatewayName" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreDefaultLcid" : {
+        "Type" : "Number",
+        "Default" : "0"
+      },
+      "MDCMSBusinessLogicCoreEmailEnableSsl" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreEmailHost" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreEmailPort" : {
+        "Type" : "Number",
+        "Default" : "0"
+      },
+      "MDCMSBusinessLogicCorePassword" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreRootAdminAccount" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreSessionDomain" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreSessionTimeout" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreUsername" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCoreCorsOrigins" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCorePluginsDirectory" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSWebApiCorePluginsFileProviderType" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "MDToolsHelpersCoreProviderOptions" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsHelpersCoreDefaultFileProvider" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "MDCMSWebApiCoreBaseApiPath" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "BillingGroup" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "VpcSecurityGroupId" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "VpcSubnet1Id" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "VpcSubnet2Id" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "ApiTimeout" : {
+        "Type" : "Number",
+        "Default" : 600
+      },
+      "TraceLevel" : {
+        "Type" : "Number",
+        "Default" : 1
+      },
+      "MDToolsHelpersCoreVerboseLoggingReflectionEnabled": {
+        "Type" : "String",
+        "Default" : "false"
+      },
+      "DebugMode" : {
+        "Type" : "String",
+        "Default" : "false"
+      }
+  },
+  "Conditions": {
+    "VpcSecurityGroupIdNotEmpty": {
+        "Fn::Not": [{
+            "Fn::Equals": [
+                {
+                    "Ref": "VpcSecurityGroupId"
+                },
+                ""
+            ]
+        }]
+    },
+    "VpcSubnet1IdNotEmpty": {
+        "Fn::Not": [{
+            "Fn::Equals": [
+                {
+                    "Ref": "VpcSubnet1Id"
+                },
+                ""
+            ]
+        }]
+    },
+    "VpcSubnet2IdNotEmpty": {
+        "Fn::Not": [{
+            "Fn::Equals": [
+                {
+                    "Ref": "VpcSubnet2Id"
+                },
+                ""
+            ]
+        }]
+    }
+  },
+  "Resources": {
+    "OnConnectFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "MD.CMS.WebApi.Sockets.Core.AwsLambda::MD.CMS.WebApi.Sockets.Core.AwsLambda.Functions::OnConnectHandler",
+        "Runtime": "dotnetcore3.1",
+        "CodeUri": "",
+        "MemorySize": 512,
+        "Timeout": { "Ref" : "ApiTimeout" },
+        "Role": null,
+        "Policies": [],
+        "Environment": {
+          "Variables": {
+            "MD_CMS_BusinessLogic_Core_DefaultLcid": { "Ref" : "MDCMSBusinessLogicCoreDefaultLcid" },
+            "MD_CMS_BusinessLogic_Core_EmailEnableSsl": { "Ref" : "MDCMSBusinessLogicCoreEmailEnableSsl" },
+            "MD_CMS_BusinessLogic_Core_EmailHost": { "Ref" : "MDCMSBusinessLogicCoreEmailHost" },
+            "MD_CMS_BusinessLogic_Core_EmailPort": { "Ref" : "MDCMSBusinessLogicCoreEmailPort" },
+            "MD_CMS_BusinessLogic_Core_Password": { "Ref" : "MDCMSBusinessLogicCorePassword" },
+            "MD_CMS_BusinessLogic_Core_RootAdminAccount": { "Ref" : "MDCMSBusinessLogicCoreRootAdminAccount" },
+            "MD_CMS_BusinessLogic_Core_SessionDomain": { "Ref" : "MDCMSBusinessLogicCoreSessionDomain" },
+            "MD_CMS_BusinessLogic_Core_SessionTimeout": { "Ref" : "MDCMSBusinessLogicCoreSessionTimeout" },
+            "MD_CMS_BusinessLogic_Core_Username": { "Ref" : "MDCMSBusinessLogicCoreUsername" },
+            "MD_CMS_WebApi_Core_CorsOrigins": { "Ref" : "MDCMSWebApiCoreCorsOrigins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_ProviderOptions": { "Ref" : "MDToolsHelpersCoreProviderOptions" },
+            "MD_Tools_Helpers_Core_DefaultFileProvider": { "Ref" : "MDToolsHelpersCoreDefaultFileProvider" },
+            "MD_CMS_WebApi_Core_BaseApiPath": { "Ref" : "MDCMSWebApiCoreBaseApiPath" },
+            "MD_CMS_WebApi_Core_PluginsDirectory": { "Ref" : "MDCMSWebApiCorePluginsDirectory" },
+            "MD_CMS_WebApi_Core_PluginsFileProviderType": { "Ref" : "MDCMSWebApiCorePluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_TraceSwitches": {
+                "Fn::Sub": [
+                    "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                    { "TraceLevel": { "Ref" : "TraceLevel" } }
+                ]
+            },
+            "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled": { "Ref" : "MDToolsHelpersCoreVerboseLoggingReflectionEnabled" },
+            "MD_CMS_WebApi_Sockets_Core_AwsLambda_DebugMode": { "Ref" : "DebugMode" }
+          }
+        },
+        "Tags": {
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        },
+        "VpcConfig": {
+            "SecurityGroupIds": [{
+              "Fn::If" : [
+                "VpcSecurityGroupIdNotEmpty",
+                {"Ref" : "VpcSecurityGroupId"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }],
+            "SubnetIds": [{
+              "Fn::If" : [
+                "VpcSubnet1IdNotEmpty",
+                {"Ref" : "VpcSubnet1Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            },{
+              "Fn::If" : [
+                "VpcSubnet2IdNotEmpty",
+                {"Ref" : "VpcSubnet2Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }]
+        }
+      }
+    },
+    "OnDisconnectFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "MD.CMS.WebApi.Sockets.Core.AwsLambda::MD.CMS.WebApi.Sockets.Core.AwsLambda.Functions::OnDisconnectHandler",
+        "Runtime": "dotnetcore3.1",
+        "CodeUri": "",
+        "MemorySize": 512,
+        "Timeout": { "Ref" : "ApiTimeout" },
+        "Role": null,
+        "Policies": [],
+        "Environment": {
+          "Variables": {
+            "MD_CMS_BusinessLogic_Core_DefaultLcid": { "Ref" : "MDCMSBusinessLogicCoreDefaultLcid" },
+            "MD_CMS_BusinessLogic_Core_EmailEnableSsl": { "Ref" : "MDCMSBusinessLogicCoreEmailEnableSsl" },
+            "MD_CMS_BusinessLogic_Core_EmailHost": { "Ref" : "MDCMSBusinessLogicCoreEmailHost" },
+            "MD_CMS_BusinessLogic_Core_EmailPort": { "Ref" : "MDCMSBusinessLogicCoreEmailPort" },
+            "MD_CMS_BusinessLogic_Core_Password": { "Ref" : "MDCMSBusinessLogicCorePassword" },
+            "MD_CMS_BusinessLogic_Core_RootAdminAccount": { "Ref" : "MDCMSBusinessLogicCoreRootAdminAccount" },
+            "MD_CMS_BusinessLogic_Core_SessionDomain": { "Ref" : "MDCMSBusinessLogicCoreSessionDomain" },
+            "MD_CMS_BusinessLogic_Core_SessionTimeout": { "Ref" : "MDCMSBusinessLogicCoreSessionTimeout" },
+            "MD_CMS_BusinessLogic_Core_Username": { "Ref" : "MDCMSBusinessLogicCoreUsername" },
+            "MD_CMS_WebApi_Core_CorsOrigins": { "Ref" : "MDCMSWebApiCoreCorsOrigins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_ProviderOptions": { "Ref" : "MDToolsHelpersCoreProviderOptions" },
+            "MD_Tools_Helpers_Core_DefaultFileProvider": { "Ref" : "MDToolsHelpersCoreDefaultFileProvider" },
+            "MD_CMS_WebApi_Core_BaseApiPath": { "Ref" : "MDCMSWebApiCoreBaseApiPath" },
+            "MD_CMS_WebApi_Core_PluginsDirectory": { "Ref" : "MDCMSWebApiCorePluginsDirectory" },
+            "MD_CMS_WebApi_Core_PluginsFileProviderType": { "Ref" : "MDCMSWebApiCorePluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_TraceSwitches": {
+                "Fn::Sub": [
+                    "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                    { "TraceLevel": { "Ref" : "TraceLevel" } }
+                ]
+            },
+            "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled": { "Ref" : "MDToolsHelpersCoreVerboseLoggingReflectionEnabled" },
+            "MD_CMS_WebApi_Sockets_Core_AwsLambda_DebugMode": { "Ref" : "DebugMode" }
+          }
+        },
+        "Tags": {
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        },
+        "VpcConfig": {
+            "SecurityGroupIds": [{
+              "Fn::If" : [
+                "VpcSecurityGroupIdNotEmpty",
+                {"Ref" : "VpcSecurityGroupId"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }],
+            "SubnetIds": [{
+              "Fn::If" : [
+                "VpcSubnet1IdNotEmpty",
+                {"Ref" : "VpcSubnet1Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            },{
+              "Fn::If" : [
+                "VpcSubnet2IdNotEmpty",
+                {"Ref" : "VpcSubnet2Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }]
+        }
+      }
+    },
+    "SendMessageFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "MD.CMS.WebApi.Sockets.Core.AwsLambda::MD.CMS.WebApi.Sockets.Core.AwsLambda.Functions::SendMessageHandler",
+        "Runtime": "dotnetcore3.1",
+        "CodeUri": "",
+        "MemorySize": 512,
+        "Timeout": { "Ref" : "ApiTimeout" },
+        "Role": null,
+        "Policies": [
+          {
+            "Statement": {
+              "Effect": "Allow",
+              "Action": "execute-api:ManageConnections",
+              "Resource": "arn:aws:execute-api:*:*:*/@connections/*"
+            }
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "MD_CMS_BusinessLogic_Core_DefaultLcid": { "Ref" : "MDCMSBusinessLogicCoreDefaultLcid" },
+            "MD_CMS_BusinessLogic_Core_EmailEnableSsl": { "Ref" : "MDCMSBusinessLogicCoreEmailEnableSsl" },
+            "MD_CMS_BusinessLogic_Core_EmailHost": { "Ref" : "MDCMSBusinessLogicCoreEmailHost" },
+            "MD_CMS_BusinessLogic_Core_EmailPort": { "Ref" : "MDCMSBusinessLogicCoreEmailPort" },
+            "MD_CMS_BusinessLogic_Core_Password": { "Ref" : "MDCMSBusinessLogicCorePassword" },
+            "MD_CMS_BusinessLogic_Core_RootAdminAccount": { "Ref" : "MDCMSBusinessLogicCoreRootAdminAccount" },
+            "MD_CMS_BusinessLogic_Core_SessionDomain": { "Ref" : "MDCMSBusinessLogicCoreSessionDomain" },
+            "MD_CMS_BusinessLogic_Core_SessionTimeout": { "Ref" : "MDCMSBusinessLogicCoreSessionTimeout" },
+            "MD_CMS_BusinessLogic_Core_Username": { "Ref" : "MDCMSBusinessLogicCoreUsername" },
+            "MD_CMS_WebApi_Core_CorsOrigins": { "Ref" : "MDCMSWebApiCoreCorsOrigins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPlugins": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPlugins" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_DataAccessPluginSettings": { "Ref" : "MDToolsBaseDataAccessPluginsCoreDataAccessPluginSettings" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsDirectory": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsDirectory" },
+            "MD_Tools_BaseDataAccess_Plugins_Core_BaseDataAccessPluginsFileProviderType": { "Ref" : "MDToolsBaseDataAccessPluginsCoreBaseDataAccessPluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_ProviderOptions": { "Ref" : "MDToolsHelpersCoreProviderOptions" },
+            "MD_Tools_Helpers_Core_DefaultFileProvider": { "Ref" : "MDToolsHelpersCoreDefaultFileProvider" },
+            "MD_CMS_WebApi_Core_BaseApiPath": { "Ref" : "MDCMSWebApiCoreBaseApiPath" },
+            "MD_CMS_WebApi_Core_PluginsDirectory": { "Ref" : "MDCMSWebApiCorePluginsDirectory" },
+            "MD_CMS_WebApi_Core_PluginsFileProviderType": { "Ref" : "MDCMSWebApiCorePluginsFileProviderType" },
+            "MD_Tools_Helpers_Core_TraceSwitches": {
+                "Fn::Sub": [
+                    "{ \"AwsCloudWatchLogger\": \"${TraceLevel}\" }",
+                    { "TraceLevel": { "Ref" : "TraceLevel" } }
+                ]
+            },
+            "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled": { "Ref" : "MDToolsHelpersCoreVerboseLoggingReflectionEnabled" },
+            "MD_CMS_WebApi_Sockets_Core_AwsLambda_DebugMode": { "Ref" : "DebugMode" }
+          }
+        },
+        "Tags": {
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        },
+        "VpcConfig": {
+            "SecurityGroupIds": [{
+              "Fn::If" : [
+                "VpcSecurityGroupIdNotEmpty",
+                {"Ref" : "VpcSecurityGroupId"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }],
+            "SubnetIds": [{
+              "Fn::If" : [
+                "VpcSubnet1IdNotEmpty",
+                {"Ref" : "VpcSubnet1Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            },{
+              "Fn::If" : [
+                "VpcSubnet2IdNotEmpty",
+                {"Ref" : "VpcSubnet2Id"},
+                {"Ref" : "AWS::NoValue"}
+              ]
+            }]
+        }
+      }
+    },
+    "OmegaCmsWebApiWebSockets": {
+      "Type": "AWS::ApiGatewayV2::Api",
+      "Properties": {
+        "Name": { "Ref" : "GatewayName" },
+        "ProtocolType": "WEBSOCKET",
+        "RouteSelectionExpression": "$request.body.action",
+        "Tags":{
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        }
+      }
+    },
+    "ConnectRoute": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "RouteKey": "$connect",
+        "AuthorizationType": "NONE",
+        "OperationName": "ConnectRoute",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "ConnectInteg"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "ConnectInteg": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::Sub": [
+            "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${function}/invocations",
+            {
+              "region": {
+                "Ref": "AWS::Region"
+              },
+              "function": {
+                "Fn::GetAtt": [
+                  "OnConnectFunction",
+                  "Arn"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "DisconnectRoute": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "RouteKey": "$disconnect",
+        "AuthorizationType": "NONE",
+        "OperationName": "ConnectRoute",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "DisconnectInteg"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "DisconnectInteg": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::Sub": [
+            "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${function}/invocations",
+            {
+              "region": {
+                "Ref": "AWS::Region"
+              },
+              "function": {
+                "Fn::GetAtt": [
+                  "OnDisconnectFunction",
+                  "Arn"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "SendMessageRoute": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "RouteKey": "sendmessage",
+        "AuthorizationType": "NONE",
+        "OperationName": "ConnectRoute",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "SendMessageInteg"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "SendMessageInteg": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::Sub": [
+            "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${function}/invocations",
+            {
+              "region": {
+                "Ref": "AWS::Region"
+              },
+              "function": {
+                "Fn::GetAtt": [
+                  "SendMessageFunction",
+                  "Arn"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Deployment": {
+      "Type": "AWS::ApiGatewayV2::Deployment",
+      "DependsOn": [
+        "ConnectRoute",
+        "SendMessageRoute",
+        "DisconnectRoute"
+      ],
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        }
+      }
+    },
+    "Stage": {
+      "Type": "AWS::ApiGatewayV2::Stage",
+      "Properties": {
+        "ApiId": {
+          "Ref": "OmegaCmsWebApiWebSockets"
+        },
+        "DeploymentId": {
+          "Ref": "Deployment"
+        },
+        "StageName": "ws-web-sockets"
+      }
+    },
+    "OnConnectPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "DependsOn": [
+        "OnConnectFunction",
+        "OmegaCmsWebApiWebSockets"
+      ],
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "OnConnectFunction"
+        },
+        "Principal": "apigateway.amazonaws.com"
+      }
+    },
+    "OnDisconnectPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "DependsOn": [
+        "OnDisconnectFunction",
+        "OmegaCmsWebApiWebSockets"
+      ],
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "OnDisconnectFunction"
+        },
+        "Principal": "apigateway.amazonaws.com"
+      }
+    },
+    "SendMessagePermission": {
+      "Type": "AWS::Lambda::Permission",
+      "DependsOn": [
+        "SendMessageFunction",
+        "OmegaCmsWebApiWebSockets"
+      ],
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "SendMessageFunction"
+        },
+        "Principal": "apigateway.amazonaws.com"
+      }
+    }
+  },
+  "Outputs": {
+    "WebSocketURI": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "wss://",
+            {
+              "Ref": "OmegaCmsWebApiWebSockets"
+            },
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region"
+            },
+            ".amazonaws.com/",
+            {
+              "Ref": "Stage"
+            }
+          ]
+        ]
+      },
+      "Description": "The WSS Protocol URI to connect to"
+    }
+  }
+}

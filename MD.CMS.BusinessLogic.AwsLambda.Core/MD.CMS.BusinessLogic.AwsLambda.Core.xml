@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MD.CMS.BusinessLogic.AwsLambda.Core</name>
+    </assembly>
+    <members>
+        <member name="T:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.AwsStartupExtensions">
+            <summary>
+            AWS startup extension methods
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.AwsStartupExtensions.UseAwsStartup(Microsoft.AspNetCore.Hosting.IWebHostBuilder,MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartup,System.String,System.Collections.IDictionary)">
+            <summary>
+            Use AWS Startup method
+            </summary>
+            <param name="hostBuilder"></param>
+            <param name="startup"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.AwsStartupTools">
+            <summary>
+            Aws Startup Tools
+            </summary>
+        </member>
+        <member name="P:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.AwsStartupTools.PrintLoadingMessages">
+            <summary>
+            Print assembly loading messages
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.AwsStartupTools.GetAwsStartup(System.String,System.String)">
+            <summary>
+            Get the AWS startup object
+            </summary>
+            <param name="path"></param>
+            <param name="referencePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.AwsStartupTools.GetAwsStartupSockets(System.String,System.String)">
+            <summary>
+            Get the AWS startup sockets object
+            </summary>
+            <param name="path"></param>
+            <param name="referencePath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartup">
+            <summary>
+            AWSStartup Interface
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartup.Configure(Microsoft.AspNetCore.Hosting.IWebHostBuilder,System.String,System.Collections.IDictionary)">
+            <summary>
+            Configuration method for the aws startup object
+            </summary>
+            <param name="builder"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartup.UseAwsStartup(Microsoft.AspNetCore.Hosting.IWebHostBuilder,System.String,System.Collections.IDictionary)">
+            <summary>
+            UseAwsStartup Object
+            </summary>
+            <param name="hostBuilder"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartupSockets">
+            <summary>
+            AwsStartupSockets Interface
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartupSockets.OnConnectHandler(Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest,Amazon.Lambda.Core.ILambdaContext,System.String,System.Collections.IDictionary)">
+            <summary>
+            OnConnect event handler
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartupSockets.SendMessageHandler(Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest,Amazon.Lambda.Core.ILambdaContext,System.String,System.Collections.IDictionary)">
+            <summary>
+            SendMessage event handler
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Containers.IAwsStartupSockets.OnDisconnectHandler(Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest,Amazon.Lambda.Core.ILambdaContext,System.String,System.Collections.IDictionary)">
+            <summary>
+            OnDisconnect event handler
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <param name="path"></param>
+            <param name="environmentalVariables"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MD.CMS.BusinessLogic.AwsLambda.Core.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings">
+            <summary>
+            Application settings
+            </summary>
+        </member>
+        <member name="P:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.Default">
+            <summary>
+            Default static settings instance
+            </summary>
+        </member>
+        <member name="P:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.WebAppPath">
+            <summary>
+            Folder path to the web application files
+            </summary>
+        </member>
+        <member name="P:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.AppReferencePath">
+            <summary>
+            Reference path for the application in the format of "{dll_file_name}.{namespace}"
+            </summary>
+        </member>
+        <member name="P:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.DebugMode">
+            <summary>
+            Toggle debug mode to display debug information in CloudWatch
+            </summary>
+        </member>
+        <member name="P:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.SupportedMimeTypes">
+            <summary>
+            Supported MimeTypes
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MD.CMS.BusinessLogic.AwsLambda.Core.Properties.Settings.ParseConfig">
+            <summary>
+            Parse settings from environmental variables
+            </summary>
+        </member>
+    </members>
+</doc>

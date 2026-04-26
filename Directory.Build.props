@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- C# 14 'field' keyword collides with common lambda parameter name 'field' in this codebase -->
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+</Project>

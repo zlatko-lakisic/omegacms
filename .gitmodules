@@ -1,0 +1,6 @@
+[submodule "MD.CMS.Administration/public-repo/omega-cms-businesslogic.git"]
+	path = MD.CMS.Administration/public-repo/omega-cms-businesslogic.git
+	url = https://github.com/Omega-CMS/omega-cms-businesslogic.git
+[submodule "MD.CMS.Administration/public-repo/omega-cms-businesslogic"]
+	path = MD.CMS.Administration/public-repo/omega-cms-businesslogic
+	url = https://github.com/Omega-CMS/omega-cms-businesslogic.git

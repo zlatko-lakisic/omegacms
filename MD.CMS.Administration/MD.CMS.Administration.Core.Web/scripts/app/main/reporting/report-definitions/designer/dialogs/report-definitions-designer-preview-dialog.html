@@ -1,0 +1,56 @@
+<md-dialog aria-label="Edit dialog" style="min-width:900px">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 md-resource-text name="Titles.ReportPreview"></h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon style="color:white; font-size:24px;" class="icon icon-window-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div ng-if="!tableDataReady && hasDynamicFilters">
+        <md-input-container class="md-block" ng-repeat="filter in reportDefinition.Definition.Filters" ng-if="filter.IsDynamic">
+          <input type="text" name="value" ng-model="filter.Value"
+                 placeholder="{{filter.Entity.Name}}.{{filter.Property.Name}}">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="generateSampleData()">
+          <md-resource-text name="Labels.GenerateData"></md-resource-text>
+        </md-button>
+      </div>
+      <div ng-if="tableDataReady && tableDataValid">
+        <table class="dataTable row-border hover" datatable="ng"
+               dt-options="dataTableOptions">
+          <thead>
+            <tr>
+              <th class="secondary-text"
+                  ng-repeat="column in :: reportData.columns">
+                <div class="table-header">
+                  <span class="column-title">{{column.title}}</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in :: reportData.rows">
+              <td ng-repeat="cell in row">
+                <span class="{{cell.classes}}">
+                  {{cell.value}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div ng-if="!tableDataValid">
+        {{$root.globals.resources.Labels.TableDataNotReady}}
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button class="md-raised md-primary" ng-click="cancel()">
+            <md-resource-text name="Labels.Close"></md-resource-text>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

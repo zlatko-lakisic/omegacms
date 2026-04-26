@@ -1,0 +1,18 @@
+<div layout="column" class="content" layout-padding>
+    <ul>
+        <li layout="row" layout-align="end center" flex-gt-sm="50" flex>
+            <md-button md-no-ink class="md-primary" ng-click="vm.addMetadata()">Add Metadata</md-button>
+        </li>
+        <li ng-repeat="metadata in vm.field.JsonField.metadata track by $index" layout="row" layout-align="center center" flex-gt-sm="50" flex>
+            <md-input-container>
+                <label>Metadata Key</label>
+                <input ng-model="metadata.Key">
+            </md-input-container>
+            <md-input-container>
+                <label>Metadata Value</label>
+                <input ng-model="metadata.Value">
+            </md-input-container>
+            <md-button md-no-ink class="md-primary" ng-click="vm.removeMetaData($index)">Delete Metadata</md-button>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,10 @@
+.report-designer {
+    form[name="reportDesignerForm"] {
+        position: relative;
+        .preview-button{
+            position: absolute;
+            right: 0;
+            z-index: 3;
+        }
+    }
+}

@@ -1,0 +1,1209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionNotCompletedAuthorization" xml:space="preserve">
+    <value>¡No estás autorizado para completar esta acción!</value>
+  </data>
+  <data name="ActionNotCompletedError" xml:space="preserve">
+    <value>Se produjo un error al completar esta acción.</value>
+  </data>
+  <data name="ActionType" xml:space="preserve">
+    <value>Tipo de acción</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Agregar {0}</value>
+  </data>
+  <data name="Add1" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="AddAudio" xml:space="preserve">
+    <value>Agregar audio</value>
+  </data>
+  <data name="AddConnection" xml:space="preserve">
+    <value>Agregar conexión</value>
+  </data>
+  <data name="AddContentInPlaceholder" xml:space="preserve">
+    <value>Agregar contenido en ...</value>
+  </data>
+  <data name="AddDocument" xml:space="preserve">
+    <value>Agregar documento</value>
+  </data>
+  <data name="AddedText" xml:space="preserve">
+    <value>Agregando exitosamente</value>
+  </data>
+  <data name="AddFolder" xml:space="preserve">
+    <value>Agregar carpeta</value>
+  </data>
+  <data name="AddImage" xml:space="preserve">
+    <value>Añadir imagen</value>
+  </data>
+  <data name="AddMenu" xml:space="preserve">
+    <value>Agregar menú</value>
+  </data>
+  <data name="AddNewAction" xml:space="preserve">
+    <value>Agregar nueva acción</value>
+  </data>
+  <data name="AddProfileType" xml:space="preserve">
+    <value>Agregar tipo de perfil</value>
+  </data>
+  <data name="AddRemoveColumns" xml:space="preserve">
+    <value>Agregar o quitar columnas</value>
+  </data>
+  <data name="AddRemoveColumnsDescription" xml:space="preserve">
+    <value>Utilice esta inferface para agregar o eliminar columnas del conjunto de datos.</value>
+  </data>
+  <data name="AddTaxonomy" xml:space="preserve">
+    <value>Agregar taxonomía</value>
+  </data>
+  <data name="AddVideo" xml:space="preserve">
+    <value>Añadir video</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="AllVersions" xml:space="preserve">
+    <value>Todas las versiones</value>
+  </data>
+  <data name="AndApproveOrReject" xml:space="preserve">
+    <value>Y aprobarlo o rejecetarlo.</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>Alguna</value>
+  </data>
+  <data name="ApprovalChain" xml:space="preserve">
+    <value>Cadena de aprobación</value>
+  </data>
+  <data name="ApprovalChainDesigner" xml:space="preserve">
+    <value>ApprovalChainDesigner</value>
+  </data>
+  <data name="ApprovalPending" xml:space="preserve">
+    <value>Aprobación pendiente</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Aprobar</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Aprobado</value>
+  </data>
+  <data name="Assigned" xml:space="preserve">
+    <value>Asignado</value>
+  </data>
+  <data name="AssignFieldToFolder" xml:space="preserve">
+    <value>Asignar el campo a la carpeta</value>
+  </data>
+  <data name="AssignPermissionsToProfile" xml:space="preserve">
+    <value>Asignar permisos al perfil</value>
+  </data>
+  <data name="AssignPermissionsToUser" xml:space="preserve">
+    <value>Asignar permisos al usuario</value>
+  </data>
+  <data name="AudioNotSupported" xml:space="preserve">
+    <value>Su navegador no admite el elemento de audio.</value>
+  </data>
+  <data name="AuthErrorFeedback" xml:space="preserve">
+    <value>Error de autenticación</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="AverageCPUPercentage" xml:space="preserve">
+    <value>Avg. UPC %</value>
+  </data>
+  <data name="AverageCPUUsage" xml:space="preserve">
+    <value>Uso promedio de la CPU</value>
+  </data>
+  <data name="AverageMemoryMB" xml:space="preserve">
+    <value>Avg. Mem MB</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Espalda</value>
+  </data>
+  <data name="BadErrorFeedback" xml:space="preserve">
+    <value>Error: solicitud incorrecta</value>
+  </data>
+  <data name="CalculatedFormNameChange" xml:space="preserve">
+    <value>Si cambió el nombre de este campo y si lo está usando en la fórmula calculada, edite el nombre en la fórmula</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Cambio</value>
+  </data>
+  <data name="ChangePasswordQuestion" xml:space="preserve">
+    <value>¿Te gustaría cambiar la contraseña?</value>
+  </data>
+  <data name="CheckYoutube" xml:space="preserve">
+    <value>Compruébelo en YouTube</value>
+  </data>
+  <data name="ChooseDirectory" xml:space="preserve">
+    <value>Elegir directorio:</value>
+  </data>
+  <data name="ChooseEntity" xml:space="preserve">
+    <value>Elegir entidad</value>
+  </data>
+  <data name="ChooseIcon" xml:space="preserve">
+    <value>Elegir icono</value>
+  </data>
+  <data name="ChooseReportDefinition" xml:space="preserve">
+    <value>Elija la definición de informe</value>
+  </data>
+  <data name="ChooseTemplate" xml:space="preserve">
+    <value>Elegir la plantilla</value>
+  </data>
+  <data name="ChosenDirectory" xml:space="preserve">
+    <value>Ruta de directorio elegida</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
+  <data name="Comparer" xml:space="preserve">
+    <value>Comparador</value>
+  </data>
+  <data name="Compose" xml:space="preserve">
+    <value>Componer</value>
+  </data>
+  <data name="ContentChanges" xml:space="preserve">
+    <value>El contenido ha sido cambiado.</value>
+  </data>
+  <data name="ContentList" xml:space="preserve">
+    <value>Lista de contenido</value>
+  </data>
+  <data name="ContentRejected" xml:space="preserve">
+    <value>Contenido rechazado en el paso anterior</value>
+  </data>
+  <data name="ContentRemoved" xml:space="preserve">
+    <value>El contenido se eliminó con éxito.</value>
+  </data>
+  <data name="ContentRemoveError" xml:space="preserve">
+    <value>Se produjo un error al eliminar este contenido.</value>
+  </data>
+  <data name="Contents" xml:space="preserve">
+    <value>Contenido</value>
+  </data>
+  <data name="ContentTitle" xml:space="preserve">
+    <value>Título del contenido</value>
+  </data>
+  <data name="ContentTitleRequired" xml:space="preserve">
+    <value>El título del contenido es obligatorio.</value>
+  </data>
+  <data name="ContentTypeNotEditable" xml:space="preserve">
+    <value>Este tipo de contenido no se puede editar.</value>
+  </data>
+  <data name="ContentTypes" xml:space="preserve">
+    <value>Tipos de contenido</value>
+  </data>
+  <data name="ContentVersions" xml:space="preserve">
+    <value>{0} -Versión {1}</value>
+  </data>
+  <data name="ContentWasRejectedOnPreviousStep" xml:space="preserve">
+    <value>El contenido fue rechazado en el paso anterior. Motivo: {0}</value>
+  </data>
+  <data name="Controller" xml:space="preserve">
+    <value>Controlador</value>
+  </data>
+  <data name="CreateReportDefinition" xml:space="preserve">
+    <value>Crear definición de informe</value>
+  </data>
+  <data name="CreateReportScheduler" xml:space="preserve">
+    <value>Crear planificador de informes</value>
+  </data>
+  <data name="CultureRemoved" xml:space="preserve">
+    <value>La cultura se eliminó con éxito</value>
+  </data>
+  <data name="CultureSaved" xml:space="preserve">
+    <value>El cultivo se salvó exitosamente</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>Personalizar</value>
+  </data>
+  <data name="DateCreated" xml:space="preserve">
+    <value>Fecha de creacion</value>
+  </data>
+  <data name="DateEdited" xml:space="preserve">
+    <value>Fecha editada</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Días</value>
+  </data>
+  <data name="DefaultValue" xml:space="preserve">
+    <value>Valor por defecto</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar {0}</value>
+  </data>
+  <data name="Delete1" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="DeleteErrorFeedback" xml:space="preserve">
+    <value>Error al eliminar</value>
+  </data>
+  <data name="DeleteFolderWithContents" xml:space="preserve">
+    <value>Esta carpeta tiene contenido, ¿estás seguro de que quieres eliminarlo?</value>
+  </data>
+  <data name="DeleteInfoFeedback" xml:space="preserve">
+    <value>Suprimido</value>
+  </data>
+  <data name="DeleteMessages" xml:space="preserve">
+    <value>Eliminar mensajes</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Design" xml:space="preserve">
+    <value>Diseño</value>
+  </data>
+  <data name="Designer" xml:space="preserve">
+    <value>Diseñador</value>
+  </data>
+  <data name="DesignerDescription" xml:space="preserve">
+    <value>Arrastre y suelte entidades para construir un conjunto de datos</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="DialogCanceled" xml:space="preserve">
+    <value>Has cancelado el cuadro de diálogo</value>
+  </data>
+  <data name="DisableFolderInheritance" xml:space="preserve">
+    <value>Deshabilitar la herencia de la carpeta para editar</value>
+  </data>
+  <data name="DocumentPreviewNotSupported" xml:space="preserve">
+    <value>Habrá una vista previa del documento una vez, con suerte</value>
+  </data>
+  <data name="DownloadErrorFeedback" xml:space="preserve">
+    <value>Error al descargar</value>
+  </data>
+  <data name="DownloadInfoFeedback" xml:space="preserve">
+    <value>Descargado</value>
+  </data>
+  <data name="DuplicateFolderName" xml:space="preserve">
+    <value>Ya hay una carpeta con el mismo nombre en este directorio.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar {0}</value>
+  </data>
+  <data name="Edit1" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="EditConnection" xml:space="preserve">
+    <value>¡Haga clic para editar la conexión {0} a {1}!</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>Editado: {0}</value>
+  </data>
+  <data name="Edited1" xml:space="preserve">
+    <value>Editado</value>
+  </data>
+  <data name="EditedText" xml:space="preserve">
+    <value>Edición exitosa</value>
+  </data>
+  <data name="EditFolder" xml:space="preserve">
+    <value>Editar carpeta</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Dirección de correo electrónico</value>
+  </data>
+  <data name="EmailIncorrectFormat" xml:space="preserve">
+    <value>El correo electrónico no está en el formato correcto</value>
+  </data>
+  <data name="EmailInfo" xml:space="preserve">
+    <value>Su correo electrónico debe tener entre 5 y 100 caracteres y parecer una dirección de correo electrónico .. (hhh@example.com)</value>
+  </data>
+  <data name="EmailSent" xml:space="preserve">
+    <value>E-mail ha sido enviado</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Fecha final</value>
+  </data>
+  <data name="EndDateAfter" xml:space="preserve">
+    <value>¡La fecha es muy temprana!</value>
+  </data>
+  <data name="EndDateSameBeforeStart" xml:space="preserve">
+    <value>¡La fecha de finalización no puede ser anterior a la fecha de inicio y no puede ser igual a la fecha de inicio!</value>
+  </data>
+  <data name="Entity" xml:space="preserve">
+    <value>Entidad</value>
+  </data>
+  <data name="EntityFilter" xml:space="preserve">
+    <value>Filtro de entidad</value>
+  </data>
+  <data name="EqualsOption" xml:space="preserve">
+    <value>Iguales</value>
+  </data>
+  <data name="ErrorTryAgain" xml:space="preserve">
+    <value>Algo salió mal. Por favor, vuelva a intentarlo.</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Nombre del archivo</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtrar</value>
+  </data>
+  <data name="FilterData" xml:space="preserve">
+    <value>Filtrar datos</value>
+  </data>
+  <data name="FilterDataDescription" xml:space="preserve">
+    <value>Use esta interfaz para agregar o eliminar filtros para el conjunto de datos.</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>Bandera</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Carpeta</value>
+  </data>
+  <data name="FolderInheritParentSettings" xml:space="preserve">
+    <value>Herede la configuración de la carpeta principal</value>
+  </data>
+  <data name="FolderList" xml:space="preserve">
+    <value>Lista de carpetas</value>
+  </data>
+  <data name="FolderName" xml:space="preserve">
+    <value>Nombre de la carpeta</value>
+  </data>
+  <data name="FolderRemoved" xml:space="preserve">
+    <value>La carpeta se eliminó correctamente.</value>
+  </data>
+  <data name="FolderRemoveForbiddenRoot" xml:space="preserve">
+    <value>No puedes eliminar la carpeta raíz</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Carpetas</value>
+  </data>
+  <data name="FolderTemplates" xml:space="preserve">
+    <value>Plantillas de carpeta</value>
+  </data>
+  <data name="ForbbidenMediaContent" xml:space="preserve">
+    <value>Elija otro formato, solo se permite {0}</value>
+  </data>
+  <data name="ForbiddenErrorFeedback" xml:space="preserve">
+    <value>Error - frobidden</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Función</value>
+  </data>
+  <data name="GenerateData" xml:space="preserve">
+    <value>Generar datos</value>
+  </data>
+  <data name="GetUserListError" xml:space="preserve">
+    <value>No se pudo obtener la lista de usuarios.</value>
+  </data>
+  <data name="GoBackToLogin" xml:space="preserve">
+    <value>Vuelva a iniciar sesión</value>
+  </data>
+  <data name="GotIt" xml:space="preserve">
+    <value>¡Lo tengo!</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Mas grande que</value>
+  </data>
+  <data name="GreaterThanEqual" xml:space="preserve">
+    <value>Mayor que o igual</value>
+  </data>
+  <data name="GridView" xml:space="preserve">
+    <value>Vista en cuadrícula</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Horas de trabajo</value>
+  </data>
+  <data name="HoursError" xml:space="preserve">
+    <value>Ingrese el número entre 0 y 23</value>
+  </data>
+  <data name="HTML5VideoNotSupported" xml:space="preserve">
+    <value>Su navegador no es compatible con video HTML5.</value>
+  </data>
+  <data name="HtmlContent" xml:space="preserve">
+    <value>Contenido html</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Carné de identidad</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="InternalErrorFeedback" xml:space="preserve">
+    <value>Error interno</value>
+  </data>
+  <data name="Interval" xml:space="preserve">
+    <value>Intervalo:</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Inválido</value>
+  </data>
+  <data name="InvalidFormat" xml:space="preserve">
+    <value>Utiliza otro formato</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Está activo</value>
+  </data>
+  <data name="IsDynamic" xml:space="preserve">
+    <value>Es dinamico</value>
+  </data>
+  <data name="IsRecurring" xml:space="preserve">
+    <value>Es recurrente</value>
+  </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>Es requerido</value>
+  </data>
+  <data name="LastModified" xml:space="preserve">
+    <value>Última modificación</value>
+  </data>
+  <data name="LCID" xml:space="preserve">
+    <value>LCID</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Menos que</value>
+  </data>
+  <data name="LessThanEqual" xml:space="preserve">
+    <value>Menor o igual</value>
+  </data>
+  <data name="Like" xml:space="preserve">
+    <value>Me gusta</value>
+  </data>
+  <data name="ListValue" xml:space="preserve">
+    <value>Valor de la lista</value>
+  </data>
+  <data name="ListView" xml:space="preserve">
+    <value>Vista de la lista</value>
+  </data>
+  <data name="LoadErrorFeedback" xml:space="preserve">
+    <value>Error de carga</value>
+  </data>
+  <data name="LoadInfoFeedback" xml:space="preserve">
+    <value>Cargado</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Ubicación</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>Hubo un registro de errores</value>
+  </data>
+  <data name="LoginInto" xml:space="preserve">
+    <value>Inicie sesión en su cuenta</value>
+  </data>
+  <data name="MainContent" xml:space="preserve">
+    <value>Contenido principal</value>
+  </data>
+  <data name="MediaContentMetaData" xml:space="preserve">
+    <value>Contenido multimedia Meta datos</value>
+  </data>
+  <data name="MediaContentRemoved" xml:space="preserve">
+    <value>El contenido de los medios se eliminó con éxito</value>
+  </data>
+  <data name="MediaContentSaved" xml:space="preserve">
+    <value>Has guardado correctamente contenido multimedia.</value>
+  </data>
+  <data name="MenuRemoveForbiddenRoot" xml:space="preserve">
+    <value>No puedes eliminar el menú raíz</value>
+  </data>
+  <data name="MessageFolderName" xml:space="preserve">
+    <value>Nombre de carpeta de mensaje</value>
+  </data>
+  <data name="MessageNotSent" xml:space="preserve">
+    <value>Mensaje no enviado</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Mensajes</value>
+  </data>
+  <data name="MessageSent" xml:space="preserve">
+    <value>Mensaje enviado</value>
+  </data>
+  <data name="MessagesRemoved" xml:space="preserve">
+    <value>Mensajes eliminados</value>
+  </data>
+  <data name="MessagesReplaced" xml:space="preserve">
+    <value>Mensajes reemplazados</value>
+  </data>
+  <data name="MetaData" xml:space="preserve">
+    <value>Meta Datos</value>
+  </data>
+  <data name="MetaDataFieldRemoved" xml:space="preserve">
+    <value>El campo de metadatos se eliminó con éxito</value>
+  </data>
+  <data name="Method" xml:space="preserve">
+    <value>Método</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutos</value>
+  </data>
+  <data name="MinutesError" xml:space="preserve">
+    <value>Ingrese el número entre 0 y 59</value>
+  </data>
+  <data name="MissingMediaContent" xml:space="preserve">
+    <value>¡Tienes que subir el archivo para completar esta acción!</value>
+  </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Modificado</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>Más</value>
+  </data>
+  <data name="MoveDown" xml:space="preserve">
+    <value>Mover hacia abajo</value>
+  </data>
+  <data name="MoveTo" xml:space="preserve">
+    <value>Mover a</value>
+  </data>
+  <data name="MoveUp" xml:space="preserve">
+    <value>Ascender</value>
+  </data>
+  <data name="MyFiles" xml:space="preserve">
+    <value>Mis archivos</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="NewContent" xml:space="preserve">
+    <value>Nuevo contenido</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoApprovalRequesteSelected" xml:space="preserve">
+    <value>No se ha seleccionado ninguna solicitud de aprobación</value>
+  </data>
+  <data name="NoEntityFound" xml:space="preserve">
+    <value>No se encontraron entidades que coincidan con {0}</value>
+  </data>
+  <data name="NoIconFound" xml:space="preserve">
+    <value>No se encontraron iconos que coincidan con {0}.</value>
+  </data>
+  <data name="NoMessages" xml:space="preserve">
+    <value>Ningún mensaje</value>
+  </data>
+  <data name="NoMessagesSelected" xml:space="preserve">
+    <value>No se seleccionaron mensajes</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>No hay resultados</value>
+  </data>
+  <data name="NotEquals" xml:space="preserve">
+    <value>No es igual</value>
+  </data>
+  <data name="NotfoundErrorFeedback" xml:space="preserve">
+    <value>Error no encontrado</value>
+  </data>
+  <data name="NoUserFound" xml:space="preserve">
+    <value>No se encontraron usuarios que coincidan {0}</value>
+  </data>
+  <data name="Offline" xml:space="preserve">
+    <value>Desconectado</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Contraseña anterior</value>
+  </data>
+  <data name="OnReject" xml:space="preserve">
+    <value>En rechazo</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Orden</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Propietario</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Contraseña confirmada)</value>
+  </data>
+  <data name="PasswordForgot" xml:space="preserve">
+    <value>¿Se te olvidó tu contraseña?</value>
+  </data>
+  <data name="PasswordReset" xml:space="preserve">
+    <value>Restablecer mi contraseña</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Camino</value>
+  </data>
+  <data name="PermissionAssigned" xml:space="preserve">
+    <value>Permiso asignado</value>
+  </data>
+  <data name="PermissiongUnassigned" xml:space="preserve">
+    <value>Permiso sin asignar</value>
+  </data>
+  <data name="PermissionID" xml:space="preserve">
+    <value>ID de permiso</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Permisos</value>
+  </data>
+  <data name="PleaseReviewContent" xml:space="preserve">
+    <value>Revisa el contenido</value>
+  </data>
+  <data name="PositiveNumberError" xml:space="preserve">
+    <value>Ingrese un número positivo</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="ProfilePermissions" xml:space="preserve">
+    <value>Permisos de perfil</value>
+  </data>
+  <data name="ProfileType" xml:space="preserve">
+    <value>Tipo de perfil</value>
+  </data>
+  <data name="ProfileTypeError" xml:space="preserve">
+    <value>Se produjo un error al obtener el tipo de perfil</value>
+  </data>
+  <data name="ProfileTypeFieldNameDuplicate" xml:space="preserve">
+    <value>Tiene dos o más campos con el mismo nombre, por favor cámbielo</value>
+  </data>
+  <data name="ProfileTypeNameDuplicate" xml:space="preserve">
+    <value>No es posible agregar un tipo de perfil con el mismo nombre.</value>
+  </data>
+  <data name="ProfileTypePermissionError" xml:space="preserve">
+    <value>Se produjo un error al obtener los permisos de tipo de perfil.</value>
+  </data>
+  <data name="ProfileTypeRemoved" xml:space="preserve">
+    <value>El tipo de perfil se eliminó correctamente.</value>
+  </data>
+  <data name="ProfileTypeSaved" xml:space="preserve">
+    <value>El tipo de perfil se guardó correctamente.</value>
+  </data>
+  <data name="ProfileTypesFieldNameValidation" xml:space="preserve">
+    <value>El nombre del campo no puede contener caracteres especiales, comenzar con un número y ser solo un número</value>
+  </data>
+  <data name="Property" xml:space="preserve">
+    <value>Propiedad</value>
+  </data>
+  <data name="Read" xml:space="preserve">
+    <value>Leer</value>
+  </data>
+  <data name="ReadPane" xml:space="preserve">
+    <value>Leer panel</value>
+  </data>
+  <data name="Recent" xml:space="preserve">
+    <value>Reciente</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refrescar</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Rechazar</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Recuérdame</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Retirar</value>
+  </data>
+  <data name="RemoveAnswer" xml:space="preserve">
+    <value>Este elemento se eliminará de forma permanente.</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Respuesta</value>
+  </data>
+  <data name="ReportDefinitionsJoinsPlaceholder" xml:space="preserve">
+    <value>¿A qué entidad le gustaría crear un enlace?</value>
+  </data>
+  <data name="ReportDefinitionsMissing" xml:space="preserve">
+    <value>No tiene ninguna definición de informe, cree una antes de crear el planificador de informes.</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Necesario</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Papel</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Funciones</value>
+  </data>
+  <data name="RowsPerPage" xml:space="preserve">
+    <value>Filas por página:</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="SaveApprovalChainErrorNo" xml:space="preserve">
+    <value>Ignorar y dejar</value>
+  </data>
+  <data name="SaveApprovalChainErrorText" xml:space="preserve">
+    <value>¡La cadena de aprobación tiene algunos errores! ¿Te gustaría corregirlos?</value>
+  </data>
+  <data name="SaveApprovalChainErrorYes" xml:space="preserve">
+    <value>¡Permanezca en esta página y corrija errores!</value>
+  </data>
+  <data name="SaveErrorFeedback" xml:space="preserve">
+    <value>Error al guardar</value>
+  </data>
+  <data name="SaveInfoFeedback" xml:space="preserve">
+    <value>Salvado</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="SearchByAll" xml:space="preserve">
+    <value>Buscar por todos</value>
+  </data>
+  <data name="SearchByAuthor" xml:space="preserve">
+    <value>Búsqueda por autor</value>
+  </data>
+  <data name="SearchByName" xml:space="preserve">
+    <value>Buscar por nombre</value>
+  </data>
+  <data name="SearchByType" xml:space="preserve">
+    <value>Buscar por tipo</value>
+  </data>
+  <data name="SearchByUrl" xml:space="preserve">
+    <value>SearchByUrl</value>
+  </data>
+  <data name="SearchEmailContact" xml:space="preserve">
+    <value>Buscar un correo electrónico o contacto</value>
+  </data>
+  <data name="SearchForTaxonomyPlaceholder" xml:space="preserve">
+    <value>Busque taxonomia ...</value>
+  </data>
+  <data name="SearchForUserPlaceholder" xml:space="preserve">
+    <value>Buscar un usuario</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Buscar...</value>
+  </data>
+  <data name="SelectAnotherOne" xml:space="preserve">
+    <value>¡Por favor seleccione otro!</value>
+  </data>
+  <data name="SelectedMessagesWillBeMoved" xml:space="preserve">
+    <value>Los mensajes seleccionados se moverán a la papelera.</value>
+  </data>
+  <data name="SelectedMessagesWillBeRemoved" xml:space="preserve">
+    <value>Los mensajes seleccionados se eliminarán de forma permanente.</value>
+  </data>
+  <data name="SelectedUILanguage" xml:space="preserve">
+    <value>Lenguaje de interfaz de usuario seleccionado</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="SendResetLink" xml:space="preserve">
+    <value>Enviar enlace de restablecimiento</value>
+  </data>
+  <data name="ServerDashboardProcessExplorerNumber" xml:space="preserve">
+    <value>{0} procesos</value>
+  </data>
+  <data name="ServerDashboardRefreshLabel" xml:space="preserve">
+    <value>Actualiza cada {0} segundos</value>
+  </data>
+  <data name="ServerUsageDetails" xml:space="preserve">
+    <value>Esta es la parte posterior. Puede mostrar información detallada aquí.</value>
+  </data>
+  <data name="SharedWithMe" xml:space="preserve">
+    <value>Comparte conmigo</value>
+  </data>
+  <data name="Starred" xml:space="preserve">
+    <value>Sembrado de estrellas</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Comienzo</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Fecha de inicio</value>
+  </data>
+  <data name="StartDateBefore" xml:space="preserve">
+    <value>¡La fecha de inicio no puede ser anterior a la fecha actual!</value>
+  </data>
+  <data name="Step" xml:space="preserve">
+    <value>Paso</value>
+  </data>
+  <data name="StepX" xml:space="preserve">
+    <value>Paso {0}</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Taxonomies" xml:space="preserve">
+    <value>Taxonomias</value>
+  </data>
+  <data name="TaxonomyRemoved" xml:space="preserve">
+    <value>La taxonomía se eliminó con éxito.</value>
+  </data>
+  <data name="TaxonomyRemoveForbiddenRoot" xml:space="preserve">
+    <value>No puede eliminar la taxonomía raíz.</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="TemplateRemoved" xml:space="preserve">
+    <value>La plantilla se eliminó con éxito</value>
+  </data>
+  <data name="TemplateUrl" xml:space="preserve">
+    <value>TemplateUrl</value>
+  </data>
+  <data name="ThisVersion" xml:space="preserve">
+    <value>Esta versión</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>A:</value>
+  </data>
+  <data name="ToSmall" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="TotalMemory" xml:space="preserve">
+    <value>Memoria total</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="UpdateErrorFeedback" xml:space="preserve">
+    <value>Error al actualizar</value>
+  </data>
+  <data name="UpdateInfoFeedback" xml:space="preserve">
+    <value>Actualizado</value>
+  </data>
+  <data name="UploadErrorFeedback" xml:space="preserve">
+    <value>Error al cargar</value>
+  </data>
+  <data name="UploadInfoFeedback" xml:space="preserve">
+    <value>Cargado</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlAlias" xml:space="preserve">
+    <value>Url Alias</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="UsedMemory" xml:space="preserve">
+    <value>Memoria usada</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="UserPermissions" xml:space="preserve">
+    <value>Permisos de usuario</value>
+  </data>
+  <data name="UserRemoved" xml:space="preserve">
+    <value>Usuario eliminado exitosamente</value>
+  </data>
+  <data name="UserSaved" xml:space="preserve">
+    <value>El usuario se salvó exitosamente</value>
+  </data>
+  <data name="UsersRequiredToApprove" xml:space="preserve">
+    <value>Los usuarios deben aprobar</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="ViewContentType" xml:space="preserve">
+    <value>Ver tipo de contenido</value>
+  </data>
+  <data name="WelcomeMDCMS" xml:space="preserve">
+    <value>¡Bienvenido a su administración de MD CMS!</value>
+  </data>
+  <data name="Write" xml:space="preserve">
+    <value>Escribir</value>
+  </data>
+  <data name="XResults" xml:space="preserve">
+    <value>{0} resultados</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="ChooseFile" xml:space="preserve">
+    <value>Elija el archivo</value>
+  </data>
+  <data name="EnterDate" xml:space="preserve">
+    <value>Ingrese la fecha</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Bandeja de entrada</value>
+  </data>
+  <data name="MaxLength" xml:space="preserve">
+    <value>La longitud debe ser inferior a {0}</value>
+  </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>Mi Perfil</value>
+  </data>
+  <data name="PositionOnMap" xml:space="preserve">
+    <value>Posición en el mapa</value>
+  </data>
+  <data name="SearchForContent" xml:space="preserve">
+    <value>Buscar contenido...</value>
+  </data>
+  <data name="SearchForMediaContent" xml:space="preserve">
+    <value>Buscar contenido multimedia...</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>seleccionado</value>
+  </data>
+  <data name="Using" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="ContentTypeRemoved" xml:space="preserve">
+    <value>Tipo de contenido eliminado con éxito</value>
+  </data>
+  <data name="ThereAreXContentsWithContentType" xml:space="preserve">
+    <value>Hay contenidos con este tipo de contenido</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Avanzado</value>
+  </data>
+  <data name="Casing" xml:space="preserve">
+    <value>Carta</value>
+  </data>
+  <data name="CharTypes" xml:space="preserve">
+    <value>Tipos de personajes</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>De</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>En general</value>
+  </data>
+  <data name="LettersAZ" xml:space="preserve">
+    <value>Letras (A a Z)</value>
+  </data>
+  <data name="LowerCase" xml:space="preserve">
+    <value>Minúscula</value>
+  </data>
+  <data name="MaximumLength" xml:space="preserve">
+    <value>Longitud máxima</value>
+  </data>
+  <data name="MinimumLength" xml:space="preserve">
+    <value>Longitud mínima</value>
+  </data>
+  <data name="Numbers" xml:space="preserve">
+    <value>Números</value>
+  </data>
+  <data name="Repeatable" xml:space="preserve">
+    <value>Repetible</value>
+  </data>
+  <data name="SpecialCharacters" xml:space="preserve">
+    <value>Caracteres especiales</value>
+  </data>
+  <data name="UpperCase" xml:space="preserve">
+    <value>Mayúsculas</value>
+  </data>
+  <data name="MatchRequired" xml:space="preserve">
+    <value>La entrada no coincide</value>
+  </data>
+  <data name="MinLength" xml:space="preserve">
+    <value>La longitud debe ser mayor que {0}</value>
+  </data>
+  <data name="NoFilesOrFolders" xml:space="preserve">
+    <value />
+  </data>
+  <data name="OrSmall" xml:space="preserve">
+    <value>o</value>
+  </data>
+  <data name="TableDataNotReady" xml:space="preserve">
+    <value>No se pueden mostrar los datos de la tabla</value>
+  </data>
+  <data name="WelcomeOmegaCMS" xml:space="preserve">
+    <value>¡Bienvenido a su administración de Omega CMS!</value>
+  </data>
+  <data name="OpenToolbox" xml:space="preserve">
+    <value>Open Toolbox</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="DateExpires" xml:space="preserve">
+    <value>Date Expires</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
+  <data name="LinkToTitle" xml:space="preserve">
+    <value>Link this field to the content title</value>
+  </data>
+  <data name="Input_calculated" xml:space="preserve">
+    <value>Calculated Field</value>
+  </data>
+  <data name="Input_contentSelectorSingle" xml:space="preserve">
+    <value>Single Content Selector</value>
+  </data>
+  <data name="Input_date" xml:space="preserve">
+    <value>Date/Time Picker</value>
+  </data>
+  <data name="Input_file" xml:space="preserve">
+    <value>File Upload</value>
+  </data>
+  <data name="Input_input" xml:space="preserve">
+    <value>Input Field</value>
+  </data>
+  <data name="Input_map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="Input_mediaContentSelectorSingle" xml:space="preserve">
+    <value>Single MediaContent Selector</value>
+  </data>
+  <data name="Input_section" xml:space="preserve">
+    <value>Section</value>
+  </data>
+  <data name="Input_selectMultiple" xml:space="preserve">
+    <value>Multiple Value Selector</value>
+  </data>
+  <data name="Input_selectSingle" xml:space="preserve">
+    <value>Single Value Selector</value>
+  </data>
+  <data name="Input_tabbedSections" xml:space="preserve">
+    <value>Tabbed Section</value>
+  </data>
+  <data name="Input_taxonomySelectorMultiple" xml:space="preserve">
+    <value>Multiple Value Selector</value>
+  </data>
+  <data name="Input_taxonomySelectorSingle" xml:space="preserve">
+    <value>Single Taxonomy Selector</value>
+  </data>
+  <data name="Input_textarea" xml:space="preserve">
+    <value>Textarea</value>
+  </data>
+  <data name="Input_trueFalse" xml:space="preserve">
+    <value>True/False Selector</value>
+  </data>
+  <data name="Input_userSelectorSingle" xml:space="preserve">
+    <value>Single User Selector</value>
+  </data>
+  <data name="Input_youtube" xml:space="preserve">
+    <value>Youtube Input</value>
+  </data>
+</root>

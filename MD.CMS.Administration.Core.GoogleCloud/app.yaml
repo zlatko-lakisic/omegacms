@@ -1,0 +1,20 @@
+﻿runtime: aspnetcore
+env: flex
+readiness_check:
+  path: "/readiness_check"
+  check_interval_sec: 30
+  timeout_sec: 20
+  failure_threshold: 5
+  success_threshold: 5
+  app_start_timeout_sec: 600
+liveness_check:
+  path: "/liveness_check"
+  check_interval_sec: 30
+  timeout_sec: 20
+  failure_threshold: 5
+  success_threshold: 5
+  initial_delay_sec: 3600
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 30

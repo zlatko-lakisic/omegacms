@@ -1,0 +1,34 @@
+﻿<div class="simple-table-container md-whiteframe-4dp">
+    <div class="table-title">
+        <md-resource-text name="Titles.ProfilePermissions"></md-resource-text>
+    </div>
+    <table class="simple" ms-responsive-table>
+        <thead>
+            <tr>
+                <th md-resource-text name="Labels.ProfileType"></th>
+                <th md-resource-text name="Labels.Read"></th>
+                <th md-resource-text name="Labels.Write"></th>
+                <th md-resource-text name="Labels.Delete1"></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr ng-repeat="profileType in vm.profileTypes">
+                <td>{{profileType.Name}}</td>
+                <td class="position">
+                    <md-checkbox ng-model ="profileType.RWDPermissions[0].Read" aria-label="read?" />
+                </td>
+                <td class="office">
+                    <md-checkbox ng-model="profileType.RWDPermissions[0].Write" aria-label="write?" />
+                </td>
+                <td class="position">
+                    <md-checkbox ng-model="profileType.RWDPermissions[0].Delete" aria-label="delete?" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

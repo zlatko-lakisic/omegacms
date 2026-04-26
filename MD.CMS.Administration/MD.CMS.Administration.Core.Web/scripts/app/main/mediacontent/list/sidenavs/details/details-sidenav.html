@@ -1,0 +1,81 @@
+<!-- SIDENAV HEADER -->
+<div class="header md-accent-bg" layout="column" layout-align="space-between">
+    <div class="toolbar" layout="row" layout-align="end center">
+        <md-button ng-disabled="vm.disableBtn" class="md-icon-button" ng-click="vm.deleteItem()"
+                   ng-hide="vm.selected.Id == 1">
+            <md-icon md-font-icon="icon-delete"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Delete1"></span></md-tooltip>
+        </md-button>
+        <md-button ng-disabled="vm.disableBtn" ng-click="vm.validateEdit()"
+                   ng-hide="vm.selected.Id == 1"
+                   class="md-icon-button">
+            <md-icon md-font-icon="icon-table-edit"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+        </md-button>
+    </div>
+    <div>
+        <div class="title text-truncate">
+            <md-icon md-font-icon="{{vm.selected.Icon}}" style="color:white;" class="{{vm.selected.Icon}}" ng-show="vm.getSelectedType() != 1">
+                <md-tooltip md-direction="bottom">{{vm.selected.Type}}</md-tooltip>
+            </md-icon>
+            {{(vm.getSelectedType() == 1 ? vm.selected.Name : vm.selected.Name)}}
+        </div>
+        <div class="subtitle secondary-text" ng-show="vm.getSelectedType() == 2"><span md-resource-text name="Labels.Edited1"></span>: {{vm.selected.DateCreated | datetime}}</div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+
+<!-- SIDENAV CONTENT -->
+<md-content class="content" flex ms-scroll>
+
+    <div class="file-details">
+        <div class="preview file-icon" layout="row" layout-align="center center">
+            <div class="preview file-icon" layout="row" layout-align="center center"
+                 ng-show=" vm.hidePreviewUrl">
+                <img ng-src="{{vm.uploadsBase + vm.selectMediaContent.PreviewUrl}}?mode=crop&w=320&h=240" style="height:240px;max-width:100%;max-height:100%;" ng-if="vm.selected.FileType == '1'" />
+                <video ng-if="vm.selected.FileType == '2'" width="400" controls>
+                    <source ng-src="{{vm.selectMediaContent.PreviewUrl}}" type="video/mp4" />
+                    <md-resource-text name="Labels.HTML5VideoNotSupported"></md-resource-text>
+                </video>
+                <audio ng-if="vm.selected.FileType == '3'" controls>
+                    <source ng-src="{{vm.selectMediaContent.PreviewUrl}}" type="audio/ogg" />
+                    <md-resource-text name="Labels.AudioNotSupported"></md-resource-text>
+                </audio>
+                <i class="icon-document s48" ng-if="vm.selected.FileType == '4'"></i>
+            </div>
+            <i class="icon-folder s48" ng-show="vm.getSelectedType() == 1"></i>
+        </div>
+
+
+        <div class="title" md-resource-text name="Labels.Info"></div>
+
+        <table>
+            <tr class="title">
+                <th md-resource-text name="Labels.Name"></th>
+                <td>{{vm.selected.Name}}</td>
+            </tr>
+
+            <tr class="type">
+                <th md-resource-text name="Labels.Type"></th>
+                <td>{{(vm.getSelectedType() == 1 ? 'Folder' : (vm.selected.ContentType != null ? vm.selected.ContentType.Name : (vm.selected.InputType | mediaContentType)))}}</td>
+            </tr>
+
+            <tr class="location">
+                <th md-resource-text name="Labels.Location"></th>
+                <td>{{(vm.getSelectedType() == 1 ? (vm.folder.Parent == null ? vm.folder.FolderPath : vm.folder.Parent.FolderPath) : vm.folder.FolderPath)}}</td>
+            </tr>
+
+            <!--<tr class="owner" ng-show="vm.getSelectedType() == 2">
+                <th translate="FM.OWNER">Owner</th>
+                <td>{{vm.selected.Author.Username}}</td>
+            </tr>-->
+
+            <tr class="modified" ng-show="vm.getSelectedType() == 2">
+                <th md-resource-text name="Labels.Modified"></th>
+                <td>{{vm.selected.DateCreated | datetime: 'ago'}}</td>
+            </tr>
+        </table>
+    </div>
+
+</md-content>
+<!-- / SIDENAV CONTENT -->

@@ -1,0 +1,20 @@
+<div id="{{uniqueId}}" class="custom-pagination" ng-class="{ 'custom-pagination-no-tabs': noTabs}" ng-hide="hidePager">
+    <md-button class="md-icon-button xs-toggle-button" ng-click="toggleOpen()">
+        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+    </md-button>
+    <div layout="row" class="pagination-controls" layout-align="start center">
+        <label><md-resource-text name="Labels.RowsPerPage" />&nbsp;&nbsp;</label>
+        <md-select ng-model="pageSize" ng-hide="noSize" ng-change="updatePager();">
+            <md-option ng-repeat="size in pageSizes" ng-value="size">{{size}}</md-option>
+        </md-select>
+        <span class="page-info" hide-sm>{{ pagingInfo }}</span>
+        <md-button class="md-icon-button" ng-click="previousPage();" ng-disabled="disablePrevious">
+            <md-icon md-font-icon="icon-chevron-left"></md-icon>
+            <md-tooltip><md-resource-text name="Labels.Previous" /></md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" ng-click="nextPage();" ng-disabled="disableNext">
+            <md-icon md-font-icon="icon-chevron-right"></md-icon>
+            <md-tooltip><md-resource-text name="Labels.Next" /></md-tooltip>
+        </md-button>
+    </div>
+</div>

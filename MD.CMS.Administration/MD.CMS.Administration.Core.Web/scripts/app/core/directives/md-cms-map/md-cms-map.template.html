@@ -1,0 +1,13 @@
+<div class="md-block form-container" id="{{uniqueId}}">
+    <div class="title" flex layout="row" layout-align="space-between center">
+        <md-input-container class="md-block" flex style="height: 30px" ng-if="mdFloatingLabel != ''">
+            <label>{{mdFloatingLabel}}</label>
+        </md-input-container>
+        <md-input-container class="md-block" flex style="height: 30px">
+            <label>Lat: {{mdMapCoordinates.split(';')[0]}} | Lon: {{mdMapCoordinates.split(';')[1]}}</label>
+        </md-input-container>
+    </div>
+    <ui-gmap-google-map flex center="map.center" zoom="map.zoom" events="map.events" options="map.options">
+        <ui-gmap-marker idkey="uniqueId" coords="map.marker.coords" icon="map.marker.icon"></ui-gmap-marker>
+    </ui-gmap-google-map>
+</div>

@@ -1,0 +1,220 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>1.0.24</Version>
+    <Configurations>Debug;Release;Release_Publish_win_x64;Release_Publish_linux_x64;Release_Publish_osx_x64</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PackageIcon>0.png</PackageIcon>
+    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <Copyright>2022</Copyright>
+    <Authors>Omega IT LLC</Authors>
+    <Product>OmegaCMS</Product>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AdvancedStringBuilder" Version="0.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="10.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Obfuscar" Version="2.2.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="WebMarkupMin.AspNet.Common" Version="2.17.0" />
+    <PackageReference Include="WebMarkupMin.AspNetCore3" Version="2.17.0" />
+    <PackageReference Include="WebMarkupMin.Core" Version="2.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MD.CMS.BusinessLogic.Administration.Core\MD.CMS.BusinessLogic.Administration.Core.csproj" />
+    <ProjectReference Include="..\..\MD.CMS.BusinessLogic.Core\MD.CMS.BusinessLogic.Core.csproj" />
+    <ProjectReference Include="..\..\MD.CMS.BusinessLogic.WebApi.Core\MD.CMS.BusinessLogic.WebApi.Core.csproj" />
+    <ProjectReference Include="..\..\MD.Tools.Helpers.Core\MD.Tools.Helpers.Core.csproj" />
+    <ProjectReference Include="..\..\MD.Tools.Licensing\MD.Tools.Licensing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Labels.bs.Designer.cs">
+      <DependentUpon>Labels.bs.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Labels.Designer.cs">
+      <DependentUpon>Labels.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Labels.es.Designer.cs">
+      <DependentUpon>Labels.es.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Labels.hr.Designer.cs">
+      <DependentUpon>Labels.hr.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Menus.bs.Designer.cs">
+      <DependentUpon>Menus.bs.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Menus.Designer.cs">
+      <DependentUpon>Menus.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Menus.es.Designer.cs">
+      <DependentUpon>Menus.es.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Menus.hr.Designer.cs">
+      <DependentUpon>Menus.hr.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\SupportedLanguages.bs.Designer.cs">
+      <DependentUpon>SupportedLanguages.bs.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\SupportedLanguages.Designer.cs">
+      <DependentUpon>SupportedLanguages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\SupportedLanguages.es.Designer.cs">
+      <DependentUpon>SupportedLanguages.es.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\SupportedLanguages.hr.Designer.cs">
+      <DependentUpon>SupportedLanguages.hr.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Titles.bs.Designer.cs">
+      <DependentUpon>Titles.bs.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Titles.Designer.cs">
+      <DependentUpon>Titles.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Titles.es.Designer.cs">
+      <DependentUpon>Titles.es.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Titles.hr.Designer.cs">
+      <DependentUpon>Titles.hr.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Labels.bs.resx">
+      <LastGenOutput>Labels.bs.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Labels.es.resx">
+      <LastGenOutput>Labels.es.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Labels.hr.resx">
+      <LastGenOutput>Labels.hr.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Labels.resx">
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Menus.bs.resx">
+      <LastGenOutput>Menus.bs.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Menus.es.resx">
+      <LastGenOutput>Menus.es.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Menus.hr.resx">
+      <LastGenOutput>Menus.hr.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Menus.resx">
+      <LastGenOutput>Menus.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SupportedLanguages.bs.resx">
+      <LastGenOutput>SupportedLanguages.bs.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SupportedLanguages.es.resx">
+      <LastGenOutput>SupportedLanguages.es.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SupportedLanguages.hr.resx">
+      <LastGenOutput>SupportedLanguages.hr.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SupportedLanguages.resx">
+      <LastGenOutput>SupportedLanguages.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Titles.bs.resx">
+      <LastGenOutput>Titles.bs.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Titles.es.resx">
+      <LastGenOutput>Titles.es.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Titles.hr.resx">
+      <LastGenOutput>Titles.hr.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Titles.resx">
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\0.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="IF ($(ConfigurationName)) == (Debug) GOTO END&#xD;&#xA;  CD $(TargetDir)&#xD;&#xA;  $(ProjectDir)..\..\3rdParty\Obfuscar.Console.exe Obfuscar.xml&#xD;&#xA;  xcopy &quot;$(TargetDir)Obfuscated\$(TargetFileName)&quot; &quot;$(TargetDir)&quot; /y/f/i&#xD;&#xA;:END" />
+  </Target>
+
+</Project>

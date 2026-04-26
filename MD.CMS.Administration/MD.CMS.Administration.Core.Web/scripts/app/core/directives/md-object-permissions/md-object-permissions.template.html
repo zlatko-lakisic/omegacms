@@ -1,0 +1,53 @@
+<div id="{{uniqueId}}" class="md-object-permissions" layout="column">
+    <div class="table-title">
+        <span ng-if="type == $root.mdBusinessLogic.dataAccess.entities.permissions.permissionObjectTypeEnum.User" md-resource-text name="Labels.AssignPermissionsToUser"></span>
+        <span ng-if="type == $root.mdBusinessLogic.dataAccess.entities.permissions.permissionObjectTypeEnum.ProfileType" md-resource-text name="Labels.AssignPermissionsToProfile"></span>
+    </div>
+    <div ng-if="permissions.length > 0" layout="row">
+        <div flex-gt-sm="40" flex="100">{{displayPropertyHeader}}</div>
+        <div flex-gt-sm="45"></div>
+        <div flex-gt-sm="15"></div>
+    </div>
+    <div ng-if="permissions.length > 0 && !permission.IsDeleted" ng-repeat="permission in permissions track by $index" layout="row">
+        <div flex-gt-sm="40" flex-sm="100"><h2>{{ getPermissionEntityName(type, displayProperty, permission) }}</h2></div>
+        <div flex-gt-sm="15">
+            <md-button class="md-fab md-mini permission-button" ng-class="{'active': isPermissionSet(permission, $root.mdBusinessLogic.dataAccess.entities.permissions.permissionAccessTypeEnum.Read)}" ng-click="toggleValue(permission, $root.mdBusinessLogic.dataAccess.entities.permissions.permissionAccessTypeEnum.Read)" aria-label="Read">
+                R
+                <md-tooltip md-direction="top">Read</md-tooltip>
+            </md-button>
+        </div>
+        <div flex-gt-sm="15">
+            <md-button class="md-fab md-mini permission-button" ng-class="{'active': isPermissionSet(permission, $root.mdBusinessLogic.dataAccess.entities.permissions.permissionAccessTypeEnum.Write)}" ng-click="toggleValue(permission, $root.mdBusinessLogic.dataAccess.entities.permissions.permissionAccessTypeEnum.Write)" aria-label="Write">
+                W
+                <md-tooltip md-direction="top">Write</md-tooltip>
+            </md-button>
+        </div>
+        <div flex-gt-sm="15">
+            <md-button class="md-fab md-mini permission-button" ng-class="{'active': isPermissionSet(permission, $root.mdBusinessLogic.dataAccess.entities.permissions.permissionAccessTypeEnum.Delete)}" ng-click="toggleValue(permission, $root.mdBusinessLogic.dataAccess.entities.permissions.permissionAccessTypeEnum.Delete)" aria-label="Delete">
+                D
+                <md-tooltip md-direction="top">Delete</md-tooltip>
+            </md-button>
+        </div>
+        <div flex-gt-sm="15">
+            <md-button class="md-raised" ng-click="removePermissionFromList($index)">Remove</md-button>
+        </div>
+    </div>
+    <div layout="row">
+        <md-autocomplete md-search-text="searchText"
+                         md-selected-item-change="selectedItemChange(entity)"
+                         md-selected-item="entity"
+                         md-item-text="entity[displayProperty]"
+                         md-items="entity in querySearch(searchText)"
+                         md-min-length="0"
+                         placeholder="Type to search"
+                         md-no-cache="true"
+                         flex="100">
+            <md-item-template>
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity[displayProperty]}}</span>
+            </md-item-template>
+            <md-not-found>
+                No results matching "{{searchText}}" were found.
+            </md-not-found>
+        </md-autocomplete>
+    </div>
+</div>

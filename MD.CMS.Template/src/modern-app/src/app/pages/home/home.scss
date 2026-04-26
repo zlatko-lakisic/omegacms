@@ -1,0 +1,21 @@
+.home {
+  max-width: 42rem;
+
+  h1 {
+    margin-top: 0;
+    font: var(--mat-sys-headline-medium);
+  }
+
+  p {
+    font: var(--mat-sys-body-large);
+    line-height: 1.5;
+  }
+
+  code {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--mat-sys-surface) 92%, var(--mat-sys-on-surface));
+  }
+}

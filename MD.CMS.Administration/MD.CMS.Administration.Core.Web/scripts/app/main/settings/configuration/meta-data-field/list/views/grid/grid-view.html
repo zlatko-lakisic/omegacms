@@ -1,0 +1,24 @@
+<!-- GRID VIEW -->
+<div class="grid-view" layout="column">
+    <div class="folders" layout="row" layout-wrap>
+        <div class="md-background-bg md-hue-1 md-whiteframe-1dp item folder"
+             ng-repeat="contentType in vm.contentTypes | filter:global.search"
+             layout="row" layout-align="space-between center"
+             ng-class="{'selected' : vm.selected === contentType}"
+             ng-click="vm.select(contentType, $index)">
+            <div layout="row" class="title"
+                 layout-align="start center">
+                <span class="file-icon">
+                    <md-icon md-font-icon="icon-document"></md-icon>
+                </span>
+                <span class="name">{{contentType.Name}}</span>
+            </div>
+            <div class="show-details" hide-gt-md>
+                <md-button class="md-icon-button sidenav-toggle">
+                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / GRID VIEW -->

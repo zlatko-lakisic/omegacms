@@ -1,0 +1,56 @@
+﻿<div class="simple-table-container md-whiteframe-4dp">
+    <div class="table-title">
+        <md-resource-text name="Labels.UserPermissions"></md-resource-text>
+    </div>
+    <table class="simple" ms-responsive-table>
+        <thead>
+            <tr>
+                <th md-resource-text name="Labels.User"></th>
+                <th md-resource-text name="Labels.Read"></th>
+                <th md-resource-text name="Labels.Write"></th>
+                <th md-resource-text name="Labels.Delete1"></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr ng-repeat="user in vm.notAuthorizedUsers">
+                <td>{{user.Username}}</td>
+                <td class="position">
+                    <md-checkbox ng-model="user.RWDPermissions[0].Read" aria-label="read?" />
+                </td>
+                <td class="office">
+                    <md-checkbox ng-model="user.RWDPermissions[0].Write" aria-label="write?" />
+                </td>
+                <td class="position">
+                    <md-checkbox ng-model="user.RWDPermissions[0].Delete" aria-label="delete?" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <md-input-container>
+                        <label md-resource-text name="Labels.User"></label>
+                        <md-select ng-model="vm.selectedUser.Username">
+                            <md-option ng-repeat="user in vm.allUsers" ng-value="user.Username" ng-disabled="$index === 1">
+                                {{user.Username}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </td>
+                <td class="position">
+                    <md-checkbox ng-model="vm.selectedUser.RWDPermissions[0].Read" aria-label="read?" />
+                </td>
+                <td class="office">
+                    <md-checkbox ng-model="vm.selectedUser.RWDPermissions[0].Write" aria-label="write?" />
+                </td>
+                <td class="position">
+                    <md-checkbox ng-model="vm.selectedUser.RWDPermissions[0].Delete" aria-label="delete?" />
+                </td>
+                <td><input type="button" value="add" ng-click="vm.addAnotherTableRow($event)" /> </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

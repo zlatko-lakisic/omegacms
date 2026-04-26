@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build (solution)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/MD.CMS.Core.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": { "reveal": "silent" },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build (Web API Hosted)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/MD.CMS.WebApi.Core.Hosted/MD.CMS.WebApi.Core.Hosted.csproj",
+        "/property:GenerateFullPaths=true"
+      ],
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

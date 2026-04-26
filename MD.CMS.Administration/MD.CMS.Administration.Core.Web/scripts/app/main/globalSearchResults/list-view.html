@@ -1,0 +1,18 @@
+﻿<table class="simple list-view">
+    <thead>
+        <tr>
+            <th></th>
+            <th ng-repeat="header in vm.headers[key]">{{header}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="obj in value track by $index" ng-class="{'selected' : vm.selected === obj}" ng-click="vm.redirect(key, obj)">
+            <td class="file-icon">
+                <i class="icon {{vm.icon}} s35"></i>
+            </td>
+            <td ng-style="{width: $index == value.length ? '100%' : 'auto'}" ng-repeat="header in vm.headers[key]">
+                {{obj[header]}}
+            </td>
+        </tr>
+    </tbody>
+</table>

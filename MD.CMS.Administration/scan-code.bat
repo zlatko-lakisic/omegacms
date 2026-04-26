@@ -1,0 +1,1 @@
+"%~dp0..\3rdParty\sonarscanner\sonar-scanner-4.5.0.2216-windows\bin\sonar-scanner.bat" -D"sonar.projectKey=Omega-CMS-Client-Side" -D"sonar.sources=%~dp0MD.CMS.Administration.Core.Web\scripts" -D"sonar.host.url=http://sonarqube.omegacms.io" -D"sonar.login=%1"

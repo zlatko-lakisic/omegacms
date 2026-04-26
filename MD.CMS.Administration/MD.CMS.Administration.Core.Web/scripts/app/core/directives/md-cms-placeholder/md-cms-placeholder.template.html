@@ -1,0 +1,52 @@
+<div ng-switch="vm.mdTemplate" class="loading-container" ng-if="vm.loading">
+    <div class="ph-item" ng-switch-when="1">
+        <div class="ph-col-12">
+            <div class="ph-row">
+                <div class="ph-col-12"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ph-item" ng-switch-when="2">
+        <div class="ph-col-12">
+            <div class="ph-row">
+                <div class="ph-col-12 big"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ph-item" ng-switch-when="3">
+        <div class="ph-col-12">
+            <div class="ph-row">
+                <div class="ph-col-12"></div>
+            </div>
+            <div class="ph-row">
+                <div class="ph-col-12 big"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ph-item" ng-switch-when="4">
+        <div class="ph-col-12">
+            <div class="ph-row">
+                <div class="ph-col-12 big"></div>
+            </div>
+            <div class="ph-row">
+                <div class="ph-col-12 big"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ph-item" ng-switch-when="5">
+        <div class="ph-col-12">
+            <div class="ph-row">
+                <div class="ph-picture"></div>
+            </div>
+            <div class="ph-row">
+                <div class="ph-col-12"></div>
+            </div>
+            <div class="ph-row">
+                <div class="ph-col-12 big"></div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-template" ng-switch-when="6">
+    </div>
+</div>
+<ng-transclude ng-if="(!vm.loading && vm.mdTemplate != vm.availableTamplates.custom) || (vm.mdTemplate == vm.availableTamplates.custom)" ng-hide="vm.loading && vm.mdTemplate == vm.availableTamplates.custom" />

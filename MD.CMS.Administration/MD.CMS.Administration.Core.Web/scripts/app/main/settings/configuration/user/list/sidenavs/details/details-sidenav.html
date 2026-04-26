@@ -1,0 +1,47 @@
+<!-- SIDENAV HEADER -->
+<div class="header md-accent-bg" layout="column" layout-align="space-between">
+    <div class="toolbar" layout="row" layout-align="end center">
+        <md-button ng-disabled="vm.disablebtn"
+                   class="md-icon-button" ng-click="vm.deleteItem()">
+            <md-icon md-font-icon="icon-delete"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Delete1"></span></md-tooltip>
+        </md-button>
+        <md-button ng-disabled="vm.disablebtn"
+                   ui-sref="app.user_form({id: vm.selected.Id, action: 'edit',currentView:vm.currentView})"
+                   class="md-icon-button">
+            <md-icon md-font-icon="icon-table-edit"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+        </md-button>     
+        
+    </div>
+    <div>
+        <div class="title text-truncate">{{vm.selected.Username || "Users"}}</div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+<!-- SIDENAV CONTENT -->
+<md-content class="content" flex ms-scroll>
+    <div class="file-details" ng-if="vm.selected">
+        <div class="title" md-resource-text name="Labels.Info"></div>
+        <table>
+            <tr class="Id">
+                <th md-resource-text name="Labels.Id"></th>
+                <td>{{vm.selected.Id}}</td>
+            </tr>
+            <tr class="type">
+                <th md-resource-text name="Labels.Username"></th>
+                <td>{{ vm.selected.Username}}</td>
+            </tr>
+            <tr class="type">
+                <th md-resource-text name="Labels.Role"></th>
+                <td>
+                    <span ng-repeat="profileType in vm.selected.ProfileTypes">
+                        {{profileType.Name}} 
+                        <span ng-hide="$index ==  vm.selected.ProfileTypes.length-1"> , </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</md-content>
+<!-- / SIDENAV CONTENT -->

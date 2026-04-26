@@ -1,0 +1,63 @@
+<!--<!-- SIDENAV HEADER -->
+<div class="header md-accent-bg" layout="column" layout-align="space-between">
+    <div class="toolbar" layout="row" layout-align="end center">
+        <md-button ng-hide="vm.selected.Id == 1 && vm.getSelectedType() != 2 " class=" md-icon-button"
+                   ng-click="vm.deleteItem()">
+            <md-icon md-font-icon="icon-delete"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Delete1"></span></md-tooltip>
+        </md-button>       
+        <md-button ng-hide="vm.selected.Id == 1 || vm.currentTaxonomyPath == ''"
+                   ui-sref="app.taxonomy_forms({path: vm.selectedTaxonomy.TaxonomyPath, currentView: vm.currentView.Name, id: vm.selectedTaxonomy.Id, action: 'edit', taxonomyId: vm.selectedTaxonomy.Id})"
+                   class="md-icon-button">
+            <md-icon md-font-icon="icon-table-edit"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+        </md-button>
+    </div>
+    <div>      
+        <div class="title text-truncate">{{(vm.getSelectedType() == 1 ? vm.selected.Name : vm.selected.Title)}}</div>
+        <div class="subtitle secondary-text" ng-show="vm.getSelectedType() == 2"><span md-resource-text name="Labels.Edited"></span> {{vm.selected.DateCreated | datetime}}</div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+<!-- SIDENAV CONTENT -->
+<md-content class="content" flex ms-scroll>
+    <div class="file-details">
+        <div class="preview file-icon" layout="row" layout-align="center center">
+            <i class="icon-document s48" ng-show="vm.getSelectedType() == 2"></i>
+            <i class="icon-bookmark s48" ng-show="vm.getSelectedType() == 1"></i>
+          
+          
+        </div>
+        <div class="title" md-resource-text name="Labels.Info">Info</div>
+        <table>
+            <tr class="id">
+                <th md-resource-text name="Labels.Id"></th>
+                <td>{{vm.selected.Id}}</td>
+            </tr>
+            <tr class="type">
+                <th md-resource-text name="Labels.Type"></th>
+                <td>{{(vm.getSelectedType() == 1 ? 'Taxonomy' : (vm.selected.ContentType != null ? vm.selected.ContentType.Name : vm.selected.ContentType.Name))}}</td>
+            </tr>
+            <tr class="location">
+                <th md-resource-text name="Labels.Location"></th>
+                <td ng-show="vm.getSelectedType() == 1">
+                    {{(vm.getSelectedType() == 1 ? (vm.selected.Parent == null ? vm.selected.TaxonomyPath : vm.selected.TaxonomyPath) :  vm.selectedContent.Path)}}
+                </td>
+                <td ng-show="vm.getSelectedType() == 2">
+                    <a href="" ng-click="vm.redirectoContentLocation()">
+                        {{(vm.getSelectedType() == 1 ? (vm.selected.Parent == null ? vm.selected.TaxonomyPath : vm.selected.TaxonomyPath) :  vm.selectedContent.Path)}}
+                    </a>
+                </td>
+            </tr>
+            <!--<tr class="owner" ng-show="vm.getSelectedType() == 2">
+                <th translate="FM.OWNER">Owner</th>
+                <td>{{vm.selected.Author.Username}}</td>
+            </tr>-->
+            <tr class="modified" ng-show="vm.getSelectedType() == 2">
+                <th md-resource-text name="Labels.Modified"></th>
+                <td>{{vm.selected.DateCreated | datetime: 'ago'}}</td>
+            </tr>
+        </table>
+    </div>
+</md-content>
+<!-- / SIDENAV CONTENT -->

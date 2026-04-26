@@ -1,0 +1,30 @@
+<div id="login" layout="row" layout-align="start" ng-style="{'background-image': (vm.background.type == 'image' ? 'url(' + vm.background.image.url + ')' : undefined)}">
+    <div ng-if="vm.background.type == 'video'" flex hide show-gt-sm>
+        <div id="omega-background-video-top-gradient"></div>
+        <video autoplay muted id="omega-background-video">
+            <source ng-src="{{vm.background.video.url}}" type="video/mp4">
+        </video>
+    </div>
+    <div ng-if="vm.background.type == 'image'" id="login-intro" flex hide show-gt-sm>
+        <div class="logo md-accent-bg">
+            <span class="icon-omega-logo"></span>
+        </div>
+        <div class="title" ng-if="vm.background.image.label == ''" md-resource-text name="Labels.WelcomeOmegaCMS"></div>
+        <div class="title" ng-if="vm.background.image.label != ''">{{vm.background.image.label}}</div>
+    </div>
+    <div id="login-form-wrapper" class="flex-scrollable md-whiteframe-8dp" ms-scroll>
+        <md-tabs class="md-accent" ng-class="{ 'hide-tab-labels': vm.loginProviders.length < 2 }" md-dynamic-height md-center-tabs>
+            <md-tab ng-repeat="provider in vm.loginProviders" md-on-select="vm.selectedProvider = provider">
+                <md-tab-label><md-icon ng-if="provider.Value.icon" md-font-icon="{{provider.Value.icon}}" /> {{provider.Value.name}}</md-tab-label>
+                <md-tab-body>
+                    <div id="login-form">
+                        <div class="logo md-accent-bg" hide-gt-sm>
+                            <span class="icon-omega-logo"></span>
+                        </div>
+                        <md-cms-dynamic-directive dynamic-shortcode="{{provider.Value.shortcode}}" process-authentication="vm.processLogin" on-remember-me="vm.onRememberMe" mode="vm.authMode.login" />
+                    </div>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </div>
+</div>

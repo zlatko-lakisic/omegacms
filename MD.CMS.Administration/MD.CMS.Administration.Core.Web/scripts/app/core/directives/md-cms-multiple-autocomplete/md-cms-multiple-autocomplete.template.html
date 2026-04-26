@@ -1,0 +1,63 @@
+<md-chips id="{{uniqueId}}_chips"
+          ng-model="items"
+          md-autocomplete-snap
+          md-on-add="addItemToList($chip, $index)"
+          md-on-remove="removeItemFromList($chip, $index)"
+          md-require-match="requireMatch" flex>
+    <md-autocomplete id="{{uniqueId}}"
+                     class="md-cms-multiple-autocomplete {{type}}"
+                     placeholder="{{placeholder}}"
+                     flex="100"
+                     md-selected-item="entity"
+                     md-search-text="searchText"
+                     md-items="entity in querySearch(searchText)"
+                     md-item-text="entity._displayText"
+                     md-min-length="0"
+                     md-no-cache="true">
+        <span ng-switch="typeString">
+            <span ng-switch-when="ProfileType" md-highlight-text="searchText" md-highlight-flags="^i">{{entity[displayProperty]}}</span>
+            <span ng-switch-when="User" md-highlight-text="searchText" md-highlight-flags="^i">{{entity[displayProperty]}}</span>
+            <span ng-switch-when="Content">
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity.Path}}/{{entity.Title}}</span>
+            </span>
+            <span ng-switch-when="Taxonomy">
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity.TaxonomyPath}}</span>
+            </span>
+            <span ng-switch-when="MediaContent">
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity.Path}}/{{entity.Name}}</span>
+                <span style='width: 150px; height: 50px; display: inline-block; margin-left: 25px;'>
+                    <img alt="{{entity.Name}}" ng-if='entity.FileType == 1' style='max-width:100%;max-height:100%' ng-src="{{'uploads/' + entity.PreviewUrl}}" />
+                </span>
+            </span>
+            <span ng-switch-when="ContentTypeDefinition" md-highlight-text="searchText" md-highlight-flags="^i">{{entity[displayProperty]}}</span>
+            <span ng-switch-default>
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{entity}}</span>
+            </span>
+        </span>
+        {{getInnerHtml()}}
+    </md-autocomplete>
+    <md-chip-template>
+        <span ng-switch="typeString">
+            <span ng-switch-when="ProfileType">{{$chip[displayProperty]}}</span>
+            <span ng-switch-when="User">{{$chip[displayProperty]}}</span>
+            <span ng-switch-when="Content">{{$chip[displayProperty]}}</span>
+            <span ng-switch-when="Taxonomy">
+                <strong>{{$chip.Name}} <md-icon md-font-icon="icon-information" ng-click="openMoreinfoDialog($event, $chip)"><md-tooltip>{{$chip.TaxonomyPath}}</md-tooltip></md-icon></strong>
+            </span>
+            <span ng-switch-when="MediaContent">
+                <strong>{{$chip.Name}} <md-icon md-font-icon="icon-information" ng-click="openMoreinfoDialog($event, $chip)"><md-tooltip>{{$chip.Path}}/{{$chip.Name}}</md-tooltip></md-icon></strong>
+            </span>
+            <span ng-switch-when="ContentTypeDefinition">{{$chip[displayProperty]}}</span>
+            <span ng-switch-default>
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{$chip}}</span>
+            </span>
+        </span>
+    </md-chip-template>
+</md-chips>
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="{{mdInputName}}_moreInfoDialog">
+        <md-dialog layout-padding>
+            <md-cms-elementsummary md-type="mdType" md-selected-item="selectedEntity" />
+        </md-dialog>
+    </div>
+</div>

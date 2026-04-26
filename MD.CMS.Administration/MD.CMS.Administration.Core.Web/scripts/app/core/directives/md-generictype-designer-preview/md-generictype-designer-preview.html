@@ -1,0 +1,64 @@
+<h1><i class="icon icon-{{genericTypeObj.Icon}} s26"></i> {{genericTypeObj.Name}}</h1>
+<md-card class="class="md-whiteframe-3dp">
+    <md-card-content>
+        <md-cms-grid md-hide-toolbar="true">
+            <md-cms-grid-list>
+                <md-cms-grid-tile ng-repeat="field in genericTypeObj.Fields" ng-model="field" ng-switch="field.AttributeTypeDefinition.InputType">
+                    <md-input-container class="md-block" ng-switch-when="1" flex-gt-xs>
+                        <label>{{field.Name}}</label>
+                        <input ng-model="field.Defaultvalue" disabled>
+                    </md-input-container>
+                    <div ng-switch-when="2">
+                        <md-switch ng-model="field.Defaultvalue" disabled>
+                            {{field.Name}} {{field.Defaultvalue}}
+                        </md-switch>
+                    </div>
+                    <md-input-container class="md-block" ng-switch-when="3" flex-gt-xs>
+                        <label>{{field.Name}}</label>
+                        <textarea disabled>{{field.Defaultvalue}}</textarea>
+                    </md-input-container>
+                    <div ng-switch-when="4">
+                        <md-checkbox disabled>
+                            {{field.Name}} {{field.Defaultvalue}}
+                        </md-checkbox>
+                    </div>
+                    <div ng-switch-when="5">
+                        <md-checkbox ng-repeat="listItem in field.ListValue.split(field.Delimiter)" disabled>
+                            {{listItem}} {{field.Defaultvalue}}
+                        </md-checkbox>
+                    </div>
+                    <div ng-switch-when="6">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-bookmark"></md-icon>{{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="7">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-bookmark"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="8">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-cloud-upload"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="9">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-calendar"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="10">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-google-maps"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="11">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-file"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="12">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-youtube"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="14">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-file"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="15">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-account"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                    <div ng-switch-when="16">
+                        <md-button class="md-raised md-primary"><md-icon md-font-icon="icon-calculator"></md-icon> {{field.Name}} {{field.Defaultvalue}}</md-button>
+                    </div>
+                </md-cms-grid-tile>
+            </md-cms-grid-list>
+        </md-cms-grid>
+    </md-card-content>
+</md-card>

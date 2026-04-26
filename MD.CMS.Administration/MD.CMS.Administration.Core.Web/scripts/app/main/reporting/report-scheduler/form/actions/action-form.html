@@ -1,0 +1,46 @@
+﻿<md-dialog aria-label="Choose action" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Action form</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <md-icon md-svg-src="assets/angular-material-assets/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 800px;">
+        <div class="md-dialog-content">
+            <md-input-container>
+                <label>Chose action</label>
+                <md-select ng-model="vm.actionType" ng-change="vm.change(vm.actionType);" required>
+                    <md-option ng-repeat="action in vm.actionTypes" value="{{action}}">
+                        {{action}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <div layout="column" layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Name</label>
+                    <input name="name" ng-model="vm.action.name" required />
+                </md-input-container>
+            </div>
+            <div layout="column" layout-gt-sm="row">
+                <md-input-container class="md-block" flex="100">
+                    <label>Is Active</label>
+                    <md-switch aria-label="Is Active" ng-model="vm.action.isActive"></md-switch>
+                </md-input-container>
+            </div>
+            <action-form></action-form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button type="submit" class="md-raised md-accent" ng-disabled="actionForm.$invalid || vm.disableBtn" ng-click="vm.save(vm.actionType)">
+            Save
+        </md-button>
+        <md-button class="md-accent" ng-click="vm.discard()" style="margin-right:20px;">
+            Cancel
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

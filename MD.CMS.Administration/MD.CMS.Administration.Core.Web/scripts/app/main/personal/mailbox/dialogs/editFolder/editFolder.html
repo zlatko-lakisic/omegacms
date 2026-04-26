@@ -1,0 +1,57 @@
+﻿<md-dialog aria-label="Edit message folder" ng-cloak>
+    <form autocomplete="off" name="messageFolderForm" class="md-inline-form" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 md-resource-text name="Titles.EditMessageFolder"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="assets/angular-material-assets/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">                
+                <div layout="row" flex="100">
+                    <md-input-container flex="100">
+                        <label md-resource-text name="Labels.MessageFolderName"></label>
+                        <input type="text" name="name" ng-model="vm.messageFolder.Name"
+                               required>
+                        <div ng-messages="messageFolderForm.title.$error"
+                             role="alert">
+                            <div ng-message="required">
+                                <span md-resource-text name="Labels.Required"></span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex="100">
+                    <md-autocomplete flex="100"
+                                     md-selected-item="vm.selectedIcon"
+                                     md-search-text="vm.searchText"
+                                     md-items="item in vm.querySearch(vm.searchText)"
+                                     md-item-text="item.properties.name"
+                                     md-min-length="0"
+                                     placeholder="{{$root.globals.resources.Labels.ChooseIcon}}"
+                                     required>
+                        <md-item-template>
+                            <i class="icon icon-{{item.properties.name}} s40"></i>
+                            <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.properties.name}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            <md-resource-text name="Labels.NoIconFound" replacevalue0="{{vm.searchText}}">
+                            </md-resource-text>
+                        </md-not-found>
+                    </md-autocomplete>
+                </div>
+                <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                           ng-disabled="messageFolderForm.$invalid" ng-click="vm.submitForm()">
+                    <md-resource-text name="Labels.Submit">
+                    </md-resource-text>
+                </md-button>
+                <md-button ng-click="vm.deleteFolder()" style="margin-right:20px;">
+                    <md-resource-text name="Labels.Delete1"></md-resource-text>
+                </md-button>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

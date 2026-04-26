@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Logging.V2" Version="3.3.0" />
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="3.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MD.Tools.Helpers.Core\MD.Tools.Helpers.Core.csproj" />
+  </ItemGroup>
+
+</Project>

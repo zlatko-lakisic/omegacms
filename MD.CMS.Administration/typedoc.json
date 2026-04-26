@@ -1,0 +1,8 @@
+{
+  "inputFiles": [ "./MD.CMS.Administration.Core.Web/scripts/businessLogic" ],
+  "mode": "file",
+  "out": "./MD.CMS.Administration.Core.Web/scripts/documentation/typescript",
+  "tsconfig": "./MD.CMS.Administration.Core.Web/scripts/businessLogic/tsconfig.json",
+  "theme": "./typedoc-omega-themes",
+  "name": "OmegaCMS Typescript Documentation"
+}

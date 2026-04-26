@@ -1,0 +1,44 @@
+<div ng-form name="actionForm">
+    <div ng-if="vm.action.type == 1">
+        <div layout="column" layout-gt-sm="row">
+            <md-input-container>
+                <form autocomplete="off" ng-cloak>
+                    <table class="simple" ms-responsive-table>
+                        <thead>
+                            <tr>
+                                <th md-resource-text name="Labels.ChooseDirectory"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="vm.showBack">
+                                <td style="cursor:pointer" ng-click="vm.goBack(vm.reportData.Path)"><md-icon md-font-icon="icon-folder"></md-icon>...</td>
+                            </tr>
+                            <tr ng-repeat="child in vm.reportData.Children">
+                                <td style="cursor:pointer" ng-click="vm.chooseDirectory(child.Path)"><md-icon md-font-icon="icon-folder"></md-icon>{{child.Path}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </md-input-container>
+        </div>
+        <div layout="column" layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label md-resource-text name="Labels.ChosenDirectory"></label>
+                <input name="name" ng-model="vm.reportData.Path" disabled />
+            </md-input-container>
+        </div>
+    </div>
+
+    <div ng-if="vm.action.type == 2">
+        <md-input-container class="md-block" flex-gt-sm>
+            <label md-resource-text name="Labels.Email"></label>
+            <input name="email" ng-model="vm.action.value"
+                   required minlength="5" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+            <div ng-messages="emailForm.email.$error" ng-hide="showHints">
+                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                    <md-resource-text name="Labels.EmailInfo"></md-resource-text>
+                </div>
+            </div>
+        </md-input-container>
+    </div>
+</div>

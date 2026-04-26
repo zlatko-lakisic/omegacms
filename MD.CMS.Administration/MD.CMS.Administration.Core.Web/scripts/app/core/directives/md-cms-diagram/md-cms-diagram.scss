@@ -1,0 +1,85 @@
+md-cms-diagram {
+    #diagram-canvas {
+        outline: 1px dashed rgba(170,170,170,0.7);
+        padding: 0;
+
+        svg {
+            padding: 0;
+
+            & > g {
+                foreignObject {
+                    md-cms-diagram-element {
+                        display: block;
+
+                        br {
+                            display: none;
+                        }
+                    }
+                }
+
+                & > g:nth-last-child(2) {
+
+
+                    rect {
+                        stroke: #3b97e3;
+                        stroke-width: 3px;
+                        stroke-dasharray: none;
+                    }
+
+                    g[style="cursor: nw-resize; visibility: visible;"],
+                    g[style="cursor: n-resize; visibility: visible;"],
+                    g[style="cursor: ne-resize; visibility: visible;"],
+                    g[style="cursor: w-resize; visibility: visible;"],
+                    g[style="cursor: e-resize; visibility: visible;"],
+                    g[style="cursor: sw-resize; visibility: visible;"],
+                    g[style="cursor: s-resize; visibility: visible;"],
+                    g[style="cursor: se-resize; visibility: visible;"] {
+                        rect {
+                            fill: #fff;
+                            stroke: #3b97e3;
+                            stroke-width: 3px;
+                            width: 7px;
+                            height: 7px;
+                        }
+                    }
+
+                    g[style="cursor: n-resize; visibility: visible;"],
+                    g[style="cursor: w-resize; visibility: visible;"],
+                    g[style="cursor: e-resize; visibility: visible;"],
+                    g[style="cursor: s-resize; visibility: visible;"] {
+                        display: none
+                    }
+                }
+            }
+        }
+
+        .diagram-element-toolbar {
+            position: absolute;
+            background-color: #3b97e3;
+            white-space: nowrap;
+            margin-top: -3px;
+
+            i {
+                line-height: 14px;
+                color: #fff;
+                cursor: pointer;
+                padding: 0 2px;
+                margin: 0 3px;
+            }
+        }
+
+        &.connectable-selected {
+            svg {
+                & > g {
+                    & > g:nth-last-child(2) {
+                        display: none;
+                    }
+                }
+            }
+
+            .diagram-element-toolbar {
+                border: 3px #fff solid;
+            }
+        }
+    }
+}

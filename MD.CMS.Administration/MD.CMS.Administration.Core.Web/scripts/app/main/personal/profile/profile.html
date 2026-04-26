@@ -1,0 +1,102 @@
+<div id="profile" class="page-layout simple tabbed">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="column" layout-align="center center" layout-gt-sm="row" layout-align-gt-sm="space-between end">
+        <div class="user-info" layout="column" layout-align="center center" layout-gt-sm="row" layout-align-gt-sm="start center">
+            <img class="profile-image avatar huge" src="assets/images/avatars/profile.jpg">
+
+            <div class="name">{{vm.originalUser.Username}}</div>
+        </div>
+
+        <div class="actions" layout="row" layout-align="end center">
+            <md-button class="md-raised md-primary" aria-label="Inbox" ui-sref="app.mailbox">
+                <md-icon md-font-icon="icon-email" class="icon"></md-icon>
+                My Inbox
+            </md-button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" flex>
+
+        <form autocomplete="off" name="userForm" novalidate>
+            <md-tabs md-selected="vm.tab" md-dynamic-height>
+                <md-tab label="Main user details">
+                    <div layout="column" layout-gt-sm="row">
+                        <md-input-container flex>
+                            <input type="text" name="name" ng-model="vm.user.Username"
+                                   placeholder="{{$root.globals.resources.Labels.Username}}"
+                                   required>
+                            <div ng-messages="userForm.name.$error"
+                                 role="alert">
+                                <div ng-message="required">
+                                    <span md-resource-text name="Labels.Required"></span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-sm="row">
+                        <md-input-container flex>
+                            <input type="password" name="password" ng-model="vm.user.Password" autocomplete="false"
+                                   placeholder="{{$root.globals.resources.Labels.Password}}"
+                                   ng-change="vm.registerChangePassword()"
+                                   ng-required="vm.changePass">
+                            <div ng-messages="userForm.password.$error"
+                                 role="alert">
+                                <div ng-message="required">
+                                    <span md-resource-text name="Labels.Required"></span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div ng-if="vm.changePass" layout="column" layout-gt-sm="row">
+                        <md-input-container flex>
+                            <input type="password" name="password" ng-model="vm.passwordConfirmm" autocomplete="false"
+                                   placeholder="{{$root.globals.resources.Labels.PasswordConfirm}}"
+                                   required>
+                            <div ng-messages="userForm.password.$error"
+                                 role="alert">
+                                <div ng-message="required">
+                                    <span md-resource-text name="Labels.Required"></span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-sm="row">
+                        <md-input-container flex>
+                            <md-checkbox name="administrationAllowed"
+                                         ng-model="vm.user.AdministrationAllowed"
+                                         ng-required="true"
+                                         disabled>Allowed to login to admin console?</md-checkbox>
+                            <div ng-messages="userForm.administrationAllowed.$error"
+                                 role="alert">
+                                <div ng-message="required">
+                                    <span md-resource-text name="Labels.Required"></span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </md-tab>
+                <md-tab ng-repeat="profileType in vm.user.ProfileTypes" label="{{profileType.Name}}">
+                    <md-cms-fields md-fields="profileType.Fields" 
+                                   md-form-name="userForm" 
+                                   register-upload-events="vm.registerProfileTypeUploadEvents" 
+                                   on-save="vm.onSave(event)" 
+                                   md-folder-path="'users'" />
+                    <h3 ng-if="profileType.Fields.length == 0">This profile type has no fields to fill in!</h3>
+                </md-tab>
+            </md-tabs>
+            <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                       ng-disabled="userForm.$invalid || userForm.$pristine"
+                       ng-click="vm.save('', $event);">
+                <md-resource-text name="Labels.Submit"></md-resource-text>
+            </md-button>
+            <md-button class="md-accent" aria-label="Cancel"
+                       ng-click="vm.cancel();">
+                <md-resource-text name="Labels.Cancel"></md-resource-text>
+            </md-button>
+        </form>
+    </div>
+    <!-- / CONTENT -->
+
+</div>

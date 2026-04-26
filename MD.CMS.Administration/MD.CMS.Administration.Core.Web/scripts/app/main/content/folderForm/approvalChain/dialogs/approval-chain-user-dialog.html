@@ -1,0 +1,63 @@
+<md-dialog aria-label="Edit dialog" style="min-width:900px">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>
+                <span md-resource-text name="Titles.EditStepX" replacevalue0="{{step.Order}}"></span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon style="color:white; font-size:24px;" class="icon icon-window-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form autocomplete="off" name="StpeEditForm">
+              <md-chips ng-model="Users" md-autocomplete-snap
+                        md-require-match="true">
+                <md-autocomplete md-selected-item="approvalChainUserFormController.user"
+                                 md-search-text="approvalChainUserFormController.searchText"
+                                 md-items="item in querySearch(approvalChainUserFormController.searchText)"
+                                 md-item-text="item.Username"
+                                 placeholder="{{$root.globals.resources.Labels.SearchForUserPlaceholder}}">
+                  <span md-highlight-text="approvalChainUserFormController.searchText">{{item.Username}}</span>
+                </md-autocomplete>
+                <md-chip-template>
+                  <span>
+                    <strong>{{$chip.Username}}</strong>
+                    <em></em>
+                  </span>
+                </md-chip-template>
+              </md-chips>
+
+              <md-input-container class="md-block" flex>
+                <label md-resource-text name="Labels.UsersRequiredToApprove"></label>
+                <md-select name="UsersRequired" ng-model="step.ComboOperator" aria-label="comboOperator" required>
+                  <md-option value="1"><md-resource-text name="Labels.All"></md-resource-text></md-option>
+                  <md-option value="2"><md-resource-text name="Labels.Any"></md-resource-text></md-option>
+                </md-select>
+                <div class="errors" ng-messages="StpeEditForm.UsersRequired.$error">
+                  <div ng-message="required"><md-resource-text name="Labels.Required"></md-resource-text></div>
+                </div>
+              </md-input-container>
+
+              <md-input-container class="md-block" flex>
+                <label md-resource-text name="Labels.OnReject"></label>
+                <md-select name="OnReject" ng-model="step.Actions[1].RedirectTo" aria-label="reject" required>
+                  <md-option ng-repeat="item in beforeSteps" ng-value="{{item.Order}}"><md-resource-text name="Labels.StepX" replacevalue0="{{item.Order}}"></md-resource-text></md-option>
+                </md-select>
+                <div class="errors" ng-messages="StpeEditForm.OnReject.$error">
+                  <div ng-message="required"><md-resource-text name="Labels.Required"></md-resource-text></div>
+                </div>
+              </md-input-container>
+            </form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button ng-disabled="!isValid()" class="md-raised md-primary" ng-click="answer()">
+            <md-resource-text name="Labels.Save"></md-resource-text>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

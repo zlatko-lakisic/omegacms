@@ -1,0 +1,16 @@
+﻿<md-dialog>
+    <md-dialog-content>
+        <h1 md-resource-text name="Titles.RemoveContentWithVersions"></h1>
+    </md-dialog-content>
+    <md-dialog-actions>  
+        <md-button ng-click="cancel()" class="md-primary">         
+            <md-resource-text name="Labels.Close"></md-resource-text>
+        </md-button>
+        <md-button ng-click="answer('all')" class="md-primary">
+            <md-resource-text name="Labels.AllVersions"></md-resource-text> 
+        </md-button>
+        <md-button ng-click="answer('this')" class="md-primary">
+            <md-resource-text name="Labels.ThisVersion"></md-resource-text>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

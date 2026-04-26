@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MD.CMS.WebApi.Core</name>
+    </assembly>
+    <members>
+        <member name="T:MD.CMS.WebApi.Core.Controllers.ApprovalChainController">
+            <summary>
+            WebAPI for manipulating Approval chain, it's steps and actions
+            </summary>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetById(System.Int64)">
+            <summary>
+            Get approval chain by ID with it's steps. If not found return HTTP 404 status
+            </summary>
+            <param name="id">Approval chain ID</param>
+            <returns>IActionResult with requested ApprovalChain</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetByFolderId(System.Int64)" -->
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.Save(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.ApprovalChain)">
+            <summary>
+            Insert new or edit existing approval chain
+            </summary>
+            <param name="chain">ApprovalChain to edit or insert</param>
+            <returns>IActionResult with ApprovalChain with new ID</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.Delete(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.ApprovalChain)">
+            <summary>
+            Delete approval chain
+            </summary>
+            <param name="approvalChain">ApprovalChain to delete</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetStepById(System.Int64)">
+            <summary>
+            Get Step by given step ID
+            </summary>
+            <param name="id">long step id</param>
+            <returns>IActionResult with Step</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetStepsByApprovalChainId(System.Int64)">
+            <summary>
+            Get all steps for approval chain
+            </summary>
+            <param name="id">long id of approval chain</param>
+            <returns>IActionResult with List of Step objects </returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.AddStep(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.Step)">
+            <summary>
+            Add step to exitsing approval chain. If approval chain does not exist return HTTP 400 status.
+            </summary>
+            <param name="approvalStep">Step to add</param>
+            <returns>IActionResult with Step</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.AddSteps(System.Collections.Generic.List{MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.Step})">
+            <summary>
+            Add multiple steps to existing approval chain
+            </summary>
+            <param name="approvalSteps">List of approval chain steps</param>
+            <returns>IActionResult with ApprovalChain steps populated</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.DeleteStep(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.Step)">
+            <summary>
+            Delete approval chain step
+            </summary>
+            <param name="step">Step to delete</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetStepActionById(System.Int64)">
+            <summary>
+            Get step action by provided id
+            </summary>
+            <param name="id">StepAction id</param>
+            <returns>IActionResult with StepAction</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.AddStepAction(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.StepAction)">
+            <summary>
+            Insert or edit StepAction
+            </summary>
+            <param name="stepAction">StepAction to create or edit</param>
+            <returns>IActionResult with StepAcion</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetStepActionsByStepId(System.Int64)">
+            <summary>
+            Get step actions list for provided step id
+            </summary>
+            <param name="id">Step id</param>
+            <returns>IActionResult with List of StepAction objects</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.DeleteStepAction(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.StepAction)">
+            <summary>
+            Delete StepAction
+            </summary>
+            <param name="stepAction">StepAction to delete</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetApprovalById(System.Int64)">
+            <summary>
+            Get approval by id
+            </summary>
+            <param name="approvalId">ApprovalChainApproval ID</param>
+            <returns>ApprovalChainApprovals</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.GetContentApprovals(System.String,System.DateTime,System.Int32)">
+            <summary>
+            Get user approvals and rejections for new content
+            </summary>
+            <param name="contentId">Content ID</param>
+            <param name="contentDateCreated">Content date created</param>
+            <param name="lcid">Content LCID</param>
+            <returns>List of ApprovalChainApprovals</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.AddApproval(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ApprovalChain.ApprovalChainApproval)">
+            <summary>
+            Approve or reject new content
+            </summary>
+            <param name="approval">New ApprovalChainApproval for new content on one of the steps in approval chain</param>
+            <returns>New ApprovalChainApproval object</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ApprovalChainController.DeleteApproval(System.Int64)">
+            <summary>
+            Delete existing approval
+            </summary>
+            <param name="approval">ApprovalChainApproval to remove</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.CacheController.AddProvidersFromSettings(System.Collections.Generic.List{System.String},MD.CMS.BusinessLogic.WebApi.Core.Caching.OmegaCacheSettings)">
+            <summary>
+            
+            </summary>
+            <param name="providers"></param>
+            <param name="settings"></param>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportDataController.GetAll">
+            <summary>
+            Gets all ReportData objects
+            </summary>
+            <returns>If everything went fine, "Ok" status code with list of ReportData objects, InternalServerError otherwise</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportDataController.GetByReportSchedulerId(System.Int32)">
+            <summary>
+            Gets all ReportData objects which belong to ReportScheduler object with given id
+            </summary>
+            <param name="id">Report Scheduler Id</param>
+            <returns>If found, "Ok" status code with list of found ReportData objects, else "NotFound" or "BadRequest" status code</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportDataController.Save(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ReportData)">
+            <summary>
+            Saves ReportData object with all its properties
+            </summary>
+            <param name="reportData">ReportData object to save</param>
+            <returns>"Ok" status code with saved ReportData object or "BadRequest" with ModelState in case that ModelState is not valid</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportDataController.GenerateReportdata(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ReportDefinition)">
+            <summary>
+            Saves ReportData object with all its properties
+            </summary>
+            <param name="obj">Report definition object to process</param>
+            <returns>"Ok" status code with saved ReportData object or "BadRequest" with ModelState in case that ModelState is not valid</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.GetById(System.Int64)">
+            <summary>
+            Gets ReportScheduler by id
+            </summary>
+            <param name="id">Id of wanted ReportScheduler object</param>
+            <returns>If found, "Ok" status code with found ReportScheduler object, else "NotFound" or "BadRequest" status code</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.GetByReportDefinitionId(System.Int32)">
+            <summary>
+            Gets all ReportScheduler objects which belong to ReportDefinition object with given id
+            </summary>
+            <param name="id">Report Definition Id</param>
+            <returns>If found, "Ok" status code with list of found ReportScheduler objects, else "NotFound" or "BadRequest" status code</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.GetAll(System.String)">
+            <summary>
+            Gets all ReportScheduler objects
+            </summary>
+            <returns>If everything went fine, "Ok" status code with list of ReportScheduler objects, InternalServerError otherwise</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.GetAllWithPagination(System.Int64,System.Int64,System.String,System.String,System.String)">
+            <summary>
+            Gets all ReportScheduler objects with pagination
+            </summary>
+            <returns>If everything went fine, "Ok" status code with list of ReportScheduler objects, InternalServerError otherwise</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.GetAllCount(System.String,System.String)">
+            <summary>
+            Gets count of objects
+            </summary>
+            <returns>If everything went fine, "Ok" status code with numer of ReportScheduler objects, InternalServerError otherwise</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.Save(MD.CMS.BusinessLogic.Core.DataAccess.Entities.ReportScheduler)">
+            <summary>
+            Saves ReportScheduler object with all its properties (that might include other objects or lists of other objects
+            </summary>
+            <param name="scheduler">ReportScheduler object to save</param>
+            <returns>"Ok" status code with saved ReportScheduler object or "BadRequest" with ModelState in case that ModelState is not valid</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.ReportSchedulerController.Delete(System.Int64)">
+            <summary>
+            Deletes ReportScheduler object with coresponding id
+            </summary>
+            <param name="id">Id of ReportScheduler object to delete</param>
+            <returns>"Ok" Status code if everything went fine, "NotFound" or "BadRequest" status codes otherwise</returns>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Controllers.SearchController.FullText(System.String)">
+            <summary>
+            Searches for folders, taxonomies, contents, content types, users, profile types and media contents inside of one culture
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MD.CMS.WebApi.Core.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MD.CMS.WebApi.Core.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MD.CMS.WebApi.Core.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:MD.CMS.WebApi.Core.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:MD.CMS.WebApi.Core.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:MD.CMS.WebApi.Core.Properties.Resources.ResetEmailSubject">
+            <summary>
+              Looks up a localized string similar to OmegaCMS Password Reset.
+            </summary>
+        </member>
+        <member name="P:MD.CMS.WebApi.Core.Properties.Resources.ResetEmailTemplate">
+            <summary>
+              Looks up a localized string similar to Hello {0}&lt;br&gt;&lt;br&gt;Your password has been reset. Your new password is: {1}.&lt;br&gt;&lt;br&gt;Please login as soon as possible and change this password.&lt;br&gt;&lt;br&gt;Thanks,&lt;br&gt;OmegaCMS.
+            </summary>
+        </member>
+    </members>
+</doc>

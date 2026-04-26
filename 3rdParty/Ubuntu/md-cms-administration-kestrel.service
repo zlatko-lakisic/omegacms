@@ -1,0 +1,15 @@
+[Unit]
+Description=Kestrel service running .NET Core MD.CMS.Administration.Core.dll
+
+[Service]
+WorkingDirectory=/var/www/html/admin/
+ExecStart=/usr/bin/dotnet /var/www/html/admin/MD.CMS.WebApi.Core.dll
+Restart=always
+RestartSec=10 # restart after 10 sec if crashed
+SyslogIdentifier=dotnet-kestrel
+User=md-admin
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

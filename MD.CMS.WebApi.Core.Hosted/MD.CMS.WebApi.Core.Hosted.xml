@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MD.CMS.WebApi.Core.Hosted</name>
+    </assembly>
+    <members>
+        <member name="M:MD.CMS.WebApi.Core.Hosted.LocalEnvLoader.Load">
+            <summary>Loads a solution-root or working-directory <c>.env</c> so environment variables map into ASP.NET Core configuration.</summary>
+        </member>
+    </members>
+</doc>

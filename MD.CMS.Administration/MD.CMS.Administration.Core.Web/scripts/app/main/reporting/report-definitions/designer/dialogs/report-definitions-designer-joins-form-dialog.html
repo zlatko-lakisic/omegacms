@@ -1,0 +1,62 @@
+<md-dialog aria-label="Edit dialog" flex>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>
+                <span md-resource-text name="Titles.EditConnection"></span>: {{vm.join.Left.Entity.Name}} <md-icon md-font-icon="icon-code-tags"></md-icon> {{vm.join.Right.Entity.Name}}
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-disabled="!vm.isValid()" ng-click="vm.cancel()">
+                <md-icon style="color:white; font-size:24px;" class="icon icon-window-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <div layout="row" layout-align="center center">
+                <div flex>
+                    <h3 layout="row"><span flex>{{vm.join.Left.Entity.Name}}</span><md-icon md-font-icon="icon-menu-right"></md-icon></h3>
+                </div>
+                <div layout-margin flex>
+                    <md-input-container>
+                        <label>Select {{vm.join.Left.Entity.Name}} Propery</label>
+                        <md-select ng-model="vm.join.Left.Property" ng-model-options="{trackBy: '$value.Name'}">
+                            <md-option ng-repeat="field in vm.join.Left.Entity.Fields" ng-value="field">{{field.Name}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex>
+                    <md-input-container>
+                        <label>Select Comparer</label>
+                        <md-select ng-model="vm.join.Type">
+                            <md-option value="1"><span md-resource-text name="Labels.EqualsOption"></span></md-option>
+                            <md-option value="2"><span md-resource-text name="Labels.NotEquals"></span></md-option>
+                            <md-option value="3"><span md-resource-text name="Labels.Like"></span></md-option>
+                            <md-option value="4"><span md-resource-text name="Labels.GreaterThan"></span></md-option>
+                            <md-option value="5"><span md-resource-text name="Labels.GreaterThanEqual"></span></md-option>
+                            <md-option value="6"><span md-resource-text name="Labels.LessThan"></span></md-option>
+                            <md-option value="7"><span md-resource-text name="Labels.LessThanEqual"></span></md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout-margin flex>
+                    <h3 layout="row"><span flex>{{vm.join.Right.Entity.Name}}</span><md-icon md-font-icon="icon-menu-right"></md-icon></h3>
+                </div>
+                <div flex>
+                    <md-input-container>
+                        <label>Select {{vm.join.Right.Entity.Name}} Propery</label>
+                        <md-select ng-model="vm.join.Right.Property" ng-model-options="{trackBy: '$value.Name'}">
+                            <md-option ng-repeat="field in vm.join.Right.Entity.Fields" ng-value="field">{{field.Name}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button class="md-raised md-primary" ng-disabled="!vm.isValid()" ng-click="vm.save()">
+            <span md-resource-text name="Labels.Save"></span>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

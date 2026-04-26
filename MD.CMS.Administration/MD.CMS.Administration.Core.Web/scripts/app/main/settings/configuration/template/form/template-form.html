@@ -1,0 +1,62 @@
+﻿<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="space-between">
+            <div>
+                <span class="md-display-1 font-weight-300" md-resource-text name="Titles.TemplateEditor"></span>
+            </div>
+        </div>
+        <!-- BREADCRUMB -->
+        
+        <!-- / BREADCRUMB -->
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <!-- BASIC FORM -->
+        <div class="form-wrapper md-whiteframe-1dp" flex="60">
+            <form autocomplete="off" name="templateForm" class="md-inline-form" novalidate>
+                <div class="form-title">{{vm.formTitle | uppercase}}</div>
+                <div layout="column" layout-gt-sm="row">
+                    <md-input-container class="md-block">
+                        <label md-resource-text name="Labels.Name"></label>
+                        <input type="text" name="fieldname" ng-model="vm.template.Name" required>
+                        <div ng-messages="template.$error"
+                             role="alert">
+                            <div ng-message="required">
+                                <span md-resource-text name="Labels.Required"></span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="column" layout-gt-sm="row">
+                    <md-input-container class="md-block">
+                        <label md-resource-text name="Labels.Description"></label>
+                        <input type="text" name="fieldname" ng-model="vm.template.Description">
+                    </md-input-container>
+                </div>
+                <div layout="column" layout-gt-sm="row">
+                    <md-button ng-click="vm.chooseTemplate($event)"><md-resource-text name="Labels.ChooseTemplate"></md-resource-text></md-button>
+                </div>
+                <md-input-container class="md-block">
+                    <label md-resource-text name="Labels.Path"></label>
+                    <input type="text" name="fieldname" ng-model="vm.template.TemplateUrl" disabled style="color: black;">
+                </md-input-container>
+                <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                           ng-click="vm.sendForm()"
+                           ng-disabled="templateForm.$invalid">
+                    <md-resource-text name="Labels.Submit"></md-resource-text>
+                </md-button>
+             
+                <a ui-sref="app.template-list({folderPath:vm.folder.FolderPath})">
+                    <md-button type="button" class="md-accent" aria-label="Submit">
+                        <md-resource-text name="Labels.Back"></md-resource-text>
+                    </md-button>
+                </a>
+               
+            </form>
+        </div>
+        <!-- / BASIC FORM -->
+    </div>
+</div>
+<!-- / CONTENT -->

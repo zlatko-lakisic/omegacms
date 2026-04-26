@@ -1,0 +1,20 @@
+<div ng-if="vm.selectedMessage && vm.selectedMessage.MessageContent.Content">
+    <h1 md-resource-text name="Labels.ApprovalPending"></h1>
+    <h3>{{vm.selectedMessage.Subject}}</h3>
+    <p><a ng-click="vm.goToContent();"><md-resource-text name="Labels.PleaseReviewContent"></md-resource-text></a><md-resource-text name="AndApproveOrReject"></md-resource-text></p>
+    <p ng-if="vm.selectedMessage.MessageContent.Rejected && vm.selectedMessage.MessageContent.Reason">
+        <md-resource-text name="Labels.ContentWasRejectedOnPreviousStep" replacevalue0="{{vm.selectedMessage.MessageContent.Reason}}"></md-resource-text>
+    </p>
+    <div>
+        <md-input-container>
+            <label md-resource-text name="Labels.Comment"></label>
+            <input ng-model="vm.selectedMessage.MessageContent.comment">
+        </md-input-container>
+    </div>
+    <div class="row">
+        <a ng-click="vm.sendApproval(1)"><md-resource-text name="Labels.Approve"></md-resource-text></a>&nbsp; {{ $root.globals.resources.Labels.OrSmall }} &nbsp;<a ng-click="vm.sendApproval(2)"><md-resource-text name="Labels.Reject"></md-resource-text></a>
+    </div>
+</div>
+<div ng-if="!vm.selectedMessage">
+    <h1 md-resource-text name="Labels.NoApprovalRequesteSelected"></h1>
+</div>

@@ -1,0 +1,15 @@
+md-cms-file {
+    width:100%;
+
+    .md-cms-file {
+        .md-cms-file-label {
+            display: block;
+            margin-bottom: 20px;
+            padding-top: 40px;
+        }
+
+        button.close {
+            display: none;
+        }
+    }
+}

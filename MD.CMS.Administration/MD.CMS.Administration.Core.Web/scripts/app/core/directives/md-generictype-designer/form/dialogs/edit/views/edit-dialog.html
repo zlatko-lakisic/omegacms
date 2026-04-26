@@ -1,0 +1,63 @@
+<md-dialog aria-label="Edit Form" flex>
+    <form autocomplete="off" name="editForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{vm.field.Name}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="icon-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-generictype-designer-form-field-dialog">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="{{$root.globals.resources.Labels.General}}">
+                    <ng-include src="'scripts/app/core/directives/md-generictype-designer/form/dialogs/edit/views/edit-dialog.tabs.general.html'" />
+                </md-tab>
+                <md-tab label="Style">
+                    <ng-include src="'scripts/app/core/directives/md-generictype-designer/form/dialogs/edit/views/edit-dialog.tabs.style.html'" />
+                </md-tab>
+                <md-tab label="Metadata">
+                    <ng-include src="'scripts/app/core/directives/md-generictype-designer/form/dialogs/edit/views/edit-dialog.tabs.metadata.html'" />
+                </md-tab>
+                <md-tab label="Data Bound" ng-if="vm.databoundReady && !vm.isCalculated && vm.allDataBoundTypes.length" md-active="field.DataBound">
+                    <ng-include src="'scripts/app/core/directives/md-generictype-designer/form/dialogs/edit/views/edit-dialog.tabs.databound.html'" />
+                </md-tab>
+                <md-tab label="Data Bound Joins" ng-if="vm.databoundReady && vm.allDataSources.length > 1 && vm.fields.length > 1">
+                    <ng-include src="'scripts/app/core/directives/md-generictype-designer/form/dialogs/edit/views/edit-dialog.tabs.databoundjoins.html'" />
+                </md-tab>
+                <md-tab label="Advanced">
+                    <md-input-container class="md-block">
+                        <label>Regex</label>
+                        <textarea ng-model="vm.regex" md-maxlength="999" rows="10" md-select-on-focus></textarea>
+                    </md-input-container>
+                    <md-input-container ng-if="vm.hasListValues" class="md-block">
+                        <label>List Values</label>
+                        <textarea ng-model="vm.field.ListValue" md-maxlength="999999" rows="10" ng-change="vm.onListValueChanged(this)" md-select-on-focus></textarea>
+                    </md-input-container>
+                    <md-input-container ng-if="vm.hasListValues" class="md-block">
+                        <label>Delimiter</label>
+                        <input ng-model="vm.field.Delimiter" type="text" ng-change="vm.onListDelimiterChanged(this)">
+                    </md-input-container>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" ng-if="!vm.isAddEditMode">
+            <md-button ng-click="vm.cancel()" class="md-raised">
+                Cancel
+            </md-button>
+            <md-button ng-click="vm.save()" class="md-raised md-accent">
+                Save
+            </md-button>
+        </md-dialog-actions>
+        <md-dialog-actions layout="row" ng-if="vm.isAddEditMode">
+            <md-progress-circular ng-if="vm.fieldsLoading" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+            <md-button ng-click="vm.cancelDataSource()">
+                Cancel
+            </md-button>
+            <md-button class="md-raised md-accent submit-button" ng-click="vm.saveDataSource()" ng-disabled="mdGenerictypeDesignerForm.$invalid">
+                Save Datasource
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,1 @@
+eventcreate /ID 1 /L APPLICATION /T INFORMATION  /SO "Omega Helpers" /D "My first log"

@@ -1,0 +1,38 @@
+
+
+    <!--<table class="simple list-view">
+        <thead>
+            <tr>
+                <th></th>
+                <th>
+                    Name
+                    <md-icon md-font-icon="icon-menu-down" ng-click="vm.sort('Name', 'asc');"></md-icon>
+                    <md-icon md-font-icon="icon-menu-up" ng-click="vm.sort('Name', 'desc');"></md-icon>
+                </th>
+                <th hide show-gt-sm>
+                    Type
+                    <md-icon md-font-icon="icon-menu-down" ng-click="vm.sort('Type', 'asc');"></md-icon>
+                    <md-icon md-font-icon="icon-menu-up" ng-click="vm.sort('Type', 'desc');"></md-icon>
+                </th>
+                <th hide-gt-md>fgddfdfgdfgfdg</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr ng-repeat="metaDataField in vm.allMetaDataFields | filter:global.search"
+                ng-class="{'selected' : vm.selected === metaDataField}" ng-click="vm.select(metaDataField, $index)">
+                <td class="file-icon" ui-sref="app.content_list({folderPath:folder.FolderPath})">
+                    <md-icon md-font-icon="icon-format-indent-increase"></md-icon>
+                </td>
+                <td class="name">{{metaDataField.Name}}</td>
+                <td class="type" hide show-gt-sm>{{metaDataField.AttributeTypeDefinition.Name}}</td>
+                <td class="show-details" hide-gt-md>
+                    <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleFolderDetails(folder)" aria-label="Toggle details sidenav">
+                        <md-icon md-font-icon="icon-information-outline"></md-icon>
+                    </md-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+   
+</md-content>-->

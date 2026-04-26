@@ -1,0 +1,473 @@
+﻿@model MD.CMS.Administration.Core.Models.Layout
+<!DOCTYPE html>
+
+<html ng-app="omega">
+<head>
+    <base href="@Html.DisplayFor(model => model.BaseFolder)">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="apple-touch-icon" sizes="180x180" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.AppleTouchIcon)">
+    <link rel="icon" type="image/png" sizes="32x32" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.Icon32x32)">
+    <link rel="icon" type="image/png" sizes="16x16" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.Icon16x16)">
+    <link rel="manifest" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.Manifest)">
+    <link rel="mask-icon" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.MaskIcon)" color="#5bbad5">
+    <link rel="shortcut icon" href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.ShortcutIcon)">
+    <meta name="msapplication-config" content="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayFor(model => model.CMSIconSettings.MsApplicationConfig)">
+    <meta name="theme-color" content="@Html.DisplayTextFor(model => model.CMSIconSettings.ThemeColor)">
+    <title>@Html.DisplayTextFor(model => model.CMSTitleString) @(!string.IsNullOrEmpty(ViewBag.Title) ? string.Format("| {0}", ViewBag.Title) : "")</title>
+    @if (Model.IsProduction)
+    {
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)css/min/all.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/chartist/dist/chartist.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/datatables/media/css/jquery.dataTables.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/nvd3/build/nv.d3.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/fullcalendar/main.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/highlightjs/styles/default.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/perfect-scrollbar/css/perfect-scrollbar.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/toastr/build/toastr.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-xeditable/dist/css/xeditable.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-moment-picker/dist/angular-moment-picker.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-ui-tree/dist/angular-ui-tree.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-gantt/dist/angular-gantt.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-gantt/dist/angular-gantt-plugins.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-loading-bar/build/loading-bar.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" type="text/css" media="all" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-material/angular-material.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/omega-cms-lf-ng-md-file-input/dist/omega-cms-lf-ng-md-file-input.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/mdi/css/materialdesignicons.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-ui-grid/ui-grid.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/ng-material-datetimepicker/dist/material-datetimepicker.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-material-time-picker/dist/md-time-picker.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/jsonformatter/dist/json-formatter.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/placeholder-loading/dist/css/placeholder-loading.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="@Html.DisplayFor(model => model.BaseFolder)js/ext/grapesjs/dist/css/grapes.min.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" media="all" type="text/css" />
+        <link rel="stylesheet" href="assets/omega-logo-glyphs/fonts.css?v=@Html.DisplayTextFor(model => model.CMSVersion)" type="text/css" media="all" />
+        <link rel="stylesheet" href="scripts/app/index.css?v=@Html.DisplayTextFor(model => model.CMSVersion)">
+    }
+    <script src="//maps.googleapis.com/maps/api/js?key=@Html.DisplayTextFor(model => model.GoogleMapsApiKey)"></script>
+    <link href="//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic" rel="stylesheet" type="text/css">
+    @foreach (string scriptUrl in Model.AddonCssUrls)
+    {
+        <link href="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayTextFor(model => scriptUrl)" rel="stylesheet" type="text/css">
+    }
+    @foreach (string scriptUrl in Model.AddonJavascriptHeadUrls)
+    {
+        <script src="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayTextFor(model => scriptUrl)"></script>
+    }
+</head>
+<body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm" class="{{state.current.bodyClass || ''}}">
+    <ms-splash-screen id="splash-screen">
+        <div class="center">
+            <div class="logo">
+                <span class="icon-omega-logo"></span>
+            </div>
+            <div class="spinner-wrapper">
+                <div class="spinner">
+                    <div class="inner">
+                        <div class="gap"></div>
+                        <div class="left">
+                            <div class="half-circle"></div>
+                        </div>
+                        <div class="right">
+                            <div class="half-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ms-splash-screen>
+    @RenderBody()
+    @if (Model.IsProduction)
+    {
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/min/all.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+    }
+    else
+    {
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/fontawesome.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/crypto-js/crypto-js.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/jquery/dist/jquery.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/jquery-ui-dist/jquery-ui.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/lodash/lodash.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular/angular.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-simple-logger/dist/angular-simple-logger.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-animate/angular-animate.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-aria/angular-aria.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-cookies/angular-cookies.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/datatables/media/js/jquery.dataTables.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/angular-datatables.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-datatables/dist/plugins/select/angular-datatables.select.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/datatables-responsive/js/dataTables.responsive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-messages/angular-messages.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-material/angular-material.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-resource/angular-resource.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-sanitize/angular-sanitize.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-translate/dist/angular-translate.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-translate-loader-partial/angular-translate-loader-partial.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-ui-router/release/angular-ui-router.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/ngstorage/ngStorage.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/mobile-detect/mobile-detect.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/moment/moment.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/perfect-scrollbar/dist/perfect-scrollbar.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/toastr/build/toastr.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-loading-bar/build/loading-bar.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/plupload/js/plupload.full.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-plupload/src/angular-plupload.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-google-maps/dist/angular-google-maps.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/tinymce-dist/tinymce.full.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-ui-tinymce/src/tinymce.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/omega-cms-lf-ng-md-file-input/dist/omega-cms-lf-ng-md-file-input.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/d3/d3.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/nvd3/build/nv.d3.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-nvd3/dist/angular-nvd3.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-ui-grid/ui-grid.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/jsplumb/dist/js/jsplumb.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-ui-sortable/dist/sortable.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-material-time-picker/dist/md-time-picker.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/jsonformatter/dist/json-formatter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/angular-moment-picker/dist/angular-moment-picker.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/venn.js/venn.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/ngsticky/dist/sticky.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/fullcalendar/main.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/ace-builds/src-noconflict/ace.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/ace-builds/src-noconflict/ext-language_tools.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/js-base64/base64.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/grapesjs/dist/grapes.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram/md-cms-diagram.globals.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)js/ext/mxgraph/javascript/mxClient.min.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+
+        <!--CMS API-->
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/businessLogic_ts/compiled/businessLogic.compiled.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+        <!--App Core-->
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/core.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-widget/ms-widget.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-timeline/ms-timeline.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-stepper/ms-stepper.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-splash-screen/ms-splash-screen.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-sidenav-helper/ms-sidenav-helper.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-search-bar/ms-search-bar.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-search-bar/ms-search-bar.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-scroll/ms-scroll.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-responsive-table/ms-responsive-table.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-random-class/ms-random-class.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-navigation/ms-navigation.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-material-color-picker/ms-material-color-picker.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-nav/ms-nav.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-form-wizard/ms-form-wizard.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-card/ms-card.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/ms-repeat/ms-repeat.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-click-once/md-click-once.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer-preview/md-generictype-designer-preview.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer-form-datasource/md-generictype-designer-form-datasource.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/form/md-generictype-designer-form.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/form/md-generictype-designer-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/form/dialogs/edit/md-generictype-designer-form-editdialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/form/dialogs/preview/md-generictype-designer-form-previewdialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/element/md-generictype-designer-element.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/element/md-generictype-designer-element.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-generictype-designer/element/md-generictype-designer-element.constants.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-pager/md-pager.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-sort/md-sort.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-double-click/md-double-click.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-content-header/md-content-header.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-object-permissions/md-object-permissions.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-entity-permissions/md-entity-permissions.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-autocomplete/md-cms-autocomplete.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-multiple-autocomplete/md-cms-multiple-autocomplete.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-elementsummary/md-cms-elementsummary.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-map/md-cms-map.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-select/md-cms-select.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-fields/md-cms-fields.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-fields/md-cms-fields.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-fieldvalidation/md-cms-fieldvalidation.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-file/md-cms-file.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-file/md-cms-file.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-video/md-cms-video.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-textarea/md-cms-textarea.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-aliases/md-cms-aliases.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-calculated/md-cms-calculated.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-watch-change/md-cms-watch-change.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-root-user/md-root-user.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/highlight.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-resource-text/md-resource-text.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-grid/md-cms-grid.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-grid/md-cms-grid.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-dynamic-directive/md-cms-dynamic-directive.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-grid-tile/md-cms-grid-tile.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-grid-tile/md-cms-grid-tile.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-grid-toolbar/md-cms-grid-toolbar.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-grid-toolbar/md-cms-grid-toolbar.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-content-form/md-cms-content-form.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-content-form/md-cms-content-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-content-form/dialog/md-cms-content-form-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-datetime-picker/md-cms-datetime-picker.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-datetime-picker/md-cms-datetime-picker.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-button/md-cms-button.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-button/md-cms-button.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-placeholder/md-cms-placeholder.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-placeholder/md-cms-placeholder.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-authentication-provider-builtin/md-cms-authentication-provider-builtin.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-authentication-provider-builtin/md-cms-authentication-provider-builtin.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-password/md-cms-password.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram/md-cms-diagram.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram/md-cms-diagram.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram-element/md-cms-diagram-element.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram-element/md-cms-diagram-element.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram-toolbar/md-cms-diagram-toolbar.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/directives/md-cms-diagram-toolbar/md-cms-diagram-toolbar.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/tag.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/basic.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/cut.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/switchmbgb.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/capitalizeFirstLetter.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/memorySize.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/md-content.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/md-user.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/acronym.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/md-trust-url.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/filters/md-number.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theme-options/theme-options.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-saved-data.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-field.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/ms-utils.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/ms-api.provider.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/api-resolver.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-toast.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-sort.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-pagination.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-resource.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-feedback.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-custom-dialogs.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-check.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-autocomplete.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-socket.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-promise-resolver.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-permissions.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-permission-entities.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-permission-authenticate.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-generictype-designer-form.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-datagroup.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-memorySize.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-content.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-user.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-authentication-registry.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-ui-visibility.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/services/md-dataaccess-registry.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theming/fuse-theming.provider.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theming/fuse-theming.config.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theming/fuse-themes.constant.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theming/fuse-palettes.constant.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theming/fuse-generator.factory.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/theming/omega-theming.provider.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/config/fuse-config.provider.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+
+        <!--Main App-->
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/globalSearchResults/search-results.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/globalSearchResults/search-results.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/services/services.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/services/friendlyNameMaker.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/services/postfixEvaluator.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/filters/filters.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/filters/datetime.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/filters/md.mediaContentType.filter.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/forgetPassword/forget-password.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/forgetPassword/forget-password.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/settings.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/language_settings/language_settings.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/language_settings/language_settings.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/content-types/content-types.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/content-types/edit/content-types-edit.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/content-types/edit/content-types-edit.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/content-types/list/content-types-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/content-types/list/content-types-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/meta-data-field/meta-data-field.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/meta-data-field/list/meta-data-field-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/meta-data-field/list/meta-data-field-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/meta-data-field/form/meta-data-field-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/meta-data-field/form/meta-data-field-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/permissions/permissions.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/permissions/list/permissions-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/permissions/list/permissions-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/permissions/form/permissions-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/permissions/form/permissions-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/personal.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/mailbox.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/tinyMceMailbox.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/unreadMessages.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/mailbox.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/dialogs/addNewFolder/addNewFolder.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/dialogs/editFolder/editFolder.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/dialogs/chooseFolder/choose-folder.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/dialogs/compose/compose-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/mailbox/dialogs/reply/reply.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/profile/profile.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/personal/profile/profile.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/template.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/list/template-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/list/template-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/form/template-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/form/template-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/form/template-form.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/template/browse-dialog/browse-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/user/user.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/user/list/user-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/user/list/user-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/user/form/user-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/user/form/user-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/profile-types/profile-types.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/profile-types/list/profile-types-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/profile-types/list/profile-types-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/profile-types/form/profile-types-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/profile-types/form/profile-types-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/cache/cache.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/settings/configuration/cache/cache.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/login/login.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/login/login.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/login/reset.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/content.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/list/content-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/list/content-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/form/content-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/form/content-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/form/tiny-mce-controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/mediacontent/mediacontent.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/mediacontent/list/mediacontent-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/mediacontent/list/mediacontent-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/mediacontent/form/mediacontent-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/mediacontent/form/mediacontent-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/taxonomy/taxonomy.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/taxonomy/list/taxonomy-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/taxonomy/list/taxonomy-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/taxonomy/forms/taxonomy-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/taxonomy/forms/taxonomy-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/folderForm/folder-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/folderForm/folder-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/folderForm/approvalChain/approval-chain.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/folderForm/approvalChain/dialogs/approval-chain-user-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/folderForm/approvalChain/form/approval-chain-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/content/folderForm/approvalChain/form/approval-chain-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/menu/menu.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/menu/list/menu-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/menu/list/menu-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/menu/forms/menu-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/menu/forms/menu-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/support.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/javascript-documentation/javascript-documentation.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/javascript-documentation/javascript-documentation.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/typescript-documentation/typescript-documentation.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/typescript-documentation/typescript-documentation.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/assembly-documentation/assembly-documentation.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/assembly-documentation/assembly-documentation.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/webapi-documentation/webapi-documentation.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/support/webapi-documentation/webapi-documentation.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/dashboards/dashboards.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/reporting.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/report-definitions.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/list/report-definitions-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/list/report-definitions-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/report-definitions-designer.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/report-definitions-designer.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/directives/report-definitions-designer-entity.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/directives/report-definitions-designer-canvas.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/services/report-definitions-designer-joins.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/dialogs/report-definitions-designer-joins-form-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/dialogs/report-definitions-designer-preview-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/dialogs/report-definitions-designer-filter-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/dialogs/report-definitions-designer-customize-dialog.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-definitions/designer/services/report-definitions-designer.service.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/report-scheduler.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/list/report-scheduler-list.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/form/report-scheduler-form.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/list/report-scheduler-list.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/form/report-scheduler-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/form/actions/action-form.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/reporting/report-scheduler/form/actions/action-form.directive.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/errors.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/500/error-500.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/500/error-500.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/404/error-404.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/404/error-404.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/403/error-403.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/403/error-403.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/402/error-402.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/errors/402/error-402.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+
+        <!--General App Components-->
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/quick-panel/quick-panel.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/quick-panel/tabs/chat/chat-tab.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/toolbar/toolbar.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/toolbar/toolbar.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/quick-panel/quick-panel.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/navigation/navigation.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/navigation/navigation.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/main/main.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/core.run.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/core/core.config.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.run.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.route.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.controller.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.constants.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.config.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/index.api.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/plugins/cms-image.plugin.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/plugins/cms-media.plugin.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/plugins/cms-link.plugin.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+
+
+        <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/plugins/cms-gridstack-dd-plugin.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+    }
+    <script src="@Html.DisplayFor(model => model.BaseFolder)scripts/app/addons.module.js?v=@Html.DisplayTextFor(model => model.CMSVersion)"></script>
+    @foreach (string scriptUrl in Model.AddonJavascriptBodyUrls)
+    {
+        <script src="@Html.DisplayFor(model => model.BaseFolder)@Html.DisplayTextFor(model => scriptUrl)"></script>
+    }
+    <script>
+        mdBusinessLogic.settings.apiBase = '@Html.DisplayTextFor(model => model.ApiBase)';
+        mdBusinessLogic.settings.secureApi.enabled = false;
+        mdBusinessLogic.settings.isAdministration = true;
+        mdBusinessLogic.settings.lcid = @Html.DisplayTextFor(model => model.CurrentLcid);
+        mdBusinessLogic.settings.uploadsBase = '@Html.DisplayTextFor(model => model.UploadsBase)';
+        mdBusinessLogic.settings.appBase = '@Html.DisplayTextFor(model => model.BaseFolder)';
+        mdBusinessLogic.settings.authorizationHeader = '@Html.DisplayTextFor(model => model.AuthenticateHeaderName)';
+        mdBusinessLogic.globals.selectedLanguage = '@Html.DisplayTextFor(model => model.UILanguage)';
+        mdBusinessLogic.globals.resources = @Html.Raw(Model.GetResources);
+        mdBusinessLogic.globals.systemVersion = '@Html.DisplayTextFor(model => model.CMSVersionString)';
+        mdBusinessLogic.globals.systemName = '@Html.DisplayTextFor(model => model.CMSNameString)';
+        mdBusinessLogic.globals.uiDebugMode = @Html.DisplayTextFor(model => model.UiDebugMode);
+        mdBusinessLogic.globals.responseCode = @Html.DisplayTextFor(model => model.ResponseCode);
+        mdBusinessLogic.globals.sessionTimeout = @Html.DisplayTextFor(model => model.SessionTimeout);
+        mdBusinessLogic.globals.enabledAuthenticationProviders = @Html.Raw(Json.Serialize(Model.EnabledAuthenticatonProviders));
+    </script>
+</body>
+</html>
+
+

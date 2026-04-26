@@ -1,0 +1,274 @@
+<div id="forms" class="page-layout simple fullwidth doc-page report-designer" layout="column">
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="space-between">
+            <div>
+                <span class="md-display-1 font-weight-300" md-resource-text name="Titles.ReportDefinitionEditor"></span>
+            </div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column" flex>
+        <form autocomplete="off" name="reportDesignerForm" novalidate layout="column" ms-scroll flex>
+            <md-button ng-disabled="vm.ReportToEdit.Definition.Entities.length == 0" ng-click="vm.reportPreview($event)" class="md-raised md-accent preview-button">
+                <md-resource-text name="Titles.ReportPreview"></md-resource-text>
+            </md-button>
+            <md-tabs md-selected="vm.selectedIndex" md-dynamic-height>
+                <md-tab>
+                    <md-tab-label>
+                        <span>Designer</span>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div class="ng-scope layout-row">
+                            <md-input-container style="margin-bottom:0;" flex="50">
+                                <input type="text" name="reportName" ng-model="vm.ReportToEdit.Name"
+                                       placeholder="{{$root.globals.resources.Labels.Name}}"
+                                       required>
+                                <div ng-messages="reportDesignerForm.reportName.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab>
+                    <md-tab-label>
+                        <span>Filter</span>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <md-card>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline" md-resource-text name="Labels.FilterData"></span>
+                                    <span class="md-subhead" md-resource-text name="Labels.FilterDataDescription"></span>
+                                </md-card-title-text>
+                                <md-button class="md-fab md-mini" ng-click="vm.toggleFilterFormDialog($event, 'add')" style="position:absolute; right:30px; top:30px;"><md-icon md-font-icon="icon-filter"></md-icon></md-button>
+                            </md-card-title>
+                            <md-card-content layout="column " layout-align="space-between" style="position:relative">
+                                <md-list>
+                                    <md-list-item ng-repeat="filter in vm.ReportToEdit.Definition.Filters track by $index" ng-click="vm.toggleFilterFormDialog($event, 'edit', $index)" class="noright">
+                                        <h3 style="display:inline-block">{{ filter.Entity.Name }}.{{ filter.Property.Name }} <span ng-class="vm.reportDesignerService.getComparerType(filter.Type).icon"></span><span ng-if="vm.reportDesignerService.getComparerType(filter.Type).title != 'Like'"> </span><span ng-if="!filter.IsDynamic">{{ filter.Value }}</span><span ng-if="filter.IsDynamic">#Dynamic#</span><span ng-if="vm.reportDesignerService.getComparerType(filter.Type).title != 'Like'"> </span><span ng-if="vm.reportDesignerService.getComparerType(filter.Type).title == 'Like'" ng-class="vm.reportDesignerService.getComparerType(filter.Type).icon"></span></h3>
+                                        <md-icon class="md-secondary icon-filter-remove-outline" ng-click="vm.removeFilter($index)" aria-label="Delete"></md-icon>
+                                    </md-list-item>
+                                </md-list>
+                            </md-card-content>
+                        </md-card>
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+            <md-cms-diagram md-on-tile-event="vm.onTileEvent(event, data)" md-load-data="vm.loadDiagramData" layout="column" ng-show="vm.selectedIndex == 0" flex>
+                <md-cms-diagram-canvas>
+                    <md-cms-diagram-element ng-repeat="entity in vm.ReportToEdit.Definition.Entities"
+                                            data-id="{{entity.UniqueId}}"
+                                            data-label="{{entity.Name}}"
+                                            data-group="{{entity.getTypeString()}}"
+                                            flex>
+                        <div layout-fill layout="row" layout-align="center center">
+                            <h3 data-value="Name" md-truncate>
+                                <md-icon md-font-icon="icon-{{entity.Icon}}"></md-icon> {{entity.Name}}
+                                <md-tooltip md-direction="left">{{entity.Name}}</md-tooltip>
+                            </h3>
+                        </div>
+                    </md-cms-diagram-element>
+                </md-cms-diagram-canvas>
+                <md-cms-diagram-toolbar md-title="Report Entities">
+                    <md-cms-diagram-element ng-repeat="entity in vm.AllEntities"
+                                            data-id="{{entity.UniqueId}}"
+                                            data-label="{{entity.Name}}"
+                                            data-group="{{entity.getTypeString()}}"
+                                            flex>
+                        <div layout-fill layout="row" layout-align="center center">
+                            <h3 data-value="Name" md-truncate>
+                                <md-icon md-font-icon="icon-{{entity.Icon}}"></md-icon> {{entity.Name}}
+                                <md-tooltip md-direction="left">{{entity.Name}}</md-tooltip>
+                            </h3>
+                        </div>
+                    </md-cms-diagram-element>
+                </md-cms-diagram-toolbar>
+            </md-cms-diagram>
+            <div layout="row" layout-align="end center">
+                <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                           ng-disabled="reportDesignerForm.$invalid"
+                           ng-click="vm.save();">
+                    <md-resource-text name="Labels.Submit"></md-resource-text>
+                </md-button>
+                <md-button class="md-accent md-raised"
+                           type="button"
+                           aria-label="Back to previous page"
+                           ui-sref="app.report_definitions_list">
+                    <span class="ng-scope"> Back </span><div class="md-ripple-container"></div>
+                </md-button>
+            </div>
+            <ms-form-wizard style="position:relative" layout="column" flex="100" ng-if="false">
+                <div class="form-wrapper md-whiteframe-1dp" layout="column" flex="100">
+                    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true" flex>
+                        <md-tab ng-if="false">
+                            <md-tab-label>
+                                <span class="ms-form-wizard-step-label">
+                                    <span class="ms-form-wizard-step-number md-primary-bg" ng-class="{'md-accent-bg': vm.selectedIndex===0 }">1</span>
+                                    <span class="ms-form-wizard-step-text" md-resource-text name="Labels.Design"></span>
+                                </span>
+                            </md-tab-label>
+                            <md-tab-body flex="100">
+                                <div layout="row">
+                                    <div class="scrollable" flex="20" style="padding:0 15px;" ms-scroll>
+                                        <md-input-container flex>
+                                            <label md-resource-text name="Labels.EntityFilter"></label>
+                                            <input ng-model="vm.entityFilter" type="text" flex>
+                                        </md-input-container>
+                                        <div class="toolbox" style="max-height: 110vh;">
+                                            <div ng-repeat="entity in vm.AllEntities"
+                                                 report-designer-entity="{{entity}}"
+                                                 style="cursor: pointer; cursor: hand; border-radius: 16px; display: block; height: 32px; line-height: 32px; margin: 8px 8px 0 0; padding: 0 12px; float: left; box-sizing: border-box; max-width: 100%; position: relative; background: rgb(224,224,224); color: rgb(66,66,66);">
+                                                {{entity.Name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div flex>
+                                        <md-card>
+                                            <md-card-title>
+                                                <md-card-title-text>
+                                                    <div layout="row">
+                                                        <span flex="50" class="md-headline" md-resource-text name="Labels.Designer"></span>
+                                                    </div>
+                                                    <span class="md-subhead" md-resource-text name="Labels.DesignerDescription"></span>
+                                                </md-card-title-text>
+                                            </md-card-title>
+                                            <md-card-content layout="row" layout-align="space-between" style="position:relative">
+                                                <div id="reportCanvas" report-designer-canvas drop="vm.handleDrop" style="height: 700px; border:1px dashed #ccc; position:relative" flex>
+                                                    <div id="svgContainer" style="position:absolute;">
+                                                        <svg id="joinContainer" width="0" height="0" style="position:absolute;">
+                                                            <defs>
+                                                                <filter id="dropshadow" height="130%">
+                                                                    <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+                                                                    <feOffset dx="2" dy="2" result="offsetblur" />
+                                                                    <feMerge>
+                                                                        <feMergeNode />
+                                                                        <feMergeNode in="SourceGraphic" />
+                                                                    </feMerge>
+                                                                </filter>
+                                                            </defs>
+                                                            <path ng-repeat="join in vm.ReportToEdit.Definition.Joins track by $index" id="join{{$index}}"
+                                                                  d="M0 0"
+                                                                  stroke="rgb(45, 50, 62)"
+                                                                  fill="none"
+                                                                  stroke-width="8px"
+                                                                  ng-click="vm.toggleJoinFormDialog($event, 'edit', join)" style="cursor: pointer; cursor: hand;">
+                                                                <title>
+                                                                    <span md-resource-text name="Labels.EditConnection" replacevalue0="{{join.Left.Entity.Name}}" replacevalue1="{{join.Right.Entity.Name}}"></span>
+                                                                </title>
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                    <div ng-repeat="canvasEntity in vm.ReportToEdit.Definition.Entities track by $index" id="entity{{canvasEntity.UniqueId}}" dragend="vm.handleDragEnd" report-designer-entity="{{canvasEntity}}" style="cursor: pointer; cursor: hand;">
+                                                        <div class="padded" md-whiteframe="12" layout layout-align="center center" ng-class="($index == 0 && vm.ReportToEdit.Definition.Entities.length > 1) ? 'md-primary-bg' : 'md-hue-1'">
+                                                            <h3 style="padding:0 20px;" flex>{{canvasEntity.Name}}</h3>
+                                                            <span ng-class="'ms-form-wizard-step-label ' + (($index == 0 && vm.ReportToEdit.Definition.Entities.length > 1) ? 'md-primary-bg' : '')" ng-if="$index == 0 && vm.ReportToEdit.Definition.Entities.length > 1" ng-click="vm.toggleJoinFormDialog($event, 'add', canvasEntity)" style="padding:0">
+                                                                <span ng-class="'ms-form-wizard-step-number md-accent-bg ' + (($index == 0 && vm.ReportToEdit.Definition.Entities.length > 1) ? 'md-primary-bg' : '')" style="padding-left:5px; line-height:25px;"><span class="icon-link-variant"></span></span>
+                                                                <md-tooltip><md-resource-text name="Labels.AddConnection"></md-resource-text></md-tooltip>
+                                                            </span>
+                                                            <span ng-class="'ms-form-wizard-step-label ' + (($index == 0 && vm.ReportToEdit.Definition.Entities.length > 1) ? 'md-primary-bg' : '')" style="padding:0" ng-click="vm.removeEntity(canvasEntity)">
+                                                                <span ng-class="'ms-form-wizard-step-number md-accent-bg ' + (($index == 0 && vm.ReportToEdit.Definition.Entities.length > 1) ? 'md-primary-bg' : '')" style="padding-left:5px; line-height:25px;"><span class="icon-trash"></span></span>
+                                                                <md-tooltip><md-resource-text name="Labels.Delete" replacevalue0="{{$index == 0 && vm.ReportToEdit.Definition.Entities.length > 1 ? ' (Removing this entity will clear the board!)' : ''}}"></md-resource-text></md-tooltip>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </md-card-content>
+                                        </md-card>
+                                    </div>
+                                </div>
+                            </md-tab-body>
+                        </md-tab>
+                        <md-tab ng-show="false">
+                            <md-tab-label>
+                                <span class="ms-form-wizard-step-label">
+                                    <span class="ms-form-wizard-step-number md-primary-bg" ng-class="{'md-accent-bg': vm.selectedIndex===0 }">1</span>
+                                    <span class="ms-form-wizard-step-text" md-resource-text name="Labels.Design"></span>
+                                </span>
+                            </md-tab-label>
+                            <md-tab-body class="designer-canvas" flex="100" layout="column">
+                            </md-tab-body>
+                        </md-tab>
+                        <md-tab ng-disabled="vm.ReportToEdit.Definition.Entities.length == 0">
+                            <md-tab-label>
+                                <span class="ms-form-wizard-step-label">
+                                    <span class="ms-form-wizard-step-number md-primary-bg" ng-class="{'md-accent-bg': vm.selectedIndex===1 }">2</span>
+                                    <span class="ms-form-wizard-step-text" md-resource-text name="Labels.Customize"></span>
+                                </span>
+                            </md-tab-label>
+                            <md-tab-body flex="100">
+                                <md-card>
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline" md-resource-text name="Labels.AddRemoveColumns"></span>
+                                            <span class="md-subhead" md-resource-text name="Labels.AddRemoveColumnsDescription"></span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                    <md-card-content layout="column " layout-align="space-between" style="position:relative">
+                                        <md-list flex>
+                                            <div ng-repeat="entity in vm.ReportToEdit.Definition.Entities">
+                                                <md-subheader class="md-no-sticky">{{entity.Name}}</md-subheader>
+                                                <md-list-item ng-repeat="field in entity.Fields">
+                                                    <md-icon md-svg-icon="{{setting.icon}}"></md-icon>
+                                                    <p> {{ field.Name }} </p>
+                                                    <md-switch class="md-secondary" ng-change="vm.updateFieldEnabled(entity, field, field.Enabled)" ng-model="field.Enabled"></md-switch>
+                                                </md-list-item>
+                                            </div>
+                                        </md-list>
+                                    </md-card-content>
+                                </md-card>
+                            </md-tab-body>
+                        </md-tab>
+                        <md-tab ng-disabled="vm.ReportToEdit.Definition.Entities.length == 0">
+                            <md-tab-label>
+                                <span class="ms-form-wizard-step-label">
+                                    <span class="ms-form-wizard-step-number md-primary-bg" ng-class="{'md-accent-bg': vm.selectedIndex===2 }">3</span>
+                                    <span class="ms-form-wizard-step-text" md-resource-text name="Labels.Filter"></span>
+                                </span>
+                            </md-tab-label>
+                            <md-tab-body>
+                                <md-card>
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline" md-resource-text name="Labels.FilterData"></span>
+                                            <span class="md-subhead" md-resource-text name="Labels.FilterDataDescription"></span>
+                                        </md-card-title-text>
+                                        <md-button class="md-fab md-mini" ng-click="vm.toggleFilterFormDialog($event, 'add')" style="position:absolute; right:30px; top:30px;"><md-icon md-font-icon="icon-filter"></md-icon></md-button>
+                                    </md-card-title>
+                                    <md-card-content layout="column " layout-align="space-between" style="position:relative">
+                                        <md-list>
+                                            <md-list-item ng-repeat="filter in vm.ReportToEdit.Definition.Filters track by $index" ng-click="vm.toggleFilterFormDialog($event, 'edit', $index)" class="noright">
+                                                <h3 style="display:inline-block">{{ filter.Entity.Name }}.{{ filter.Property.Name }} <span ng-class="vm.reportDesignerService.getComparerType(filter.Type).icon"></span><span ng-if="vm.reportDesignerService.getComparerType(filter.Type).title != 'Like'"> </span><span ng-if="!filter.IsDynamic">{{ filter.Value }}</span><span ng-if="filter.IsDynamic">#Dynamic#</span><span ng-if="vm.reportDesignerService.getComparerType(filter.Type).title != 'Like'"> </span><span ng-if="vm.reportDesignerService.getComparerType(filter.Type).title == 'Like'" ng-class="vm.reportDesignerService.getComparerType(filter.Type).icon"></span></h3>
+                                                <md-icon class="md-secondary icon-filter-remove-outline" ng-click="vm.removeFilter($index)" aria-label="Delete"></md-icon>
+                                            </md-list-item>
+                                        </md-list>
+                                    </md-card-content>
+                                </md-card>
+                            </md-tab-body>
+                        </md-tab>
+                    </md-tabs>
+                    <div layout="row" layout-align="end center">
+                        <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                                   ng-disabled="reportDesignerForm.$invalid"
+                                   ng-click="vm.save();">
+                            <md-resource-text name="Labels.Submit"></md-resource-text>
+                        </md-button>
+                        <md-button class="md-accent md-raised"
+                                   type="button"
+                                   aria-label="Back to previous page"
+                                   ui-sref="app.report_definitions_list">
+                            <span class="ng-scope"> Back </span><div class="md-ripple-container"></div>
+                        </md-button>
+                    </div>
+                </div>
+            </ms-form-wizard>
+        </form>
+    </div>
+</div>
+
+<!-- / CONTENT -->

@@ -1,0 +1,34 @@
+<ul>
+    <li ng-repeat="node in vm.navigation" ms-navigation-node="node"
+        ng-class="{'collapsed': vm.collapsed, 'has-children': node.children.length > 0}"
+        ng-include="vm.template"></li>
+</ul>
+
+<script type="text/ng-template" id="navigation-nested-reloaded.html"><div ng-include="'navigation-nested.html'" class="reloaded"></div></script>
+
+<!-- Nested navigation template -->
+<script type="text/ng-template" id="navigation-nested.html">
+    <div ms-navigation-item layout="row" ng-if="node.display">
+        <div class="ms-navigation-button" ng-if="!node.uisref && node.title">
+            <i class="icon s16 {{node.icon}}" ng-if="node.icon"></i>
+            <md-resource-text ng-if="node.noTransform === undefined" name="{{node.title}}" class="title" flex></md-resource-text>
+            <span ng-if="node.noTransform" class="title" flex>{{node.title}}</span>
+            <span class="badge white-fg" ng-style="{'background': node.badge.color}" ng-if="node.badge">{{node.badge.content}}</span>
+            <i class="icon-chevron-right s16 arrow" ng-if="vm.collapsable && node.children.length > 0"></i>
+        </div>
+        <a class="ms-navigation-button" ui-sref="{{node.uisref}}" ui-sref-active="active md-accent-bg"
+           ng-if="node.uisref && node.title">
+            <i class="icon s16 {{node.icon}}" ng-if="node.icon"></i>
+            <md-resource-text ng-if="node.noTransform === undefined" name="{{node.title}}" class="title" flex></md-resource-text>
+            <span ng-if="node.noTransform" class="title" flex>{{node.title}}</span>
+            <span class="badge white-fg" ng-style="{'background': node.badge.color}" ng-if="node.badge">{{node.badge.content}}</span>
+            <i class="icon-chevron-right s16 arrow" ng-if="vm.collapsable && node.children.length > 0"></i>
+        </a>
+    </div>
+    <ul ng-if="node.children.length > 0 && node.display">
+        <li ng-repeat="node in node.children" ms-navigation-node="node"
+            ng-class="{'collapsed': vm.collapsed, 'has-children': node.children.length > 0}"
+            ng-include="'navigation-nested.html'"></li>
+    </ul>
+</script>
+<!-- / Nested navigation template -->

@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <Version>1.0.6</Version>
+    <Authors>Omega IT LLC</Authors>
+    <Company>Omega IT LLC</Company>
+    <Product>OmegaCMS Aws Lambda Container</Product>
+    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageIcon>0.png</PackageIcon>
+    <Copyright>2021</Copyright>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.3" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
+    <PackageReference Include="AWS.Logger.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="AWS.Logger.Core" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MD.CMS.BusinessLogic.AwsLambda.Core\MD.CMS.BusinessLogic.AwsLambda.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\3rdParty\System.Collections.Immutable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>..\3rdParty\System.Reflection.Metadata.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\0.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="IF ($(ConfigurationName)) == (Debug) GOTO END&#xD;&#xA;  CD $(TargetDir)&#xD;&#xA;  $(ProjectDir)..\3rdParty\Obfuscar.Console.exe Obfuscar.xml&#xD;&#xA;  xcopy &quot;$(TargetDir)Obfuscated\$(TargetFileName)&quot; &quot;$(TargetDir)&quot; /y/f/i&#xD;&#xA;:END" />
+  </Target>
+</Project>

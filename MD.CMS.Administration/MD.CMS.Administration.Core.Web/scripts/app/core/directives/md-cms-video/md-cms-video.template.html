@@ -1,0 +1,13 @@
+<div class="md-block form-container md-cms-video" flex="100">
+    <md-input-container class="md-block" flex="100">
+        <label>{{mdModel.name}}</label>
+        <input type="text"
+               name="{{mdModel.uniqueId}}"
+               ng-model="mdModel.value"
+               ng-required="mdModel.jsonField.validation.Required"
+               ng-pattern="RegExp(youtuberegex)"
+               ng-change="loadYoutubeIframe()">
+        <md-cms-fieldValidation md-field="field" md-form-name="{{mdFormName}}" />
+    </md-input-container>
+    <iframe ng-show="videoLoaded" id="{{iframeId}}" class="md-cms-video-iframe" frameborder="0" allowfullscreen></iframe>
+</div>

@@ -1,0 +1,214 @@
+<md-cms-grid md-hide-toolbar="true" reinit-event-name="{{vm.reinitEventName}}">
+    <md-cms-grid-list layout="{{vm.layout}}">
+        <md-cms-grid-tile ng-repeat="field in vm.fields track by $index"
+                          tile-data="field.gridTileData"
+                          disable-frame="true"
+                          whiteframe="{{field.gridTileData.whiteframe}}"
+                          layout-padding="{{field.gridTileData.layoutPadding}}"
+                          layout-wrap="{{field.gridTileData.layoutWrap}}">
+            <!--Input-->
+            <md-input-container class="md-block form-container" ng-if="field.type == vm.attributeTypeEnum.input" flex>
+                <label>{{field.name}}</label>
+                <input type="text"
+                       name="{{field.uniqueId}}"
+                       ng-model="field.value"
+                       ng-required="field.jsonField.validation.Required"
+                       minlength="{{field.jsonField.validation.MinLength.Edit ? field.jsonField.validation.MinLength.Length : ""}}"
+                       maxlength="{{field.jsonField.validation.MaxLength.Edit ? field.jsonField.validation.MaxLength.Length : ""}}"
+                       ng-pattern="RegExp(field.jsonField.validation.Regex)"
+                       md-cms-watch-change="vm.onChangeEvent"
+                       ng-disabled="field.isReadOnly || vm.disabled">
+                <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+            </md-input-container>
+
+            <!--Date-->
+            <md-cms-datetime-picker ng-if="field.type == vm.attributeTypeEnum.date"
+                                    md-input-name="{{field.uniqueId}}"
+                                    md-floating-label="{{field.name}}"
+                                    md-model="field.value"
+                                    placeholder=""
+                                    ng-disabled="field.isReadOnly || vm.disabled"
+                                    ng-pattern=""
+                                    md-format="MMMM Do YYYY, h:mm a"
+                                    md-start-view="day"
+                                    md-timezone="true"
+                                    flex>
+                <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+            </md-cms-datetime-picker>
+
+            <!--True False-->
+            <md-input-container class="md-block form-container" ng-if="field.type == vm.attributeTypeEnum.trueFalse" flex>
+                <md-checkbox name="{{field.uniqueId}}"
+                             ng-model="field.value"
+                             ng-change="vm.onChangeEvent()"
+                             ng-required="field.jsonField.validation.Required"
+                             ng-disabled="field.isReadOnly || vm.disabled">{{field.name}}</md-checkbox>
+                <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+            </md-input-container>
+
+            <!--Textarea-->
+            <md-cms-textarea ng-if="field.type == vm.attributeTypeEnum.textarea" flex
+                             md-input-name="{{field.uniqueId}}"
+                             md-floating-label="{{field.name}}"
+                             md-model="field"
+                             ng-disabled="field.isReadOnly || vm.disabled">
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-textarea>
+
+            <!--Youtube-->
+            <md-cms-video ng-if="field.type == vm.attributeTypeEnum.youtube"
+                          md-model="field"
+                          ng-disabled="field.isReadOnly || vm.disabled">
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-video>
+
+            <!--Map-->
+            <md-cms-map ng-if="field.type == vm.attributeTypeEnum.map" flex
+                        md-floating-label="{{field.name}}"
+                        md-input-name="{{field.uniqueId}}"
+                        md-map-coordinates="field.value"
+                        placeholder=""
+                        ng-disabled="field.isReadOnly || vm.disabled">
+                <md-inner-html><md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" /></md-inner-html>
+            </md-cms-map>
+
+            <!--File-->
+            <md-cms-file ng-if="field.type == vm.attributeTypeEnum.file"
+                         md-floating-label="{{field.name}}"
+                         md-model="field"
+                         ng-disabled="field.isReadOnly || vm.disabled"
+                         md-required="field.jsonField.validation.Required"
+                         md-folder-path="field.folderPath"
+                         register-upload-event="vm.registerUploadEvent">
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-file>
+
+            <!--Calculated-->
+            <md-cms-calculated ng-if="field.type == vm.attributeTypeEnum.calculated"
+                               md-floating-label="{{field.name}}"
+                               md-model="field"
+                               md-fields="vm.fields"
+                               ng-disabled="field.isReadOnly || vm.disabled"
+                               calculate="vm.registerCalculateEvent"
+                               layout="row"
+                               flex>
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-calculated>
+            <!--Select Multiple-->
+            <md-cms-select ng-if="field.type == vm.attributeTypeEnum.selectMultiple" flex
+                           md-input-name="{{field.uniqueId}}"
+                           placeholder="{{field.Name}}"
+                           md-floating-label="{{field.name}}"
+                           md-model="field"
+                           ng-disabled="field.isReadOnly || vm.disabled"
+                           md-multiple="true"
+                           md-use-auto-complete="vm.getStyleForField(field, 'forceAutoComplete', false)"
+                           md-require-match="vm.getStyleForField(field, 'requireMatch', false)">
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-select>
+
+            <!--Select Single-->
+            <md-cms-select ng-if="field.type == vm.attributeTypeEnum.selectSingle" flex
+                           md-input-name="{{field.uniqueId}}"
+                           placeholder="{{field.Name}}"
+                           md-floating-label="{{field.name}}"
+                           md-model="field"
+                           ng-disabled="field.isReadOnly || vm.disabled"
+                           md-use-auto-complete="vm.getStyleForField(field, 'forceAutoComplete', false)"
+                           md-require-match="vm.getStyleForField(field, 'requireMatch', false)">
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-select>
+
+            <!--Content selector single-->
+            <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Content"
+                                 md-input-name="{{field.uniqueId}}"
+                                 md-floating-label="{{field.name}}"
+                                 md-selected-item="field"
+                                 placeholder="{{$root.globals.resources.Labels.SearchForContent}}"
+                                 ng-disabled="field.isReadOnly || vm.disabled"
+                                 ng-if="field.type == vm.attributeTypeEnum.contentSelectorSingle" 
+                                 md-change="vm.onChangeEvent"
+                                 md-on-save="vm.registerOnSaveEvent" flex>
+                <md-inner-html>{2}</md-inner-html>
+            </md-cms-autocomplete>
+
+            <!--MediaContent selector single-->
+            <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.MediaContent"
+                                 md-input-name="{{field.uniqueId}}"
+                                 md-floating-label="{{field.name}}"
+                                 md-selected-item="field"
+                                 placeholder="{{$root.globals.resources.Labels.SearchForMediaContent}}"
+                                 ng-disabled="field.isReadOnly || vm.disabled"
+                                 ng-if="field.type == vm.attributeTypeEnum.mediaContentSelectorSingle"
+                                 md-change="vm.onChangeEvent"
+                                 md-on-save="vm.registerOnSaveEvent" flex>
+                <md-inner-html>{2}</md-inner-html>
+            </md-cms-autocomplete>
+
+            <!--User selector single-->
+            <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.User"
+                                 md-input-name="{{field.uniqueId}}"
+                                 md-floating-label="{{field.name}}"
+                                 md-selected-item="field"
+                                 placeholder="{{$root.globals.resources.Labels.SearchForUserPlaceholder}}"
+                                 ng-disabled="field.isReadOnly || vm.disabled"
+                                 ng-if="field.type == vm.attributeTypeEnum.userSelectorSingle"
+                                 md-change="vm.onChangeEvent"
+                                 md-on-save="vm.registerOnSaveEvent" flex>
+                <md-inner-html>{2}</md-inner-html>
+            </md-cms-autocomplete>
+
+            <!--Taxonomy selector single-->
+            <md-cms-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Taxonomy"
+                                 md-input-name="{{field.uniqueId}}"
+                                 md-floating-label="{{field.name}}"
+                                 md-selected-item="field"
+                                 placeholder="{{$root.globals.resources.Labels.SearchForTaxonomyPlaceholder}}"
+                                 ng-disabled="field.isReadOnly || vm.disabled"
+                                 ng-if="field.type == vm.attributeTypeEnum.taxonomySelectorSingle"
+                                 md-change="vm.onChangeEvent"
+                                 md-on-save="vm.registerOnSaveEvent" flex>
+                <md-inner-html>{2}</md-inner-html>
+            </md-cms-autocomplete>
+
+            <!--Taxonomy selector multiple-->
+            <md-cms-multiple-autocomplete md-type="$root.mdBusinessLogic.dataAccess.entities.entitiesEnum.Taxonomy"
+                                          md-input-name="{{field.uniqueId}}"
+                                          md-floating-label="{{field.name}}"
+                                          md-selected-item="field"
+                                          placeholder="{{$root.globals.resources.Labels.SearchForTaxonomyPlaceholder}}"
+                                          ng-disabled="field.isReadOnly || vm.disabled"
+                                          ng-if="field.type == vm.attributeTypeEnum.taxonomySelectorMultiple" flex>
+                <md-inner-html>
+                    <md-cms-fieldValidation md-field="field" md-form-name="{{vm.formName}}" />
+                </md-inner-html>
+            </md-cms-multiple-autocomplete>
+
+            <!--Section-->
+            <div ng-if="vm.showSubSections && field.type == vm.attributeTypeEnum.section" flex>
+                <h1>{{field.name}}</h1>
+                <md-cms-fields md-fields="vm.mdFields"
+                               md-folder-path="vm.folderPath"
+                               md-form-name="{{vm.formName}}"
+                               register-upload-events="vm.registerUploadEvents"
+                               on-save="vm.registerOnSaveEvent(event)"
+                               reinit-event-name="{{vm.reinitEventName}}"
+                               md-parent-id="field.gridTileData.uniqueId"
+                               md-nested-depth="{{vm.nestedDepth}}"
+                               md-current-depth="{{vm.currentDepth + 1}}" />
+            </div>
+        </md-cms-grid-tile>
+    </md-cms-grid-list>
+</md-cms-grid>

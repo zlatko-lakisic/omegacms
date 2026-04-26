@@ -1,0 +1,49 @@
+<div flex layout="column" ng-if="vm.content != null">
+    <md-whiteframe layout-padding layout="row" layout-align="space-between stretch" class="md-whiteframe-0dp" flex>
+        <md-whiteframe ng-if="!vm.content.ContentType.hasLinkToTitle()" layout="row" layout-align="start center" flex="" class="content-title-container md-whiteframe-0dp">
+            <md-input-container flex>
+                <label md-resource-text name="Labels.ContentTitle"></label>
+                <input type="text" name="title" ng-model="vm.content.Title" flex ng-disabled="vm.content.IsDataBound" ng-required="true">
+                <div ng-messages="form[vm.contentFormName].title.$error"
+                     role="alert">
+                    <div ng-message="required">
+                        <md-resource-text name="Labels.ContentTitleRequired" />
+                    </div>
+                </div>
+            </md-input-container>
+        </md-whiteframe>
+        <md-cms-placeholder ng-if="vm.showVersions" flex-xs="100" flex-md="100" layout="row" layout-align="start" class="md-whiteframe-0dp" md-promise="vm.loadVersions()" md-template="s">
+            <md-input-container flex>
+                <label>Version of content</label>
+                <md-select placeholder="Version of content" flex ng-model="vm.currentContentVersion" ng-disabled="vm.content.IsDataBound || vm.contentVersions.length == 0">
+                    <md-option ng-value="content.DateCreated" ng-repeat="content in vm.contentVersions track by content.DateCreated"
+                               ng-click="vm.ContentVersion(content)"><md-resource-text name="Labels.ContentVersions" replacevalue0="{{content.Title}}" replacevalue1=" {{$index +1}} - {{content.DateCreated | datetime: 'ago'}} ({{content.DateCreated | datetime: 'MMM DD YYYY [@] hh:mm A'}})" /></md-option>
+                </md-select>
+            </md-input-container>
+        </md-cms-placeholder>
+        <md-cms-placeholder ng-if="vm.showLanguages" flex-xs="100" flex-md="100" layout="row" layout-align="start" class="md-whiteframe-0dp" md-promise="vm.loadLanguages()" md-template="s">
+            <md-input-container>
+                <label>Language</label>
+                <md-select placeholder="{{$root.globals.resources.Labels.AddContentInPlaceholder}}" ng-model="vm.selectedCulture" ng-disabled="vm.content.IsDataBound">
+                    <md-option ng-value="culture.LCID" ng-repeat="culture in vm.cultures" ng-click="vm.translateContent(culture.LCID)">{{culture.Name}}</md-option>
+                </md-select>
+            </md-input-container>
+        </md-cms-placeholder>
+    </md-whiteframe>
+    <md-cms-fields flex
+                   ng-if="vm.content.ContentTypeDefinitionId"
+                   md-fields="vm.content.ContentType.Fields"
+                   md-folder-path="vm.folder.FolderPath"
+                   md-form-name="{{vm.contentFormName}}"
+                   register-upload-events="vm.registerContentUploadEvents"
+                   on-save="vm.onSave(event)"
+                   reinit-event-name="content-tabs-change" />
+    <md-cms-textarea ng-if="!vm.content.ContentTypeDefinitionId" flex
+                     md-input-name="Html Content"
+                     md-floating-label="{{$root.globals.resources.Labels.HtmlContent}}"
+                     md-model="vm.htmlField">
+        <md-inner-html>
+            <md-cms-fieldValidation md-field="vm.content.Html" md-form-name="{{vm.contentFormName}}" />
+        </md-inner-html>
+    </md-cms-textarea>
+</div>

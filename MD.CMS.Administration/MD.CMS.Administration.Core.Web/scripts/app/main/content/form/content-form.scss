@@ -1,0 +1,19 @@
+.content-form {
+    .loader {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        background-color: white;
+
+        md-progress-circular {
+            margin:20% auto 0 auto;
+
+            path {
+                stroke: rgb(16, 108, 200);
+            }
+        }
+    }
+}

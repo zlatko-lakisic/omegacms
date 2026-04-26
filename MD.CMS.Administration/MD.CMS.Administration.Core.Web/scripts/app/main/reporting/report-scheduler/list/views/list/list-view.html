@@ -1,0 +1,40 @@
+<!-- LIST VIEW -->
+<table class="simple list-view">
+    <thead>
+        <tr>
+            <th></th>
+            <th md-sort="Name" name="{{$root.globals.resources.Labels.Name}}" on-sort="vm.sort(sortingString)" class="col-active">
+             </th>
+            <th hide show-gt-md md-sort="DateCreated" name="{{$root.globals.resources.Labels.DateCreated}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide show-gt-md md-sort="DateEdited" name="{{$root.globals.resources.Labels.DateEdited}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th md-sort="Start" name="{{$root.globals.resources.Labels.Start}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide show-gt-sm md-sort="Author" name="{{$root.globals.resources.Labels.Author}}" on-sort="vm.sort(sortingString)">
+            </th>
+            <th hide-gt-md></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="file in vm.reportSchedulerData | filter:global.search"
+            ng-click="vm.selectReportScheduler(file);"
+            md-double-click="vm.openReportScheduler(file)"
+            ng-class="{'selected' : vm.selected === file}">
+            <td class="file-icon">
+                <md-icon md-font-icon="icon-document"></md-icon>
+            </td>
+            <td class="name">{{file.Name}}</td>
+            <td class="date-created" hide show-gt-md>{{file.DateCreated | datetime }}</td>
+            <td class="date-edited" hide show-gt-md>{{file.DateEdited | datetime }}</td>
+            <td class="start">{{file.Start | datetime }}</td>
+            <td class="author" hide show-gt-sm>{{file.Author.Username}}</td>
+            <td class="show-details" hide-gt-md>
+                <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleDetails(file, $event)">
+                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                </md-button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- / LIST VIEW -->

@@ -1,0 +1,35 @@
+.md-cms-diagram-toolbar {
+
+    .item {
+        margin-bottom: 15px;
+    }
+
+    > md-sidenav {
+        position: fixed;
+        top: 0px;
+        transition: top 700ms;
+
+        md-cms-diagram-element {
+            cursor: all-scroll;
+        }
+    }
+
+    .controlToolBarButton {
+        position: fixed;
+        top: 50%;
+        height: 1.5em;
+        right: 0;
+        -webkit-transform-origin: 100% 50%;
+        -moz-transform-origin: 100% 50%;
+        -ms-transform-origin: 100% 50%;
+        -o-transform-origin: 100% 50%;
+        transform-origin: 100% 50%;
+        -webkit-transform: rotate(90deg) translate(50%, 50%);
+        -moz-transform: rotate(90deg) translate(50%, 50%);
+        -ms-transform: rotate(90deg) translate(50%, 50%);
+        -o-transform: rotate(90deg) translate(50%, 50%);
+        transform: rotate(-90deg) translate(50%, -50%);
+        transition: top 700ms;
+        z-index: 50;
+    }
+}

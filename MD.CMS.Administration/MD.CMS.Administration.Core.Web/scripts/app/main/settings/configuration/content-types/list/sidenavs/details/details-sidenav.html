@@ -1,0 +1,48 @@
+<!-- SIDENAV HEADER -->
+<div class="header md-accent-bg" layout="column" layout-align="space-between">
+    <div class="toolbar" layout="row" layout-align="end center">
+        <md-button class="md-icon-button"
+                   ng-disabled="vm.disablebtn"
+                   ng-click="vm.deleteItem()">
+            <md-icon md-font-icon="icon-delete"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Delete1"></span></md-tooltip>
+        </md-button>
+        <md-button ng-disabled="vm.disablebtn"
+                   ui-sref="app.content-types-edit({currentView: 'edit', id:vm.selected.Id})"
+                   class=" md-icon-button">
+            <md-icon md-font-icon="icon-table-edit"></md-icon>
+            <md-tooltip><span md-resource-text name="Labels.Edit1"></span></md-tooltip>
+        </md-button>
+       
+    </div>
+
+    <div>
+        <div class="title text-truncate"><h2>{{vm.selected.Name}}</h2></div>
+    </div>
+</div>
+<!-- / SIDENAV HEADER -->
+
+<!-- SIDENAV CONTENT -->
+<md-content class="content" flex ms-scroll>
+
+    <div class="file-details" ng-if="vm.selected">
+        <div class="preview file-icon" layout="row" layout-align="center center">
+            <i class="{{ vm.selected.Icon + " s48"}}"></i>
+        </div>
+
+        <div class="title" md-resource-text name="Labels.Info"></div>
+
+        <table>
+            <tr class="title">
+                <th md-resource-text name="Labels.Id"></th>
+                <td>{{vm.selected.Id}}</td>
+            </tr>
+            <tr class="description">
+                <th md-resource-text name="Labels.Description"></th>
+                <td>{{vm.selected.Description}}</td>
+            </tr>
+        </table>
+    </div>
+
+</md-content>
+<!-- / SIDENAV CONTENT -->

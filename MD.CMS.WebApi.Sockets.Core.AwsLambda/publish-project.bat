@@ -1,0 +1,1 @@
+dotnet publish .\MD.CMS.WebApi.Sockets.Core.AwsLambda.csproj -c %1 -o %2 --force

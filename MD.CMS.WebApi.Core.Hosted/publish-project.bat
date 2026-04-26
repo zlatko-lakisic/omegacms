@@ -1,0 +1,1 @@
+dotnet publish .\MD.CMS.WebApi.Core.Hosted.csproj /p:PublishProfile=%1-%2 -c %1 -o %3 --force

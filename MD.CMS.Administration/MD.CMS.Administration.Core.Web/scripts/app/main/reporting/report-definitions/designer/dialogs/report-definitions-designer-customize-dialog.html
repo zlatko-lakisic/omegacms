@@ -1,0 +1,38 @@
+<md-dialog aria-label="Edit dialog" style="min-width:900px">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2></h2>
+            <span flex>{{vm.entity.Name}} Fields</span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <md-icon style="color:white; font-size:24px;" class="icon icon-window-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <md-list ng-if="vm.entity.BaseFields.length > 0" flex>
+                <md-subheader class="md-no-sticky">Base Fields</md-subheader>
+                <md-list-item ng-repeat="field in vm.entity.BaseFields">
+                    <md-icon md-svg-icon="{{field.Icon}}"></md-icon>
+                    <p> {{ field.Name }} </p>
+                    <md-switch class="md-secondary" ng-change="vm.updateFieldEnabled(field, field.Enabled)" ng-model="field.Enabled"></md-switch>
+                </md-list-item>
+            </md-list>
+            <md-list ng-if="vm.entity.ExtendedFields.length > 0" flex>
+                <md-subheader class="md-no-sticky">Extended Fields</md-subheader>
+                <md-list-item ng-repeat="field in vm.entity.ExtendedFields">
+                    <md-icon md-svg-icon="{{field.Icon}}"></md-icon>
+                    <p> {{ field.Name }} </p>
+                    <md-switch class="md-secondary" ng-change="vm.updateFieldEnabled(field, field.Enabled)" ng-model="field.Enabled"></md-switch>
+                </md-list-item>
+            </md-list>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button class="md-raised md-primary" ng-click="vm.save()">
+            <span md-resource-text name="Labels.Save"></span>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

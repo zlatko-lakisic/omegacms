@@ -1,0 +1,32 @@
+﻿swagger: '2.0'
+info:
+  title: Omega CMS Web Api
+  version: v1.0.0.0
+host: omegacms-run-webapi2.appspot.com
+paths:
+  /readiness_check:
+    get:
+      tags:
+        - readiness_check
+      operationId: readiness_checkGet
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/health'
+definitions:
+  health:
+    type: object
+    properties:
+      status:
+        type: string
+      totalDuration:
+        type: string
+      entries:
+        type: object

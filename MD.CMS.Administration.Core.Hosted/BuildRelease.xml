@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Build">
+
+    <PropertyGroup>
+        <Build>$(MSBuildProjectDirectory)\Build</Build>
+        <ProjectFile>MD.CMS.Administration.Core.Hosted.csproj</ProjectFile>
+        <ProjectName>MD.CMS.Administration.Core.Hosted</ProjectName>
+        <CopyTo>$(MSBuildProjectDirectory)\CopyTo</CopyTo>
+    </PropertyGroup>
+
+    <Target Name="Build">
+        <RemoveDir Directories="$(Build)"/>
+        <MSBuild Projects="$(ProjectFile)" Properties="Configuration=Release;OutputPath=$(Build);OutDir=$(Build)/"></MSBuild>
+        <Exec Command="robocopy.exe  $(Build)\_PublishedWebsites\$(ProjectName) $(CopyTo) /e /is if %errorlevel% leq 4 exit 0 else exit %errorlevel%"/>
+    </Target>
+
+</Project>

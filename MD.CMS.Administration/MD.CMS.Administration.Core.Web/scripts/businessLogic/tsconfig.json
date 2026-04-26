@@ -1,0 +1,42 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "lib": [
+      "dom",
+      "es5",
+      "es2015.promise"
+    ],
+    "module": "amd",
+    "rootDir": "./",
+    "outFile": "../businessLogic_ts/compiled/businessLogic.compiled.js",
+    "types": [],
+    "declaration": true,
+    "baseUrl": ".",
+    "moduleResolution": "Node",
+    "paths": {
+      "moment": [ "../node_modules/@types/moment/node_modules/moment-timezone/index" ],
+      "lodash": [ "../node_modules/@types/lodash/index" ],
+      "crypto-js": [ "../node_modules/@types/crypto-js/index" ],
+      "js-base64": [ "../node_modules/js-base64/base64" ]
+    }
+  },
+  "include": [
+    "*",
+    "**/*",
+    "node_modules/moment/moment.d.ts",
+    "node_modules/@types/lodash/index.d.ts",
+    "node_modules/@types/crypto-js/aes.d.ts",
+    "node_modules/@types/crypto-js/md5.d.ts",
+    "node_modules/js-base64/base64.mjs"
+  ],
+  "exclude": [
+    "assets",
+    "node_modules",
+    "jspm_packages"
+  ]
+}

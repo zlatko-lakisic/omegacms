@@ -1,0 +1,30 @@
+<!-- LIST VIEW -->
+<table class="simple list-view">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th md-sort="Name" name="{{$root.globals.resources.Labels.Name}}" on-sort="vm.sort(sortingstring)" class="col-active">
+            </th>
+            <th hide-gt-md></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="profileType in vm.profileTypes | filter:global.search"
+            ng-class="{'selected' : vm.selected === profileType}"
+            ng-click="vm.select(profileType)"
+            md-double-click="vm.openProfileType(profileType)">
+            <td class="file-icon">
+                <md-icon ng-if="profileType.Icon == ''" md-font-icon="icon-document"></md-icon>
+                <md-icon ng-if="profileType.Icon != ''" md-font-icon="icon-{{profileType.Icon}}"></md-icon>
+            </td>
+            <td class="name">{{profileType.Name}}</td>
+            <td class="show-details" hide-gt-md>
+                <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleContentDetails(folder, $event)">
+                    <md-icon md-font-icon="icon-information-outline"></md-icon>
+                </md-button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- / LIST VIEW -->

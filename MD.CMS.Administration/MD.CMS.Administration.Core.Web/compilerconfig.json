@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "scripts/app/core/directives/md-cms-grid/md-cms-grid-canvas.css",
+    "inputFile": "scripts/app/core/directives/md-cms-grid/md-cms-grid-canvas.scss"
+  },
+  {
+    "outputFile": "scripts/app/core/directives/md-generictype-designer/form/md-generictype-designer-form-canvas.css",
+    "inputFile": "scripts/app/core/directives/md-generictype-designer/form/md-generictype-designer-form-canvas.scss"
+  }
+]

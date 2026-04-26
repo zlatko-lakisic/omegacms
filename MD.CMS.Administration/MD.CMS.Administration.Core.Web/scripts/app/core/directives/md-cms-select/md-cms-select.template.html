@@ -1,0 +1,57 @@
+<md-input-container ng-if="!useAutoComplete" class="md-block" id="{{uniqueId}}">
+    <label>{{mdFloatingLabel}}</label>
+    <md-select ng-if="!inputMultiple" placeholder="{{placeholder}}" name="{{mdInputName}}" ng-change="onChange()" ng-model="mdModel.value" ng-disabled="ngDisabled">
+        <md-option ng-repeat="item in listValueList" ng-value="item">
+            {{item}}
+        </md-option>
+    </md-select>
+    <md-select ng-if="inputMultiple" placeholder="{{placeholder}}" name="{{mdInputName}}" ng-change="onChange()" ng-model="selectedValues" ng-disabled="ngDisabled" multiple>
+        <md-option ng-repeat="item in listValueList" ng-value="item">
+            {{item}}
+        </md-option>
+    </md-select>
+    {{getInnerHtml()}}
+</md-input-container>
+
+<md-input-container ng-if="useAutoComplete" class="md-block" id="{{uniqueId}}">
+    <label>{{mdFloatingLabel}}</label>
+    <md-autocomplete ng-if="!inputMultiple"
+                     ng-disabled="ngDisabled"
+                     md-selected-item="mdModel.value"
+                     md-search-text="searchText"
+                     md-items="item in querySearch(searchText)"
+                     md-item-text="item"
+                     md-min-length="0"
+                     md-require-match="inputRequireMatch"
+                     placeholder="{{placeholder}}">
+        <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+        </md-item-template>
+        <md-not-found>
+            No results matching "{{searchText}}" were found.
+        </md-not-found>
+    </md-autocomplete>
+
+    <md-chips ng-if="inputMultiple"
+              ng-model="selectedValues"
+              md-autocomplete-snap
+              md-require-match="inputRequireMatch"
+              input-aria-label="{{placeholder}}"
+              ng-change="onChange()">
+        <md-autocomplete md-selected-item="selectedItem"
+                         md-search-text="searchText"
+                         md-items="item in querySearch(searchText)"
+                         md-item-text="item"
+                         md-min-length="0"
+                         placeholder="{{placeholder}}">
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+        </md-autocomplete>
+        <md-chip-template>
+            <span>
+                <strong>{{$chip}}</strong>
+            </span>
+        </md-chip-template>
+    </md-chips>
+
+    {{getInnerHtml()}}
+</md-input-container>

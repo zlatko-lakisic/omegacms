@@ -1,0 +1,23 @@
+<md-dialog aria-label="Preview Dialog" flex>
+    <form autocomplete="off" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{vm.genericTypeObj.Name}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="icon-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-generictype-designer-form-preview-dialog">
+            <div class="content" layout="column">
+                <md-cms-fields md-fields="vm.genericTypeObj.Fields" />
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="vm.cancel()">
+                Close
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

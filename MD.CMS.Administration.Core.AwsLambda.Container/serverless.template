@@ -1,0 +1,145 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application that uses the ASP.NET Core framework running in Amazon Lambda.",
+  "Parameters": {
+      "BasePluginsLayer" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "ProductLayer" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "StageName" : {
+        "Type" : "String",
+        "Default" : "admin"
+      },
+      "WebAppPath" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "AppReferencePath" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "GatewayName" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreDefaultLcid" : {
+        "Type" : "Number",
+        "Default" : "0"
+      },
+      "MDCMSBusinessLogicCoreGoogleApiTranslationKey" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSBusinessLogicCoreGoogleMapsJsKey" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsHelpersCoreProviderOptions" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsHelpersCoreDefaultFileProvider" : {
+        "Type" : "Number",
+        "Default" : "2"
+      },
+      "BillingGroup" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDToolsHelpersCoreVerboseLoggingReflectionEnabled": {
+        "Type" : "String",
+        "Default" : "false"
+      },
+      "MDCMSAdministrationCorePluginsDirectory" : {
+        "Type" : "String",
+        "Default" : ""
+      },
+      "MDCMSAdministrationCorePluginsFileProviderType" : {
+        "Type" : "Number",
+        "Default" : "1"
+      }
+  },
+  "Conditions": {},
+  "Resources": {
+    "OmegaCmsAdminApi": {
+      "Type": "AWS::Serverless::Api",
+      "Properties": {
+        "Name": { "Ref" : "GatewayName" },
+        "Tags":{
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        },
+        "StageName": {
+          "Ref": "StageName"
+        }
+      }
+    },
+    "AspNetCoreFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "MD.CMS.AwsLambda.Container.Core::MD.CMS.AwsLambda.Container.Core.LambdaEntryPoint::FunctionHandlerAsync",
+        "Runtime": "dotnetcore3.1",
+        "CodeUri": "",
+        "MemorySize": 512,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambda_FullAccess"
+        ],
+        "Environment": {
+          "Variables": {
+            "MD_CMS_AwsLambda_Container_Core_WebAppPath": { "Ref" : "WebAppPath" },
+            "MD_CMS_AwsLambda_Container_Core_AppReferencePath": { "Ref" : "AppReferencePath" },
+            "MD_CMS_BusinessLogic_Core_DefaultLcid": { "Ref" : "MDCMSBusinessLogicCoreDefaultLcid" },
+            "MD_CMS_BusinessLogic_Core_GoogleApiTranslationKey": { "Ref" : "MDCMSBusinessLogicCoreGoogleApiTranslationKey" },
+            "MD_CMS_BusinessLogic_Core_GoogleMapsJsKey": { "Ref" : "MDCMSBusinessLogicCoreGoogleMapsJsKey" },
+            "MD_Tools_Helpers_Core_ProviderOptions": { "Ref" : "MDToolsHelpersCoreProviderOptions" },
+            "MD_Tools_Helpers_Core_VerboseLoggingReflectionEnabled": { "Ref" : "MDToolsHelpersCoreVerboseLoggingReflectionEnabled" },
+            "MD_CMS_Administration_Core_PluginsDirectory": { "Ref" : "MDCMSAdministrationCorePluginsDirectory" },
+            "MD_CMS_Administration_Core_PluginsFileProviderType": { "Ref" : "MDCMSAdministrationCorePluginsFileProviderType" }
+          }
+        },
+        "Events": {
+          "ProxyResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "ANY",
+              "RestApiId": { "Ref" : "OmegaCmsAdminApi" }
+            }
+          },
+          "RootResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/",
+              "Method": "ANY",
+              "RestApiId": { "Ref" : "OmegaCmsAdminApi" }
+            }
+          }
+        },
+        "Tags": {
+            "BillingGroup": { "Ref" : "BillingGroup" }
+        },
+        "Layers": [
+            { "Ref" : "ProductLayer" },
+            { "Ref" : "BasePluginsLayer" }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ApiURL": {
+      "Description": "API endpoint URL for Prod environment",
+      "Value": {
+        "Fn::Sub": [
+            "https://${OmegaCmsAdminApi}.execute-api.${AWS::Region}.amazonaws.com/${BaseApiPath}/",
+            { "BaseApiPath": { "Ref" : "StageName" } }
+        ]
+      }
+    }
+  }
+}

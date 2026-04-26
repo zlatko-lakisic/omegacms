@@ -1,0 +1,122 @@
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="space-between">
+            
+            <div ms-scroll style="text-overflow:clip;cursor:pointer;" class="breadcrumb text-truncate layout-align-start-center layout-row" layout="row" layout-align="start center">
+                <span data-ng-repeat="path in vm.folder.ParentArray"
+                      class="ng-binding ng-scope"
+                      ui-sref="app.mediacontent_list({folderPath:path.FolderPath, currentView:vm.currentView})">
+                    {{path.Name}}
+                    <md-icon ng-if="(vm.folder.ParentArray.length-1) != $index" md-font-icon="icon-chevron-right" class="icon separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon>
+                </span>
+            </div>
+            <div class="title" md-resource-text name="Titles.MediaContent"></div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <div class="md-title">{{ vm.formTitle | uppercase }}</div>
+        <!--<div class="md-title">{{ isNew ? 'Create new' : 'Edit' }} MediaContent</div>-->
+        <div layout="row">
+            <div class="form-wrapper md-whiteframe-1dp" flex="100">
+                <form autocomplete="off" name="mediaContentForm" class="md-inline-form" novalidate>
+                    <ul>
+                        <li ng-repeat="(key, errors) in mediaContentForm.$error track by $index">
+                            <strong>{{ key }}</strong> errors
+                            <ul>
+                                <li ng-repeat="e in errors">{{e}}{{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <md-tabs md-dynamic-height>
+                        <md-tab label="Media Content">
+                            <md-input-container class="md-block">
+                                <input type="text" name="name" ng-model="vm.mediaContent.Name"
+                                       placeholder="{{$root.globals.resources.Labels.FileName}}"
+                                       ng-required="true">
+                                <div ng-messages="mediaContentForm.name.$error"
+                                     role="alert">
+                                    <div ng-message="required">
+                                        <span md-resource-text name="Labels.Required"></span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-cms-textarea flex
+                                             md-input-name="description"
+                                             md-floating-label="{{$root.globals.resources.Labels.Description}}"
+                                             md-model="vm.description"
+                                             ng-disabled="false">
+                                <md-inner-html>
+                                    <md-cms-fieldValidation md-field="vm.description" md-form-name="mediaContentForm" />
+                                </md-inner-html>
+                            </md-cms-textarea>
+                            <md-cms-file md-floating-label="{{$root.globals.resources.Labels.File}}"
+                                         md-model="vm.file"
+                                         ng-disabled="false"
+                                         md-mime-type="vm.mimeType"
+                                         md-folder-path="vm.folderPath"
+                                         md-required="true"
+                                         md-input-name="mediacontentfileinput"
+                                         register-upload-event="vm.registerContentUploadEvents"
+                                         md-extension="vm.fileExtension">
+                                <md-inner-html>
+                                    <div ng-messages="mediaContentForm.mediacontentfileinput.$error" style="color:red;">
+                                        <div ng-message="required">This is required.</div>
+                                        <div ng-message="maxcount">Too many files.</div>
+                                        <div ng-message="filesize">File size too large.</div>
+                                        <div ng-message="totalsize">Total size too large.</div>
+                                        <div ng-message="mimetype">Mimetype error.</div>
+                                    </div>
+                                </md-inner-html>
+                            </md-cms-file>
+                        </md-tab>
+
+                        <md-tab label="{{$root.globals.resources.Titles.MetaData}}" ng-if="vm.mediaContent.MediaContentMetaDataFieldValues.length > 0">
+                            <md-cms-fields md-fields="vm.mediaContent.MediaContentMetaDataFieldValues" md-form-name="contentForm" register-upload-events="vm.resigerContentMetaDataUploadEvents" on-save="vm.onSave" />
+                        </md-tab>
+
+                        <md-tab label="{{$root.globals.resources.Titles.Permissions}}">
+                            <md-tabs>
+                                <md-tab label="{{$root.globals.resources.Labels.ProfilePermissions}}">
+                                    <md-object-permissions display-property="Name"
+                                                           display-property-header="$root.globals.resources.Labels.ProfileType"
+                                                           type="mdBusinessLogic.dataAccess.entities.entitiesEnum.ProfileType"
+                                                           object="mdBusinessLogic.dataAccess.entities.entitiesEnum.MediaContent"
+                                                           object-id="vm.mediaContent.UniqueId"
+                                                           save="vm.registerPermissionSaveEvents" />
+                                </md-tab>
+                                <md-tab label="{{$root.globals.resources.Labels.UserPermissions}}">
+                                    <md-object-permissions display-property="Username"
+                                                           display-property-header="$root.globals.resources.Labels.User"
+                                                           type="mdBusinessLogic.dataAccess.entities.entitiesEnum.User"
+                                                           object="mdBusinessLogic.dataAccess.entities.entitiesEnum.MediaContent"
+                                                           object-id="vm.mediaContent.UniqueId"
+                                                           save="vm.registerPermissionSaveEvents" />
+                                </md-tab>
+                            </md-tabs>
+                        </md-tab>
+                    </md-tabs>
+
+                    <md-button type="submit" class="md-raised md-accent" aria-label="Submit" ng-disabled="mediaContentForm.$invalid" ng-click="vm.save()">
+                        <md-resource-text name="Labels.Submit"></md-resource-text>
+                    </md-button>
+                    <md-button class="md-raised"
+                               type="button"
+                               aria-label="Back to previous page"
+                               ng-click="vm.goBack()">
+                        <span class=" ng-scope">
+                            <md-resource-text name="Labels.Back"></md-resource-text>
+                        </span><div class="md-ripple-container"></div>
+                    </md-button>
+                </form>
+
+
+            </div>
+        </div>
+      
+    </div>
+    <!-- / CONTENT -->
+</div>
