@@ -11,7 +11,7 @@
     <Authors>Omega IT LLC</Authors>
     <Company>Omega IT LLC</Company>
     <Product>OmegaCMS Hosted Installer</Product>
-    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageProjectUrl>https://omega-it.solutions</PackageProjectUrl>
     <AssemblyName>Omega Hosted Installer</AssemblyName>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
   </PropertyGroup>

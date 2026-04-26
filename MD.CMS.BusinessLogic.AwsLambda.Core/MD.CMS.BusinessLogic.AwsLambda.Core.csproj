@@ -6,7 +6,7 @@
     <Version>1.0.3</Version>
     <Product>OmegaCMS Aws Lambda Container Business Logic</Product>
     <Copyright>2021</Copyright>
-    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageProjectUrl>https://omega-it.solutions</PackageProjectUrl>
     <PackageIcon>0.png</PackageIcon>
     <IsPackable>true</IsPackable>
   </PropertyGroup>

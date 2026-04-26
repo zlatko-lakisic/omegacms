@@ -10,7 +10,7 @@ namespace MD.CMS.Installer.Hosted.Core.BusinessLogic
     {
         #region Properties
         [Option('l', "license", Required = false, HelpText = "By using this Wizard you agree to the terms and " +
-                       "\nconditions described at http://omegacms.io/legal/terms/ and " +
+                       "\nconditions described at https://omega-it.solutions/legal/terms/ and " +
                        "\nthose of the Omega CMS End User Lcense Agreement." +
                        "\n\t1. Agree and go forward" +
                        "\n\t2. Cancel installation")]
@@ -43,7 +43,7 @@ namespace MD.CMS.Installer.Hosted.Core.BusinessLogic
             while (eulaAgree.Equals(default))
             {
                 Console.WriteLine("By using this Wizard you agree to the terms and " +
-                    "\nconditions described at http://omegacms.io/legal/terms/ and " +
+                    "\nconditions described at https://omega-it.solutions/legal/terms/ and " +
                     "\nthose of the Omega CMS End User Lcense Agreement.");
                 Console.WriteLine("\t1. Agree and go forward");
                 Console.WriteLine("\t2. Cancel installation");

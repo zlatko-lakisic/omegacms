@@ -4,7 +4,7 @@
 
 # OmegaCMS
 
-**OmegaCMS** is an enterprise content management (ECM) platform developed by [Omega IT LLC](https://omegacms.io) with a focus on *decoupling* how data is managed from how it is presented. It targets the “fragmented data” problem common in large organizations: you can govern and serve content across disparate sources without forcing a single monolithic data store or a one-shot migration.
+**OmegaCMS** is an enterprise content management (ECM) platform developed by [Omega IT LLC](https://omega-it.solutions) with a focus on *decoupling* how data is managed from how it is presented. It targets the “fragmented data” problem common in large organizations: you can govern and serve content across disparate sources without forcing a single monolithic data store or a one-shot migration.
 
 This repository is the main **.NET** solution for OmegaCMS: business logic, Web API, administration hosts, pluggable data access, and deployment targets including traditional hosting, **AWS Lambda**, **Azure Functions**, and **Google Cloud**.
 
@@ -151,7 +151,7 @@ Root **`Jenkinsfile`** and the **`Jenkinsfile-*.jdp`** files orchestrate remote 
 
 ## More information
 
-- Product site: [https://omegacms.io](https://omegacms.io)  
+- Company & product: [https://omega-it.solutions](https://omega-it.solutions) (Omega IT LLC)  
 - Public client library: [https://github.com/Omega-CMS/omega-cms-businesslogic](https://github.com/Omega-CMS/omega-cms-businesslogic)
 
 For product positioning, feature depth, and vertical use cases, the overview above reflects OmegaCMS’s design goals; exact feature availability in your deployment depends on configuration, licensed modules, and your infrastructure choices.

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -7,7 +7,7 @@
     <Company>Omega IT LLC</Company>
     <Product>OmegaCMS Hosted Web API</Product>
     <Copyright>2022</Copyright>
-    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageProjectUrl>https://omega-it.solutions</PackageProjectUrl>
     <ContentSQLiteInteropFiles>true</ContentSQLiteInteropFiles>
     <PackageIcon>0.png</PackageIcon>
     <PackageIconUrl />

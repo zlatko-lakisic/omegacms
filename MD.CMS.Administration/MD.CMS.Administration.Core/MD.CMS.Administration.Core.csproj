@@ -9,7 +9,7 @@
   <PropertyGroup>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PackageIcon>0.png</PackageIcon>
-    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageProjectUrl>https://omega-it.solutions</PackageProjectUrl>
     <Copyright>2022</Copyright>
     <Authors>Omega IT LLC</Authors>
     <Product>OmegaCMS</Product>

@@ -8,7 +8,7 @@
     <Product>OmegaCMS</Product>
     <Configurations>Debug;Release;Debug_Publish_win_x64;Debug_Publish_linux_x64;Debug_Publish_osx_x64;Release_Publish_win_x64;Release_Publish_linux_x64;Release_Publish_osx_x64</Configurations>
     <Copyright>2022</Copyright>
-    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageProjectUrl>https://omega-it.solutions</PackageProjectUrl>
     <PackageIcon>0.png</PackageIcon>
   </PropertyGroup>
 

@@ -8,7 +8,7 @@
     <Authors>Omega IT LLC</Authors>
     <Product>OmegaCMS  Aws Lambda Web API Socket Services</Product>
     <Copyright>2022</Copyright>
-    <PackageProjectUrl>https://omegacms.io</PackageProjectUrl>
+    <PackageProjectUrl>https://omega-it.solutions</PackageProjectUrl>
     <PackageIcon>0.png</PackageIcon>
     <ApplicationIcon>omega-icon.ico</ApplicationIcon>
   </PropertyGroup>
