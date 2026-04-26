@@ -2,11 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'coming-soon-layout',
   imports: [RouterOutlet],
-  host: {
-    class: 'flex min-h-full w-full min-h-0 flex-auto flex-col',
-  },
   template: `<router-outlet />`,
 })
-export class App {}
+export default class ComingSoonLayout {}
