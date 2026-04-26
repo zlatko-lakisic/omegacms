@@ -11,23 +11,8 @@ if (-not (Test-Path (Join-Path $root 'MD.CMS.Core.sln'))) {
 }
 
 $repoWiki = 'https://github.com/zlatko-lakisic/omegacms/wiki'
-# Banner file under the solution `Assets` folder (add `Assets/banner.png` in the repo root when ready)
-$assetsBanner = 'Assets/banner.png'
-
-function Get-RelativePathToAssetsBanner {
-  param(
-    [string]$rootPath,
-    [string]$projectDir
-  )
-  $rootPath = [IO.Path]::GetFullPath($rootPath)
-  $projectDir = [IO.Path]::GetFullPath($projectDir)
-  if (-not $projectDir.StartsWith($rootPath, [StringComparison]::OrdinalIgnoreCase)) { return $assetsBanner }
-  $child = $projectDir.Substring($rootPath.Length).Trim([IO.Path]::DirectorySeparatorChar, '/')
-  if ([string]::IsNullOrEmpty($child)) { return $assetsBanner }
-  $segs = $child -split [regex]::Escape([string][IO.Path]::DirectorySeparatorChar) | Where-Object { $_ }
-  $up = (1..$segs.Count | ForEach-Object { '..' } ) -join '/'
-  if ($segs.Count -ge 1) { return ($up + '/' + $assetsBanner) } else { return $assetsBanner }
-}
+# Per-project banner: place `Assets/banner.png` next to the README in each project folder
+$bannerImageRelativeToReadme = 'Assets/banner.png'
 
 function Get-ReadmeBody {
   param(
@@ -163,8 +148,7 @@ foreach ($f in $csprojs) {
   }
   if (-not $tfm) { $tfm = 'net10.0' }
 
-  $bannerSrc = Get-RelativePathToAssetsBanner -rootPath $root -projectDir $dir
-  $body = Get-ReadmeBody -projName $projName -relCsproj $relCsproj -tfm $tfm -product $product -isPack $isPack -awsType $aws -bannerImageSrc $bannerSrc
+  $body = Get-ReadmeBody -projName $projName -relCsproj $relCsproj -tfm $tfm -product $product -isPack $isPack -awsType $aws -bannerImageSrc $bannerImageRelativeToReadme
   $readmePath = Join-Path $dir 'README.md'
   $legacy = Join-Path $dir 'Readme.md'
   if (Test-Path $legacy) { Remove-Item $legacy -Force }

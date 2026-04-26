@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../Assets/banner.png" alt="OmegaCMS" width="100%" />
+  <img src="Assets/banner.png" alt="OmegaCMS" width="100%" />
 </p>
 
 # MD.CMS.Administration.Core.AwsLambda
