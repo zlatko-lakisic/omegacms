@@ -32,7 +32,7 @@
     <EntityDeploy Remove="%2a%2a/%2a.edmx" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.3" />
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="9.2.1" />
     <PackageReference Include="AWS.Logger.AspNetCore" Version="3.2.0" />
     <PackageReference Include="AWS.Logger.Core" Version="4.0.2" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.3.35" />
