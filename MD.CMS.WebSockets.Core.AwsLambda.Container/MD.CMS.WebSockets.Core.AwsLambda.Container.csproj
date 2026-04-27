@@ -5,7 +5,7 @@
     <AWSProjectType>Lambda</AWSProjectType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.8.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MD.CMS.AwsLambda.Container.Core\MD.CMS.AwsLambda.Container.Core.csproj" />
