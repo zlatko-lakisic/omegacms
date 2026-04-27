@@ -15,7 +15,6 @@ using MD.CMS.BusinessLogic.Core.DataAccess.Entities.Permissions;
 using MD.CMS.BusinessLogic.WebApi.Core.Models;
 using System.Threading.Tasks;
 using MD.CMS.BusinessLogic.Core.DataAccess.Controllers.V2.Options;
-using MD.CMS.BusinessLogic.Core.Properties;
 
 namespace MD.CMS.WebApi.Core.Controllers
 {
@@ -306,6 +305,11 @@ namespace MD.CMS.WebApi.Core.Controllers
 
             if (folder.IsNew)
             {
+                if (folder.ParentId == default(long))
+                {
+                    return Unauthorized();
+                }
+
                 Folder<Content> parent = new Folder<Content>();
                 if (folder.ParentId != default(long))
                 {
@@ -314,11 +318,6 @@ namespace MD.CMS.WebApi.Core.Controllers
                     {
                         isAuthorized = await MD.CMS.BusinessLogic.Core.DataAccess.Controllers.FolderController<Content>.GetNewInstance().DefaultPlugin(IsAdministration).Caller(await GetLoggedOnUser()).IsAuthorizedAsync(await GetLoggedOnUser(), parent, RWDPermissionType.Write);
                     }
-                }
-                else
-                {
-                    User loggedOnUser = await GetLoggedOnUser();
-                    isAuthorized = loggedOnUser != null && loggedOnUser.Id == Settings.Default.RootId();
                 }
             }
             else

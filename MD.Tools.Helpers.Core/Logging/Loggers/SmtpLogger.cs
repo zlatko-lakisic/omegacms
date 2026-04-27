@@ -67,7 +67,7 @@ namespace MD.Tools.Helpers.Core.Logging.Loggers
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            if (_switch.TraceError) SendEmail(TraceLevel.Error, exception.Message, exception.ToString(), "{0}/{1}".ToFormattedString(Math.Abs(exception.Message.GetHashCode(StringComparison.OrdinalIgnoreCase)), Math.Abs(exception.ToString().GetHashCode(StringComparison.OrdinalIgnoreCase))));
+            if (_switch.TraceError) SendEmail(TraceLevel.Error, "Error logged", "See server logs for details.", Math.Abs(exception.GetType().FullName.GetHashCode(StringComparison.OrdinalIgnoreCase)).ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace MD.Tools.Helpers.Core.Logging.Loggers
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            if (_switch.TraceError) SendEmail(TraceLevel.Error, message, exception.ToString(), "{0}/{1}".ToFormattedString(Math.Abs(exception.Message.GetHashCode(StringComparison.OrdinalIgnoreCase)), Math.Abs(exception.ToString().GetHashCode(StringComparison.OrdinalIgnoreCase))));
+            if (_switch.TraceError) SendEmail(TraceLevel.Error, message, "See server logs for details.", Math.Abs(exception.GetType().FullName.GetHashCode(StringComparison.OrdinalIgnoreCase)).ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>

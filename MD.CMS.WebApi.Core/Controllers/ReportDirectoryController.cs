@@ -29,16 +29,22 @@ namespace MD.CMS.WebApi.Core.Controllers
             string path = objWithPath?.ValueName ?? string.Empty;
             string rootPath = Path.GetFullPath(Path.Combine(webRoot, Settings.Default.TemplateDirectoryRoot));
             string requestedPath = path.TrimStart('/', '\\');
-            string fullPathToDirectory = Path.GetFullPath(Path.Combine(rootPath, requestedPath));
+            string fullPathToDirectory = rootPath;
+            if (IsSafeSubPath(rootPath, requestedPath))
+            {
+                string candidatePath = Path.GetFullPath(Path.Combine(rootPath, requestedPath));
+                if (Directory.Exists(candidatePath))
+                {
+                    fullPathToDirectory = candidatePath;
+                }
+            }
 
 
             ReportDirectory reportDirectory = new ReportDirectory() { Path = path };
             reportDirectory.Children = new List<ReportDirectory>();
 
-            // Reject traversal and force all lookups to stay under the report root.
-            if (!fullPathToDirectory.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase) || !Directory.Exists(fullPathToDirectory))
+            if (fullPathToDirectory == rootPath)
             {
-                fullPathToDirectory = rootPath;
                 reportDirectory.Path = "";
             }
             string[] directoryFullPaths = Directory.GetDirectories(fullPathToDirectory);         
@@ -67,6 +73,20 @@ namespace MD.CMS.WebApi.Core.Controllers
         {
             string[] pathParts = fullPath.Split('\\');
             return pathParts[pathParts.Length - 1];
+        }
+
+        private static bool IsSafeSubPath(string rootPath, string inputPath)
+        {
+            if (string.IsNullOrWhiteSpace(inputPath))
+            {
+                return true;
+            }
+
+            string combinedPath = Path.GetFullPath(Path.Combine(rootPath, inputPath));
+            string relativePath = Path.GetRelativePath(rootPath, combinedPath);
+
+            return !relativePath.StartsWith("..", StringComparison.Ordinal)
+                && !Path.IsPathRooted(relativePath);
         }
 
 
