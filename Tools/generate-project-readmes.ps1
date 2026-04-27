@@ -22,7 +22,8 @@ function Get-ReadmeBody {
     [string]$product,
     [string]$isPack,
     [string]$awsType,
-    [string]$bannerImageSrc
+    [string]$bannerImageSrc,
+    [string]$projectDir
   )
 
   $bannerHtml = @"
@@ -32,19 +33,67 @@ function Get-ReadmeBody {
 
 "@
 
-  if ($projName -match 'Tests$' -or $projName -match 'CoreTests$' -or $projName -match '\.Tests$') {
+  $isTestProject = ($projName -match 'Tests$' -or $projName -match 'CoreTests$' -or $projName -match '\.Tests$')
+  $isAws = ($projName -match 'Aws' -or $projName -match 'Lambda' -or $awsType)
+  $isContainer = ($projName -match 'Container')
+  $isGoogleCloud = ($projName -match 'GoogleCloud')
+  $isAzure = ($projName -match 'AzureFunctions')
+  $isHosted = ($projName -match 'Hosted')
+
+  $cloudNotes = @()
+  if ($isAws) {
+    $cloudNotes += '- **AWS**: This project participates in AWS deployments (Lambda, container image, or shared AWS integration logic).'
+    if ($awsType) { $cloudNotes += ('- **AWS project type** (`AWSProjectType`): `{0}`.' -f $awsType) }
+  }
+  if ($projName -match 'Lambda') {
+    $cloudNotes += '- **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.'
+  }
+  if ($isContainer) {
+    $cloudNotes += '- **Container packaging**: Keep image tag/versioning aligned with deployment scripts or CI release variables.'
+  }
+  if ($isGoogleCloud) {
+    $cloudNotes += '- **Google Cloud**: Align service configuration, credentials, and environment mapping with platform conventions.'
+  }
+  if ($isAzure) {
+    $cloudNotes += '- **Azure Functions**: Confirm trigger/binding config and app settings for function-hosted execution.'
+  }
+  if ($isHosted) {
+    $cloudNotes += '- **Hosted ASP.NET Core**: Run with local launch profiles (IIS Express or Kestrel) for day-to-day development.'
+  }
+
+  $hasAwsDefaults = Test-Path (Join-Path $projectDir 'aws-lambda-tools-defaults.json')
+  $hasDockerfile = Test-Path (Join-Path $projectDir 'Dockerfile')
+  $keyFiles = @('- `{0}`' -f $relCsproj)
+  if ($hasAwsDefaults) { $keyFiles += '- `aws-lambda-tools-defaults.json` (AWS deployment defaults)' }
+  if ($hasDockerfile) { $keyFiles += '- `Dockerfile` (container image build definition)' }
+
+  if ($isTestProject) {
     return @"
 $bannerHtml
 # $projName
 
-**Test project** for OmegaCMS. From the repository root, run:
+Test project for OmegaCMS that validates behavior, integration points, or deployment-specific wiring for related production projects.
+
+## What this project covers
+
+- Unit, integration, or host-configuration tests for the corresponding feature area.
+- Regression protection for refactors, runtime upgrades, and configuration updates.
+
+## Run tests
+
+From the repository root:
 
     dotnet test .\$relCsproj
 
 **Target framework:** $tfm
 
-Project references are listed in the project file (see the .csproj).
+## Key files
 
+$(($keyFiles + @()) -join "`n")
+
+## Documentation
+
+- [Testing]($repoWiki/Testing)
 - [Solution wiki]($repoWiki)
 - [Omega IT LLC](https://omega-it.solutions)
 
@@ -94,34 +143,65 @@ Project references are listed in the project file (see the .csproj).
     '^MD\.Tools\.BaseDataAccess\.PluginMethods\.Core$' { $blurb = 'Dynamic **plugin methods** infrastructure for data access and rules.'; break }
   }
 
-  if (-not $blurb) { $blurb = "OmegaCMS component **$projName** - see the .csproj file for exact references and metadata." }
+  if (-not $blurb) { $blurb = "OmegaCMS component **$projName**. See the project file and solution layout for exact references and responsibilities." }
 
   $meta = @()
-  if ($product) { $meta += "Project **Product** (from the .csproj file): $product" }
-  if ($isPack -eq 'false') { $meta += '**Packable:** no (application or test).' }
-  if ($awsType) { $meta += "**AWS:** $awsType" }
-  $metaBlock = if ($meta.Count) { "`n`n" + ($meta -join "`n") } else { '' }
+  if ($product) { $meta += ('- **Product** (`.csproj`): `{0}`' -f $product) }
+  if ($isPack -eq 'false') { $meta += '- **Packable:** no (application/host/test project).' }
+  if ($isPack -eq 'true') { $meta += '- **Packable:** yes (can produce a NuGet package when packed).' }
+  $meta += ('- **Target framework:** `{0}`' -f $tfm)
 
-  $packNote = if ($isPack -eq 'true') { 'This project may produce a **NuGet** package when packed (see the .csproj).' } else { '' }
+  $responsibilities = @(
+    '- Implements the primary project role described above.'
+    '- Exposes contracts, runtime behavior, or host wiring consumed by sibling projects in `MD.CMS.Core.sln`.'
+    '- Uses repository-level configuration and environment conventions documented in the wiki.'
+  )
+
+  $cloudSection = if ($cloudNotes.Count) { @"
+## Cloud/runtime notes
+
+$(($cloudNotes + @()) -join "`n")
+
+"@ } else { '' }
 
   return @"
 $bannerHtml
 # $projName
 
 $blurb
-$metaBlock
-$packNote
 
+## Project metadata
+
+$(($meta + @()) -join "`n")
+
+## Responsibilities
+
+$(($responsibilities + @()) -join "`n")
+
+$cloudSection
 ## Build
 
-From the repository root, run:
+From the repository root:
 
     dotnet build .\$relCsproj -c Debug
 
-**Target framework:** $tfm
+## Optional local run
+
+If this project is an executable host, run:
+
+    dotnet run --project .\$relCsproj
+
+Library projects should usually be consumed through a host project instead of running directly.
+
+## Key files
+
+$(($keyFiles + @()) -join "`n")
 
 ## Documentation
 
+- [Solution layout]($repoWiki/Solution-Layout)
+- [Build and run]($repoWiki/Build-and-Run)
+- [AWS and serverless]($repoWiki/AWS-and-Serverless)
 - [OmegaCMS solution wiki]($repoWiki)
 - [Omega IT LLC](https://omega-it.solutions)
 
@@ -148,7 +228,7 @@ foreach ($f in $csprojs) {
   }
   if (-not $tfm) { $tfm = 'net10.0' }
 
-  $body = Get-ReadmeBody -projName $projName -relCsproj $relCsproj -tfm $tfm -product $product -isPack $isPack -awsType $aws -bannerImageSrc $bannerImageRelativeToReadme
+  $body = Get-ReadmeBody -projName $projName -relCsproj $relCsproj -tfm $tfm -product $product -isPack $isPack -awsType $aws -bannerImageSrc $bannerImageRelativeToReadme -projectDir $dir
   $readmePath = Join-Path $dir 'README.md'
   $legacy = Join-Path $dir 'Readme.md'
   if (Test-Path $legacy) { Remove-Item $legacy -Force }
