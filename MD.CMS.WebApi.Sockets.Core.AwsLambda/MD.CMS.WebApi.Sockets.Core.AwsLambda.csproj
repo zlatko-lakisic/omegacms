@@ -34,7 +34,7 @@
     <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="2.0.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.1.0" />
     <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.4.0" />
-    <PackageReference Include="AWSSDK.ApiGatewayManagementApi" Version="3.7.0.54" />
+    <PackageReference Include="AWSSDK.ApiGatewayManagementApi" Version="4.0.2.28" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.12.0" />
     <PackageReference Include="Obfuscar" Version="2.2.29">
       <PrivateAssets>all</PrivateAssets>
