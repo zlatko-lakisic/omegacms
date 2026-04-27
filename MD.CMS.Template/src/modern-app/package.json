@@ -34,7 +34,7 @@
     "@angular/material": "21.2.4",
     "@angular/platform-browser": "21.2.6",
     "@angular/router": "21.2.6",
-    "@jsverse/transloco": "8.2.1",
+    "@jsverse/transloco": "8.3.0",
     "apexcharts": "5.10.4",
     "chroma-js": "3.2.0",
     "date-fns": "4.1.0",
