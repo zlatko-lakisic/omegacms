@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System;
 using MD.CMS.BusinessLogic.WebApi.Core.BaseControllers;
 using Microsoft.AspNetCore.Hosting;
 using MD.CMS.WebApi.Core.Properties;
@@ -25,15 +26,17 @@ namespace MD.CMS.WebApi.Core.Controllers
         public IActionResult GetReportDirectoryByPath([FromBody]GenericJsonSingleObject<string> objWithPath)
         {
             string webRoot = _env.WebRootPath;
-            string path = objWithPath.ValueName;
+            string path = objWithPath?.ValueName ?? string.Empty;
             string rootPath = Path.GetFullPath(Path.Combine(webRoot, Settings.Default.TemplateDirectoryRoot));
-            string fullPathToDirectory = rootPath + path;
+            string requestedPath = path.TrimStart('/', '\\');
+            string fullPathToDirectory = Path.GetFullPath(Path.Combine(rootPath, requestedPath));
 
 
             ReportDirectory reportDirectory = new ReportDirectory() { Path = path };
             reportDirectory.Children = new List<ReportDirectory>();
 
-            if (!Directory.Exists(fullPathToDirectory))
+            // Reject traversal and force all lookups to stay under the report root.
+            if (!fullPathToDirectory.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase) || !Directory.Exists(fullPathToDirectory))
             {
                 fullPathToDirectory = rootPath;
                 reportDirectory.Path = "";

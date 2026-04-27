@@ -98,8 +98,9 @@ namespace MD.Tools.Helpers.Core.Caching.Providers
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
             try
             {
+                string safePattern = BuildSafePattern(regexPattern);
                 IEnumerable<string> results = (from result in _cacheStore
-                                               where Regex.Match(result.Key, regexPattern, RegexOptions.IgnoreCase).Success
+                                               where Regex.Match(result.Key, safePattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)).Success
                                                select result).Select(res => res.Key);
                 if (results.Any())
                 {
@@ -169,6 +170,14 @@ namespace MD.Tools.Helpers.Core.Caching.Providers
                 @lock.Release();
             }
             return result;
+        }
+
+        private static string BuildSafePattern(string pattern)
+        {
+            string escaped = Regex.Escape(pattern);
+            escaped = escaped.Replace(@"\*", ".*", StringComparison.Ordinal);
+            escaped = escaped.Replace(@"\?", ".", StringComparison.Ordinal);
+            return "^" + escaped + "$";
         }
     }
 }

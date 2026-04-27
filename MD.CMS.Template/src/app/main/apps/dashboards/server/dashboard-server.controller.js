@@ -326,10 +326,7 @@
                         {
                             if ( type === 'display' )
                             {
-                                var el = angular.element(data);
-                                el.html(el.text() + ' MB');
-
-                                return el[0].outerHTML;
+                                return String(data) + ' MB';
                             }
                             else
                             {

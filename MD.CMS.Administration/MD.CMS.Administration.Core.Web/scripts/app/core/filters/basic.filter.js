@@ -23,7 +23,9 @@
     {
         return function (text)
         {
-            return String(text).replace(/<[^>]+>/gm, '');
+            var element = document.createElement('div');
+            element.innerHTML = text == null ? '' : String(text);
+            return element.textContent || '';
         };
     }
 

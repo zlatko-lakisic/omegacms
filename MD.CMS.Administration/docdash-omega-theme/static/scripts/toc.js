@@ -58,9 +58,9 @@
     var self = this;
     var opts = $.extend({}, jQuery.fn.toc.defaults, options);
 
-    var container = $(opts.container);
+    var container = $('body');
     var tocs = [];
-    var headings = $(opts.selectors, container);
+    var headings = $('h1,h2,h3', container);
     var headingOffsets = [];
     var activeClassName = 'active';
     var ANCHOR_PREFIX = "__anchor";

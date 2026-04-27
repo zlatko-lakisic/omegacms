@@ -41,14 +41,16 @@ namespace MD.Tools.Helpers.Core.Logging.Loggers
             if (string.IsNullOrEmpty(message)) message = string.Empty;
             if (string.IsNullOrEmpty(detail)) detail = message;
             if (string.IsNullOrEmpty(category)) category = Math.Abs(message.GetHashCode(StringComparison.OrdinalIgnoreCase)).ToString(CultureInfo.InvariantCulture);
+            string safeMessage = SanitizeForMailHeader(message);
+            string safeDetail = SanitizeForMailBody(detail);
             using (MailMessage msg = new MailMessage())
             {
                 foreach (string s in MD.Tools.Helpers.Core.Properties.HelperSettings.Default.SmtpToAddress)
                 {
                     msg.To.Add(s);
                 }
-                msg.Subject = "{0}:{1}/{2} - {3} {4:s}".ToFormattedString(MD.Tools.Helpers.Core.Properties.HelperSettings.Default.SmtpApplication, level, category, message, DateTime.Now);
-                msg.Body = detail;
+                msg.Subject = "{0}:{1}/{2} - {3:s}".ToFormattedString(MD.Tools.Helpers.Core.Properties.HelperSettings.Default.SmtpApplication, level, category, DateTime.Now);
+                msg.Body = "Message: " + safeMessage + Environment.NewLine + "Details: " + safeDetail;
                 _client.Send(msg);
             }
         }
@@ -164,6 +166,27 @@ namespace MD.Tools.Helpers.Core.Logging.Loggers
         {
             if (message == null) throw new ArgumentNullException(nameof(message));
             if (IsAvailable && IsEnabledAtLevel(message.Level)) SendEmail(message.Level, message.FormattedMessage);
+        }
+
+        private static string SanitizeForMailHeader(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+
+            string value = input.Replace("\r", " ", StringComparison.Ordinal).Replace("\n", " ", StringComparison.Ordinal);
+            return value.Length > 200 ? value.Substring(0, 200) : value;
+        }
+
+        private static string SanitizeForMailBody(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+
+            return input.Length > 4000 ? input.Substring(0, 4000) : input;
         }
 
     }

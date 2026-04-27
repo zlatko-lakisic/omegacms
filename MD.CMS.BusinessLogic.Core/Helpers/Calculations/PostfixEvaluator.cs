@@ -5,10 +5,9 @@ using MD.CMS.BusinessLogic.Core.DataAccess.Entities.GenericContent;
 using MD.CMS.BusinessLogic.Core.Helpers.Extensions;
 using MD.Tools.Helpers.Core.Logging;
 using MD.Tools.Helpers.Core.TypeConversion;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -213,11 +212,7 @@ namespace MD.CMS.BusinessLogic.Core.Helpers.Calculations
 
                 postfixExpression = postfixExpression.Replace("Math.round(", "Math.Round((double)", StringComparison.OrdinalIgnoreCase);
 
-                masterResult = (await CSharpScript.EvaluateAsync(postfixExpression, ScriptOptions.Default.WithImports("System"))).ToString();
-            }
-            catch (CompilationErrorException e)
-            {
-                typeof(PostfixEvaluator).Log(e);
+                masterResult = EvaluateSafeExpression(postfixExpression);
             }
             catch (ArgumentNullException e)
             {
@@ -241,6 +236,32 @@ namespace MD.CMS.BusinessLogic.Core.Helpers.Calculations
                 input = $"\"{input}\"";
             }
             return input;
+        }
+
+        private static string EvaluateSafeExpression(string expression)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                return string.Empty;
+            }
+
+            string candidate = expression.Trim();
+            candidate = candidate.Replace("Math.round(", "Math.Round((double)", StringComparison.OrdinalIgnoreCase);
+
+            // Support one known function form while blocking arbitrary code execution.
+            candidate = Regex.Replace(candidate, @"Math\.Round\(\(double\)\s*([-+*/().\d\s]+)\)", match =>
+            {
+                var innerValue = Convert.ToDouble(new DataTable().Compute(match.Groups[1].Value, string.Empty));
+                return Math.Round(innerValue).ToString(System.Globalization.CultureInfo.InvariantCulture);
+            }, RegexOptions.IgnoreCase);
+
+            if (Regex.IsMatch(candidate, @"[A-Za-z_]"))
+            {
+                throw new ArgumentException("Expression contains unsupported tokens.", nameof(expression));
+            }
+
+            object result = new DataTable().Compute(candidate, string.Empty);
+            return result?.ToString() ?? string.Empty;
         }
     }
 }

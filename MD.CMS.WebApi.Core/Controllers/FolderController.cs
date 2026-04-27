@@ -15,6 +15,7 @@ using MD.CMS.BusinessLogic.Core.DataAccess.Entities.Permissions;
 using MD.CMS.BusinessLogic.WebApi.Core.Models;
 using System.Threading.Tasks;
 using MD.CMS.BusinessLogic.Core.DataAccess.Controllers.V2.Options;
+using MD.CMS.BusinessLogic.Core.Properties;
 
 namespace MD.CMS.WebApi.Core.Controllers
 {
@@ -316,7 +317,8 @@ namespace MD.CMS.WebApi.Core.Controllers
                 }
                 else
                 {
-                    isAuthorized = true;
+                    User loggedOnUser = await GetLoggedOnUser();
+                    isAuthorized = loggedOnUser != null && loggedOnUser.Id == Settings.Default.RootId();
                 }
             }
             else
