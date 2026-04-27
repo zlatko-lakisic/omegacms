@@ -8,7 +8,7 @@
     "modern:serve": "npm run start --prefix src/modern-app"
   },
   "devDependencies": {
-    "browser-sync": "^2.29.3",
+    "browser-sync": "^3.0.4",
     "browser-sync-spa": "^1.0.0",
     "chalk": "~1.1.1",
     "del": "~2.0.2",
