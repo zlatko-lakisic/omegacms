@@ -20,6 +20,23 @@ Administration entry point for **Azure Functions** hosting.
 
 - **Azure Functions**: Confirm trigger/binding config and app settings for function-hosted execution.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Configure startup and host behavior from `Program.cs` and `Startup.cs`.
+- Align `appsettings.Development.json`/environment settings with Azure Functions app settings.
+- Validate local launch profile before publishing to Azure Function App resources.
+
+**Required elements**
+- Azure subscription/resource group + Function App target.
+- Function runtime-compatible settings and bindings.
+- Environment values for downstream CMS/API dependencies and storage/providers.
+
+**Effects in the system**
+- Runs administration host flow inside Azure Functions hosting model.
+- Function runtime constraints (cold start, binding config) influence admin startup/latency.
+- Incorrect app settings can silently break dependency resolution at startup.
+
 ## Build
 
 From the repository root:

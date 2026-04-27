@@ -21,6 +21,23 @@ Web API host for **Google Cloud** (ASP.NET Core).
 
 - **Google Cloud**: Align service configuration, credentials, and environment mapping with platform conventions.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Use `app.yaml` and `google-deploy.bat` as deployment entry points for Google Cloud hosting.
+- Validate `Program.cs`/`Startup.cs` configuration against expected GCP environment variables.
+- Keep OpenAPI artifacts (`openapi.yaml`, `swagger.json`) in sync with exposed routes.
+
+**Required elements**
+- GCP project/service account permissions for deploy/runtime operations.
+- App Engine (or equivalent service) configuration in `app.yaml`.
+- Runtime app settings for DB/plugins/session/CORS mapped from deployment environment.
+
+**Effects in the system**
+- Exposes REST API on Google Cloud runtime instead of AWS-hosted pathways.
+- Deployment config influences scaling, routing, and request handling characteristics.
+- Drift between OpenAPI docs and runtime config can impact client integrations.
+
 ## Build
 
 From the repository root:

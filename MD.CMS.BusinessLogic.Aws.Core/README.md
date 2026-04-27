@@ -20,6 +20,21 @@ AWS-specific business logic shared by Lambda and related API hosts.
 
 - **AWS**: This project participates in AWS deployments (Lambda, container image, or shared AWS integration logic).
 
+## Cloud setup deep dive
+
+**Setup path**
+- Reference this library from AWS host projects (Lambda/API/container) rather than deploying it alone.
+- Keep AWS-specific adapters/config abstractions aligned with host-level runtime values.
+- Validate package version compatibility with consuming Lambda host projects.
+
+**Required elements**
+- Consuming AWS host projects that provide concrete environment and deployment settings.
+- Shared contracts for file-provider/plugin and data-access behavior.
+
+**Effects in the system**
+- Centralizes AWS-targeted business logic used across multiple services.
+- Changes can affect API/admin behavior simultaneously in AWS-hosted runtimes.
+
 ## Build
 
 From the repository root:

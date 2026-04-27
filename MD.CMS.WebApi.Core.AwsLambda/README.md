@@ -23,6 +23,24 @@
 - **AWS project type** (`AWSProjectType`): `Lambda`.
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Start from `aws-lambda-tools-defaults.json` for region/profile/stack defaults.
+- Verify Lambda handler + runtime compatibility (template defaults still reference older runtime values).
+- Ensure VPC IDs, CORS/session domain, plugin folder settings, and DB plugin config values are environment-specific.
+
+**Required elements**
+- AWS account + deploy credentials/profile.
+- S3 bucket for deployment package and a unique stack name.
+- `serverless.template` parameters for network, plugin layers, and config overrides.
+- Runtime config values for data-access plugins and e-mail/session behavior.
+
+**Effects in the system**
+- Publishes the main REST API endpoint shape consumed by admin/client applications.
+- Controls API timeout behavior and plugin loading location in Lambda (`/opt/...`).
+- Drives infrastructure updates through CloudFormation/SAM deployment parameters.
+
 ## Build
 
 From the repository root:

@@ -23,6 +23,23 @@
 - **AWS project type** (`AWSProjectType`): `Lambda`.
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Configure the Lambda websocket stack defaults (`GatewayName`, VPC settings, long API timeout values).
+- Validate websocket-specific route and session configuration.
+- Confirm plugin/data-access settings match the websocket workload and backend DB capacity.
+
+**Required elements**
+- AWS websocket API Gateway integration and Lambda permissions.
+- Network access to backend data stores from the configured VPC.
+- Correct stack/stage naming so websocket clients connect to the intended endpoint.
+
+**Effects in the system**
+- Enables real-time communication channels for CMS features requiring push/stream behavior.
+- Timeout and VPC settings strongly impact connection stability and throughput.
+- Misconfiguration can degrade both websocket reliability and shared backend data performance.
+
 ## Build
 
 From the repository root:

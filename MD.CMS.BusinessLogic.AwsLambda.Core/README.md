@@ -23,6 +23,21 @@ Business logic for the **AWS Lambda** packaging of the API and admin stack.
 - **AWS**: This project participates in AWS deployments (Lambda, container image, or shared AWS integration logic).
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Use as shared Lambda-focused business logic dependency for API/admin Lambda hosts.
+- Ensure Lambda hosts pass expected configuration keys and plugin/runtime paths.
+- Keep versions aligned with dependent host projects and deployment layers.
+
+**Required elements**
+- Lambda host projects that reference this library.
+- Consistent environment variable naming and plugin provider configuration.
+
+**Effects in the system**
+- Consolidates Lambda-centric business behavior and reduces duplication.
+- Impacts request handling logic across every Lambda host that references it.
+
 ## Build
 
 From the repository root:

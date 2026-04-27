@@ -23,6 +23,23 @@
 - **AWS project type** (`AWSProjectType`): `Lambda`.
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Use `aws-lambda-tools-defaults.json` to configure stack, bucket, region, and template parameters.
+- Populate admin-specific settings (`MDCMSAdministrationCorePluginsDirectory`, provider options, maps/translation keys where used).
+- Confirm static admin payload and plugin directory mapping are available to the Lambda host.
+
+**Required elements**
+- AWS deploy credentials/profile and S3 bucket for artifacts.
+- Correct API gateway naming/stage for administration routes.
+- File-provider/plugin configuration for assets and extension loading.
+
+**Effects in the system**
+- Hosts the administration UI on Lambda with cloud-managed scaling behavior.
+- Determines how admin static/plugin assets are resolved at runtime.
+- Incorrect provider/plugin settings can break admin panel features even if the host starts successfully.
+
 ## Build
 
 From the repository root:

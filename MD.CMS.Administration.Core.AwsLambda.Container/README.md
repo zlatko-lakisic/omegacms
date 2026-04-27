@@ -23,6 +23,23 @@
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 - **Container packaging**: Keep image tag/versioning aligned with deployment scripts or CI release variables.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Configure container template parameters (`BasePluginsLayer`, `ProductLayer`, `WebAppPath`, startup entrypoint).
+- Keep `StageName` and gateway names aligned with administration URL expectations.
+- Ensure plugin and static admin assets are included in image/layer layout.
+
+**Required elements**
+- Container build/publish workflow integrated into release pipeline.
+- Valid layer ARNs and stack parameters for VPC/network and trace settings.
+- Consistent environment values for admin host URLs and plugin providers.
+
+**Effects in the system**
+- Moves administration hosting to containerized Lambda deployment with explicit filesystem/runtime shape.
+- Faster iteration on bundled dependencies, but tighter coupling to image release cadence.
+- Stage/path mismatches lead to inaccessible admin routes or broken static asset loading.
+
 ## Build
 
 From the repository root:

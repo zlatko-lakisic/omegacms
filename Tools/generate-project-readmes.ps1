@@ -101,6 +101,7 @@ $(($keyFiles + @()) -join "`n")
   }
 
   $blurb = $null
+  $deepDive = $null
   switch -Regex ($projName) {
     '^MD\.CMS\.BusinessLogic\.Core$' { $blurb = 'Core business rules, services, and domain logic. Consumed by Web API, administration, and serverless hosts. XML documentation is emitted in **Debug** builds.'; break }
     '^MD\.CMS\.BusinessLogic\.WebApi\.Core$' { $blurb = 'Bridges the core business layer to the REST/Web API (controllers and integration points).'; break }
@@ -143,6 +144,277 @@ $(($keyFiles + @()) -join "`n")
     '^MD\.Tools\.BaseDataAccess\.PluginMethods\.Core$' { $blurb = 'Dynamic **plugin methods** infrastructure for data access and rules.'; break }
   }
 
+  switch -Regex ($projName) {
+    '^MD\.CMS\.WebApi\.Core\.AwsLambda$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Start from `aws-lambda-tools-defaults.json` for region/profile/stack defaults.
+- Verify Lambda handler + runtime compatibility (template defaults still reference older runtime values).
+- Ensure VPC IDs, CORS/session domain, plugin folder settings, and DB plugin config values are environment-specific.
+
+**Required elements**
+- AWS account + deploy credentials/profile.
+- S3 bucket for deployment package and a unique stack name.
+- `serverless.template` parameters for network, plugin layers, and config overrides.
+- Runtime config values for data-access plugins and e-mail/session behavior.
+
+**Effects in the system**
+- Publishes the main REST API endpoint shape consumed by admin/client applications.
+- Controls API timeout behavior and plugin loading location in Lambda (`/opt/...`).
+- Drives infrastructure updates through CloudFormation/SAM deployment parameters.
+'@
+      break
+    }
+    '^MD\.CMS\.WebApi\.Core\.AwsLambda\.Container$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Use `aws-lambda-tools-defaults.json` plus container-oriented template parameters (`BasePluginsLayer`, `ProductLayer`, `WebAppPath`, `AppReferencePath`).
+- Keep image/package versioning aligned with CI/CD and layer ARNs.
+- Validate base path/stage routing and plugin directory mount expectations.
+
+**Required elements**
+- Lambda container-capable deployment flow (ECR/image publishing in your release pipeline).
+- Stable layer ARNs for shared plugins and product assemblies.
+- Stack/network parameters (VPC subnets/security groups, timeout, trace level).
+
+**Effects in the system**
+- Changes deployment surface from zip-function style to container-style runtime packaging.
+- Allows larger dependency footprints and explicit filesystem layout under `/opt`.
+- Any stage/base-folder mismatch directly affects reachable API routes.
+'@
+      break
+    }
+    '^MD\.CMS\.WebApi\.Sockets\.Core\.AwsLambda$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Configure the Lambda websocket stack defaults (`GatewayName`, VPC settings, long API timeout values).
+- Validate websocket-specific route and session configuration.
+- Confirm plugin/data-access settings match the websocket workload and backend DB capacity.
+
+**Required elements**
+- AWS websocket API Gateway integration and Lambda permissions.
+- Network access to backend data stores from the configured VPC.
+- Correct stack/stage naming so websocket clients connect to the intended endpoint.
+
+**Effects in the system**
+- Enables real-time communication channels for CMS features requiring push/stream behavior.
+- Timeout and VPC settings strongly impact connection stability and throughput.
+- Misconfiguration can degrade both websocket reliability and shared backend data performance.
+'@
+      break
+    }
+    '^MD\.CMS\.WebSockets\.Core\.AwsLambda\.Container$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Configure container-layer parameters (`BasePluginsLayer`, `ProductLayer`, `WebAppPath`, function entrypoint path).
+- Keep websocket stage/base path values consistent with client connection URLs.
+- Validate VPC + timeout settings tuned for long-lived websocket operations.
+
+**Required elements**
+- Container image publication flow and compatible Lambda runtime base image.
+- Stable plugin layer references and mounted plugin directories.
+- CloudFormation/SAM parameter set for gateway, networking, and observability settings.
+
+**Effects in the system**
+- Deploys websocket runtime as a containerized Lambda host, increasing packaging flexibility.
+- Route/stage changes directly impact active websocket client connection endpoints.
+- Network policy errors show up as connection drops or backend access failures.
+'@
+      break
+    }
+    '^MD\.CMS\.Administration\.Core\.AwsLambda$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Use `aws-lambda-tools-defaults.json` to configure stack, bucket, region, and template parameters.
+- Populate admin-specific settings (`MDCMSAdministrationCorePluginsDirectory`, provider options, maps/translation keys where used).
+- Confirm static admin payload and plugin directory mapping are available to the Lambda host.
+
+**Required elements**
+- AWS deploy credentials/profile and S3 bucket for artifacts.
+- Correct API gateway naming/stage for administration routes.
+- File-provider/plugin configuration for assets and extension loading.
+
+**Effects in the system**
+- Hosts the administration UI on Lambda with cloud-managed scaling behavior.
+- Determines how admin static/plugin assets are resolved at runtime.
+- Incorrect provider/plugin settings can break admin panel features even if the host starts successfully.
+'@
+      break
+    }
+    '^MD\.CMS\.Administration\.Core\.AwsLambda\.Container$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Configure container template parameters (`BasePluginsLayer`, `ProductLayer`, `WebAppPath`, startup entrypoint).
+- Keep `StageName` and gateway names aligned with administration URL expectations.
+- Ensure plugin and static admin assets are included in image/layer layout.
+
+**Required elements**
+- Container build/publish workflow integrated into release pipeline.
+- Valid layer ARNs and stack parameters for VPC/network and trace settings.
+- Consistent environment values for admin host URLs and plugin providers.
+
+**Effects in the system**
+- Moves administration hosting to containerized Lambda deployment with explicit filesystem/runtime shape.
+- Faster iteration on bundled dependencies, but tighter coupling to image release cadence.
+- Stage/path mismatches lead to inaccessible admin routes or broken static asset loading.
+'@
+      break
+    }
+    '^MD\.CMS\.AwsLambda\.Container\.Core$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Treat this project as shared container deployment scaffolding for Lambda-oriented hosts.
+- Keep default template values minimal, then override through environment/release variables per service.
+- Reuse common network/trace defaults while preserving per-application stack naming.
+
+**Required elements**
+- Shared AWS account conventions (naming, region, VPC IDs).
+- Common template parameter strategy used by downstream API/admin/socket container projects.
+- CI release process that injects real values for empty defaults.
+
+**Effects in the system**
+- Provides a consistent baseline for multiple Lambda container projects.
+- Reduces duplication in deployment conventions across cloud-hosted services.
+- Changes here can cascade into API/admin/socket deployment behavior.
+'@
+      break
+    }
+    '^MD\.CMS\.WebApi\.Core\.GoogleCloud$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Use `app.yaml` and `google-deploy.bat` as deployment entry points for Google Cloud hosting.
+- Validate `Program.cs`/`Startup.cs` configuration against expected GCP environment variables.
+- Keep OpenAPI artifacts (`openapi.yaml`, `swagger.json`) in sync with exposed routes.
+
+**Required elements**
+- GCP project/service account permissions for deploy/runtime operations.
+- App Engine (or equivalent service) configuration in `app.yaml`.
+- Runtime app settings for DB/plugins/session/CORS mapped from deployment environment.
+
+**Effects in the system**
+- Exposes REST API on Google Cloud runtime instead of AWS-hosted pathways.
+- Deployment config influences scaling, routing, and request handling characteristics.
+- Drift between OpenAPI docs and runtime config can impact client integrations.
+'@
+      break
+    }
+    '^MD\.CMS\.Administration\.Core\.GoogleCloud$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Use Google deployment helpers (`google-deploy.bat`, `publish-project.bat`, `create-links.bat`) and `dispatch.yaml`/`app.yaml`.
+- Ensure admin static files and ASP.NET host output are published to the expected GCP runtime path.
+- Confirm URL routing in `dispatch.yaml` matches admin entry URLs.
+
+**Required elements**
+- GCP deploy permissions and configured target project/service.
+- Valid app routing + service mapping (`app.yaml`, `dispatch.yaml`).
+- Consistent admin host URL/environment settings matching the cloud domain.
+
+**Effects in the system**
+- Hosts administration UI on GCP-managed runtime and routing layer.
+- Routing or publish-script misconfiguration typically surfaces as 404/static asset issues.
+- Directly affects operator access path and admin panel responsiveness.
+'@
+      break
+    }
+    '^MD\.CMS\.Administration\.Core\.AzureFunctions$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Configure startup and host behavior from `Program.cs` and `Startup.cs`.
+- Align `appsettings.Development.json`/environment settings with Azure Functions app settings.
+- Validate local launch profile before publishing to Azure Function App resources.
+
+**Required elements**
+- Azure subscription/resource group + Function App target.
+- Function runtime-compatible settings and bindings.
+- Environment values for downstream CMS/API dependencies and storage/providers.
+
+**Effects in the system**
+- Runs administration host flow inside Azure Functions hosting model.
+- Function runtime constraints (cold start, binding config) influence admin startup/latency.
+- Incorrect app settings can silently break dependency resolution at startup.
+'@
+      break
+    }
+    '^MD\.CMS\.BusinessLogic\.Aws\.Core$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Reference this library from AWS host projects (Lambda/API/container) rather than deploying it alone.
+- Keep AWS-specific adapters/config abstractions aligned with host-level runtime values.
+- Validate package version compatibility with consuming Lambda host projects.
+
+**Required elements**
+- Consuming AWS host projects that provide concrete environment and deployment settings.
+- Shared contracts for file-provider/plugin and data-access behavior.
+
+**Effects in the system**
+- Centralizes AWS-targeted business logic used across multiple services.
+- Changes can affect API/admin behavior simultaneously in AWS-hosted runtimes.
+'@
+      break
+    }
+    '^MD\.CMS\.BusinessLogic\.AwsLambda\.Core$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Use as shared Lambda-focused business logic dependency for API/admin Lambda hosts.
+- Ensure Lambda hosts pass expected configuration keys and plugin/runtime paths.
+- Keep versions aligned with dependent host projects and deployment layers.
+
+**Required elements**
+- Lambda host projects that reference this library.
+- Consistent environment variable naming and plugin provider configuration.
+
+**Effects in the system**
+- Consolidates Lambda-centric business behavior and reduces duplication.
+- Impacts request handling logic across every Lambda host that references it.
+'@
+      break
+    }
+    '^MD\.CMS\.BusinessLogic\.GoogleCloud\.Core$' {
+      $deepDive = @'
+## Cloud setup deep dive
+
+**Setup path**
+- Consume from GoogleCloud host projects and keep cloud-specific integrations scoped here.
+- Validate environment/config assumptions against GCP deployment profiles.
+- Verify compatibility with data-access and helper libraries used by GCP hosts.
+
+**Required elements**
+- GoogleCloud host projects that reference this core package.
+- Stable configuration contract for credentials/endpoints used by GCP runtime.
+
+**Effects in the system**
+- Encapsulates cloud-provider-specific business rules for GCP deployments.
+- Updates here propagate to both API/admin cloud-host behavior on Google Cloud.
+'@
+      break
+    }
+  }
+
   if (-not $blurb) { $blurb = "OmegaCMS component **$projName**. See the project file and solution layout for exact references and responsibilities." }
 
   $meta = @()
@@ -179,6 +451,7 @@ $(($meta + @()) -join "`n")
 $(($responsibilities + @()) -join "`n")
 
 $cloudSection
+$(if ($deepDive) { "$deepDive`n" } else { '' })
 ## Build
 
 From the repository root:

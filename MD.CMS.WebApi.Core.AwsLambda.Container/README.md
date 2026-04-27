@@ -23,6 +23,23 @@
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 - **Container packaging**: Keep image tag/versioning aligned with deployment scripts or CI release variables.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Use `aws-lambda-tools-defaults.json` plus container-oriented template parameters (`BasePluginsLayer`, `ProductLayer`, `WebAppPath`, `AppReferencePath`).
+- Keep image/package versioning aligned with CI/CD and layer ARNs.
+- Validate base path/stage routing and plugin directory mount expectations.
+
+**Required elements**
+- Lambda container-capable deployment flow (ECR/image publishing in your release pipeline).
+- Stable layer ARNs for shared plugins and product assemblies.
+- Stack/network parameters (VPC subnets/security groups, timeout, trace level).
+
+**Effects in the system**
+- Changes deployment surface from zip-function style to container-style runtime packaging.
+- Allows larger dependency footprints and explicit filesystem layout under `/opt`.
+- Any stage/base-folder mismatch directly affects reachable API routes.
+
 ## Build
 
 From the repository root:

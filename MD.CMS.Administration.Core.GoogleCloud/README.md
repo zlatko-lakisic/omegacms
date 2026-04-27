@@ -21,6 +21,23 @@ Administration UI host for **Google Cloud**.
 
 - **Google Cloud**: Align service configuration, credentials, and environment mapping with platform conventions.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Use Google deployment helpers (`google-deploy.bat`, `publish-project.bat`, `create-links.bat`) and `dispatch.yaml`/`app.yaml`.
+- Ensure admin static files and ASP.NET host output are published to the expected GCP runtime path.
+- Confirm URL routing in `dispatch.yaml` matches admin entry URLs.
+
+**Required elements**
+- GCP deploy permissions and configured target project/service.
+- Valid app routing + service mapping (`app.yaml`, `dispatch.yaml`).
+- Consistent admin host URL/environment settings matching the cloud domain.
+
+**Effects in the system**
+- Hosts administration UI on GCP-managed runtime and routing layer.
+- Routing or publish-script misconfiguration typically surfaces as 404/static asset issues.
+- Directly affects operator access path and admin panel responsiveness.
+
 ## Build
 
 From the repository root:

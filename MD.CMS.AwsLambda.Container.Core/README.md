@@ -24,6 +24,23 @@ Shared **container** packaging for AWS Lambda images used by the solution.
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 - **Container packaging**: Keep image tag/versioning aligned with deployment scripts or CI release variables.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Treat this project as shared container deployment scaffolding for Lambda-oriented hosts.
+- Keep default template values minimal, then override through environment/release variables per service.
+- Reuse common network/trace defaults while preserving per-application stack naming.
+
+**Required elements**
+- Shared AWS account conventions (naming, region, VPC IDs).
+- Common template parameter strategy used by downstream API/admin/socket container projects.
+- CI release process that injects real values for empty defaults.
+
+**Effects in the system**
+- Provides a consistent baseline for multiple Lambda container projects.
+- Reduces duplication in deployment conventions across cloud-hosted services.
+- Changes here can cascade into API/admin/socket deployment behavior.
+
 ## Build
 
 From the repository root:

@@ -20,6 +20,21 @@ Google Cloudâ€“related business services (for example storage integration).
 
 - **Google Cloud**: Align service configuration, credentials, and environment mapping with platform conventions.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Consume from GoogleCloud host projects and keep cloud-specific integrations scoped here.
+- Validate environment/config assumptions against GCP deployment profiles.
+- Verify compatibility with data-access and helper libraries used by GCP hosts.
+
+**Required elements**
+- GoogleCloud host projects that reference this core package.
+- Stable configuration contract for credentials/endpoints used by GCP runtime.
+
+**Effects in the system**
+- Encapsulates cloud-provider-specific business rules for GCP deployments.
+- Updates here propagate to both API/admin cloud-host behavior on Google Cloud.
+
 ## Build
 
 From the repository root:

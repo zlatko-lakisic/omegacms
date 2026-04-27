@@ -23,6 +23,23 @@
 - **Lambda runtime**: Validate handler/bootstrap configuration and environment variables before packaging and deploy.
 - **Container packaging**: Keep image tag/versioning aligned with deployment scripts or CI release variables.
 
+## Cloud setup deep dive
+
+**Setup path**
+- Configure container-layer parameters (`BasePluginsLayer`, `ProductLayer`, `WebAppPath`, function entrypoint path).
+- Keep websocket stage/base path values consistent with client connection URLs.
+- Validate VPC + timeout settings tuned for long-lived websocket operations.
+
+**Required elements**
+- Container image publication flow and compatible Lambda runtime base image.
+- Stable plugin layer references and mounted plugin directories.
+- CloudFormation/SAM parameter set for gateway, networking, and observability settings.
+
+**Effects in the system**
+- Deploys websocket runtime as a containerized Lambda host, increasing packaging flexibility.
+- Route/stage changes directly impact active websocket client connection endpoints.
+- Network policy errors show up as connection drops or backend access failures.
+
 ## Build
 
 From the repository root:
