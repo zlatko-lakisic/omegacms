@@ -37,7 +37,7 @@
     "gulp-size": "^5.0.0",
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "^1.5.4",
-    "gulp-useref": "^3.1.6",
+    "gulp-useref": "^5.0.0",
     "gulp-util": "~3.0.6",
     "http-proxy-middleware": "^3.0.5",
     "karma": "^6.4.4",
